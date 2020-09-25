@@ -1,0 +1,69 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 30
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 30
+
+        vectorDrawables.useSupportLibrary = true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        debug {}
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+
+    compileOnly 'androidx.appcompat:appcompat:1.2.0'
+    compileOnly "androidx.annotation:annotation:1.1.0"
+    compileOnly "com.google.android.material:material:1.2.1"
+
+    //api 'com.ando.file:FileOperator:0.9.3-beta1'
+    api 'ando.file:core:1.0.0'         //核心库必选
+    api 'ando.file:android-q:1.0.0'    //AndroidQ & Android 11 兼容库
+    api 'ando.file:compressor:1.0.0'   //图片压缩,核心算法采用 Luban
+    api 'ando.file:selector:1.0.0'     //文件选择器
+    api 'androidx.documentfile:documentfile:1.0.1'
+
+    api 'com.ando.string:StringExpandUtils:1.0.0'
+
+
+}
+
+//  https://github.com/novoda/bintray-release/wiki/%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3HOME
+//  apply plugin: 'com.novoda.bintray-release'
+//  `gradlew clean build bintrayUpload -PbintrayUser=javakam -PbintrayKey=xxx -PdryRun=false`
+//  https://github.com/panpf/bintray-publish
+//  gradlew clean build bintrayUpload -PbintrayUser=BINTRAY_USERNAME -PbintrayKey=BINTRAY_KEY -PdryRun=false
+apply plugin: 'com.github.panpf.bintray-publish'
+publish {
+    repoName = 'ando_maven'
+    userOrg = 'javakam'
+    groupId = 'ando.toolkit'
+    artifactId = 'toolkit'
+    publishVersion = '0.0.3'
+    desc = 'Ando ToolKit Library.'
+    website = "https://github.com/javakam/${rootProject.name}"
+    //dryRun = true
+}
