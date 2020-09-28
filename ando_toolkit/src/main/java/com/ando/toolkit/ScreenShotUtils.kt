@@ -29,6 +29,7 @@ import java.util.*
  * @date 2020/1/3 10:58
  */
 object ScreenShotUtils {
+
     fun showDialog(context: Context?, bitmap: Bitmap) {
         val builder = AlertDialog.Builder(context)
         val scrollView = NestedScrollView(context!!)

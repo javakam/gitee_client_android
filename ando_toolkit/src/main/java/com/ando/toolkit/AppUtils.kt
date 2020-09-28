@@ -20,20 +20,13 @@ object AppUtils {
     var isDebug = false
         private set
 
-    /**
-     * 初始化工具类
-     *
-     * @param context 上下文
-     */
     fun init(context: Application, isDebug: Boolean) {
         AppUtils.context = context
         AppUtils.isDebug = isDebug
     }
 
     /**
-     * 获取ApplicationContext
-     *
-     * @return ApplicationContext
+     * 获取 ApplicationContext
      */
     @JvmStatic
     fun getContext(): Context = context ?: throw NullPointerException("u should init first")

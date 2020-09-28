@@ -1,5 +1,6 @@
 package com.ando.toolkit
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
@@ -13,37 +14,36 @@ import android.text.TextUtils
  * **Attentions**
  *  * You should add **android.permission.ACCESS_NETWORK_STATE** in manifest, to get network status.
  *
- *
  * @author [Trinea](http://www.trinea.cn) 2014-11-03
  */
 object NetUtils {
-    const val NETWORK_TYPE_WIFI = "wifi"
-    const val NETWORK_TYPE_3G = "eg"
-    const val NETWORK_TYPE_2G = "2g"
-    const val NETWORK_TYPE_WAP = "wap"
-    const val NETWORK_TYPE_UNKNOWN = "unknown"
-    const val NETWORK_TYPE_DISCONNECT = "disconnect"
+
+    private const val NETWORK_TYPE_WIFI = "wifi"
+    private const val NETWORK_TYPE_3G = "eg"
+    private const val NETWORK_TYPE_2G = "2g"
+    private const val NETWORK_TYPE_WAP = "wap"
+    private const val NETWORK_TYPE_UNKNOWN = "unknown"
+    private const val NETWORK_TYPE_DISCONNECT = "disconnect"
 
     /**
      * Get network type
      */
+    @SuppressLint("MissingPermission")
     fun getNetworkType(context: Context): Int {
-        val connectivityManager = context
-            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo = connectivityManager?.activeNetworkInfo
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = cm.activeNetworkInfo
         return networkInfo?.type ?: -1
     }
 
     /**
      * Get network type name
      */
+    @SuppressLint("MissingPermission")
     fun getNetworkTypeName(context: Context): String {
-        val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         var networkInfo: NetworkInfo
         var type = NETWORK_TYPE_DISCONNECT
-        if (manager == null || manager.activeNetworkInfo.also { networkInfo = it!! } == null) {
-            return type
-        }
+        if (cm.activeNetworkInfo.also { networkInfo = it!! } == null) return type
         if (networkInfo.isConnected) {
             val typeName = networkInfo.typeName
             type = if ("WIFI".equals(typeName, ignoreCase = true)) {
@@ -61,11 +61,10 @@ object NetUtils {
     /**
      * Whether is fast mobile network
      */
+    @SuppressLint("MissingPermission")
     private fun isFastMobileNetwork(context: Context): Boolean {
-        val telephonyManager =
-            context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-                ?: return false
-        return when (telephonyManager.networkType) {
+        val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        return when (tm.networkType) {
             TelephonyManager.NETWORK_TYPE_EVDO_0, TelephonyManager.NETWORK_TYPE_EVDO_A, TelephonyManager.NETWORK_TYPE_HSDPA, TelephonyManager.NETWORK_TYPE_HSPA, TelephonyManager.NETWORK_TYPE_HSUPA, TelephonyManager.NETWORK_TYPE_UMTS, TelephonyManager.NETWORK_TYPE_EHRPD, TelephonyManager.NETWORK_TYPE_EVDO_B, TelephonyManager.NETWORK_TYPE_HSPAP, TelephonyManager.NETWORK_TYPE_LTE -> true
             TelephonyManager.NETWORK_TYPE_1xRTT, TelephonyManager.NETWORK_TYPE_CDMA, TelephonyManager.NETWORK_TYPE_EDGE, TelephonyManager.NETWORK_TYPE_GPRS, TelephonyManager.NETWORK_TYPE_IDEN, TelephonyManager.NETWORK_TYPE_UNKNOWN -> false
             else -> false
@@ -76,6 +75,7 @@ object NetUtils {
      * 网络是否可用
      * @param context
      */
+    @SuppressLint("MissingPermission")
     fun isNetworkAvailable(context: Context): Boolean {
         try {
             val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -90,12 +90,11 @@ object NetUtils {
     /**
      * 判断MOBILE网络是否可用
      */
+    @SuppressLint("MissingPermission")
     fun isMobileConnected(context: Context?): Boolean {
         if (context != null) {
-            val mConnectivityManager = context
-                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val mMobileNetworkInfo = mConnectivityManager
-                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val mMobileNetworkInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
             if (mMobileNetworkInfo != null && mMobileNetworkInfo.isAvailable) {
                 return mMobileNetworkInfo.isConnected
             }
@@ -106,12 +105,11 @@ object NetUtils {
     /**
      * 判断WIFI网络是否可用
      */
+    @SuppressLint("MissingPermission")
     fun isWifiConnected(context: Context?): Boolean {
         if (context != null) {
-            val mConnectivityManager = context
-                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val mWiFiNetworkInfo = mConnectivityManager
-                .getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val mWiFiNetworkInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
             if (mWiFiNetworkInfo != null && mWiFiNetworkInfo.isAvailable) {
                 return mWiFiNetworkInfo.isConnected
             }

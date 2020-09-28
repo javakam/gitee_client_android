@@ -29,65 +29,45 @@ object TimeUtils {
     const val DATE_FORMAT5 = "yyyy年MM月dd日 HH:mm"
     const val DATE_FORMAT6 = "yyyy年M月dd日"
     const val DATE_FORMAT7 = "yyyyMMddHHmmss"
-    private fun sdf(@Format `in`: String): SimpleDateFormat {
-        var `in`: String? = `in`
-        if (isBlank(`in`)) {
-            `in` = "1970-01-01 00:00:00"
-        }
-        return SimpleDateFormat(`in`, Locale.getDefault())
+    private fun sdf(@Format format: String): SimpleDateFormat {
+        var time: String? = format
+        if (time.isNullOrBlank()) time = DATE_FORMAT
+        return SimpleDateFormat(time, Locale.getDefault())
     }
 
-    @JvmOverloads
-    fun dateToString(date: Date?, @Format `in`: String = DATE_FORMAT): String {
-        return sdf(`in`).format(date)
-    }
-
-    private fun isBlank(cs: CharSequence?): Boolean {
-        var strLen: Int
-        if (cs == null || cs.length.also { strLen = it } == 0) {
-            return true
-        }
-        for (i in 0 until strLen) {
-            if (!Character.isWhitespace(cs[i])) {
-                return false
-            }
-        }
-        return true
-    }
+    private fun dateToString(date: Date?, @Format format: String = DATE_FORMAT): String =
+        sdf(format).format(date ?: Date())
 
     /**
      * 获取今天的时间
      *
      * @return int[] 三个元素: 年,月,日
      */
-    val currentDateTime: IntArray
-        get() {
-            val now = Calendar.getInstance()
-            return intArrayOf(
-                now[Calendar.YEAR],
-                now[Calendar.MONTH] + 1,
-                now[Calendar.DAY_OF_MONTH]
-            )
-        }
+    fun getCurrentDateTime(): IntArray {
+        val now = Calendar.getInstance()
+        return intArrayOf(
+            now[Calendar.YEAR],
+            now[Calendar.MONTH] + 1,
+            now[Calendar.DAY_OF_MONTH]
+        )
+    }
 
     /**
      * 获取现在时间 yyyy-MM-dd HH:mm:ss
      */
-    val currentDateTimeDate: Date
-        get() {
-            val formatter = sdf(DATE_FORMAT)
-            return formatter.parse(formatter.format(Date()), ParsePosition(8))
-        }
+    fun getCurrentDateTimeDate(): Date {
+        val formatter = sdf(DATE_FORMAT)
+        return formatter.parse(formatter.format(Date()), ParsePosition(8))
+    }
 
     /**
      * 获取现在星期几
      */
-    val currentWeek: Int
-        get() {
-            val calendar = Calendar.getInstance()
-            calendar.time = Date()
-            return calendar[Calendar.DAY_OF_WEEK] - 1
-        }
+    fun getCurrentWeek(): Int {
+        val calendar = Calendar.getInstance()
+        calendar.time = Date()
+        return calendar[Calendar.DAY_OF_WEEK] - 1
+    }
 
     /**
      * 把一个毫秒数转化成时间字符串。格式为小时/分/秒/毫秒（如：24903600 --> 06小时55分03秒600毫秒）。
@@ -108,40 +88,40 @@ object TimeUtils {
             s = if (isFormat) "00秒" else "0秒"
             mi = if (isFormat) "00毫秒" else "0毫秒"
         }
-        var temp = millis
-        val hper = 60 * 60 * 1000.toLong()
-        val mper = 60 * 1000.toLong()
+        var temp: Long = millis
+        val hper: Long = 60 * 60 * 1000.toLong()
+        val mper: Long = 60 * 1000.toLong()
         val sper: Long = 1000
         if (temp / hper > 0) {
             h = if (isFormat) {
-                if (temp / hper < 10) "0" + temp / hper else temp / hper.toString() + ""
+                if (temp / hper < 10) "0" + temp / hper else "${temp / hper}"
             } else {
-                temp / hper.toString() + ""
+                "${temp / hper}"
             }
             h += "小时"
         }
-        temp = temp % hper
+        temp %= hper
         if (temp / mper > 0) {
             m = if (isFormat) {
-                if (temp / mper < 10) "0" + temp / mper else temp / mper.toString() + ""
+                if (temp / mper < 10) "0" + temp / mper else "${temp / mper}"
             } else {
-                temp / mper.toString() + ""
+                "${temp / mper}"
             }
             m += "分"
         }
-        temp = temp % mper
+        temp %= mper
         if (temp / sper > 0) {
             s = if (isFormat) {
-                if (temp / sper < 10) "0" + temp / sper else temp / sper.toString() + ""
+                if (temp / sper < 10) "0" + temp / sper else "${temp / sper}"
             } else {
-                temp / sper.toString() + ""
+                "${temp / sper}"
             }
             s += "秒"
         }
-        temp = temp % sper
+        temp %= sper
         mi = temp.toString() + ""
         if (isFormat) {
-            if (temp < 100 && temp >= 10) {
+            if (temp in 10..99) {
                 mi = "0$temp"
             }
             if (temp < 10) {
@@ -160,7 +140,6 @@ object TimeUtils {
      * @param isFormat 时间数字是否要格式化，如果true：少位数前面补全；如果false：少位数前面不补全。
      * @return 返回时间字符串：小时/分/秒/毫秒的格式（如：24903600 --> 06小时55分03秒）。
      */
-    @JvmOverloads
     fun millisToStringMiddle(
         millis: Long,
         isWhole: Boolean,
@@ -183,27 +162,27 @@ object TimeUtils {
         val sper: Long = 1000
         if (temp / hper > 0) {
             h = if (isFormat) {
-                if (temp / hper < 10) "0" + temp / hper else temp / hper.toString() + ""
+                if (temp / hper < 10) "0" + temp / hper else "${temp / hper}"
             } else {
-                temp / hper.toString() + ""
+                "${temp / hper}"
             }
             h += hUnit
         }
-        temp = temp % hper
+        temp %= hper
         if (temp / mper > 0) {
             m = if (isFormat) {
-                if (temp / mper < 10) "0" + temp / mper else temp / mper.toString() + ""
+                if (temp / mper < 10) "0" + temp / mper else "${temp / mper}"
             } else {
-                temp / mper.toString() + ""
+                "${temp / mper}"
             }
             m += mUnit
         }
-        temp = temp % mper
+        temp %= mper
         if (temp / sper > 0) {
             s = if (isFormat) {
-                if (temp / sper < 10) "0" + temp / sper else temp / sper.toString() + ""
+                if (temp / sper < 10) "0" + temp / sper else "${temp / sper}"
             } else {
-                temp / sper.toString() + ""
+                "${temp / sper}"
             }
             s += sUnit
         }
@@ -230,18 +209,18 @@ object TimeUtils {
         val mper = 60 * 1000.toLong()
         if (temp / hper > 0) {
             h = if (isFormat) {
-                if (temp / hper < 10) "0" + temp / hper else temp / hper.toString() + ""
+                if (temp / hper < 10) "0" + temp / hper else "${temp / hper}"
             } else {
-                temp / hper.toString() + ""
+                "${temp / hper}"
             }
             h += "小时"
         }
-        temp = temp % hper
+        temp %= hper
         if (temp / mper > 0) {
             m = if (isFormat) {
-                if (temp / mper < 10) "0" + temp / mper else temp / mper.toString() + ""
+                if (temp / mper < 10) "0" + temp / mper else "${temp / mper}"
             } else {
-                temp / mper.toString() + ""
+                "${temp / mper}"
             }
             m += "分钟"
         }
@@ -254,9 +233,7 @@ object TimeUtils {
      * @param millis 要转化的日期毫秒数。
      * @return 返回日期字符串（如："2013-02-19 11:48:31"）。
      */
-    fun millisToStringDate(millis: Long): String {
-        return millisToStringDate(millis, DATE_FORMAT)
-    }
+    fun millisToStringDate(millis: Long): String = millisToStringDate(millis, DATE_FORMAT)
 
     /**
      * 把日期毫秒转化为字符串。
@@ -266,9 +243,8 @@ object TimeUtils {
      * @return 返回日期字符串。
      */
     @SuppressLint("SimpleDateFormat")
-    fun millisToStringDate(millis: Long, pattern: String?): String {
-        return SimpleDateFormat(pattern).format(Date(millis))
-    }
+    fun millisToStringDate(millis: Long, pattern: String?): String =
+        SimpleDateFormat(pattern).format(Date(millis))
 
     /**
      * 把日期毫秒转化为字符串（文件名）。
@@ -286,22 +262,19 @@ object TimeUtils {
      * 把日期毫秒转化为字符串（文件名）。
      *
      * @param millis 要转化的日期毫秒数。
-     * @return 返回日期字符串（yyyy_MM_dd_HH_mm_ss）。
+     * @return 返回日期字符串（yyyy-MM-dd HH:mm:ss）。
      */
     fun millisToStringFilename(millis: Long): String {
-        val dateStr = millisToStringDate(millis, "yyyy-MM-dd HH:mm:ss")
+        val dateStr = millisToStringDate(millis, DATE_FORMAT)
         return dateStr.replace("[- :]".toRegex(), "_")
     }
 
     private const val oneHourMillis = 60 * 60 * 1000 // 一小时的毫秒数
-        .toLong()
     private const val oneDayMillis = 24 * oneHourMillis // 一天的毫秒数
     private const val oneYearMillis = 365 * oneDayMillis // 一年的毫秒数
     fun millisToLifeStringPHPZQRB(millis: String): String {
         val millisLong = if (StringUtils.isBlank(millis)) 0 else millis.toLong()
-        return if (millisLong <= 0) {
-            ""
-        } else millisToLifeStringPHPZQRB(millisLong)
+        return if (millisLong <= 0) "" else millisToLifeStringPHPZQRB(millisLong)
     }
 
     fun millisToLifeStringPHPZQRB(millisLong: Long): String {
@@ -312,8 +285,8 @@ object TimeUtils {
         millisLong *= 1000 //PHP时间要 * 1000
         val now = System.currentTimeMillis()
         val todayStart = string2Millis(millisToStringDate(now, "yyyy-MM-dd"), "yyyy-MM-dd")
-        if (now - millisLong <= oneHourMillis && now - millisLong > 0) { // 一小时内
-            val m = millisToStringShort(now - millisLong, false, false)
+        if (now - millisLong in 1..oneHourMillis) { // 一小时内
+            val m = millisToStringShort(now - millisLong, isWhole = false, isFormat = false)
             return if ("" == m) "1分钟内" else m + "前"
         }
         if (millisLong >= todayStart && millisLong <= oneDayMillis + todayStart) { // 大于今天开始开始值，小于今天开始值加一天（即今天结束值）
@@ -362,11 +335,8 @@ object TimeUtils {
      * 超过昨天再显示日期；
      * 超过1年再显示年。
      */
-    fun millisToLifeStringPHP(millis: Long): String {
-        return if (millis <= 0) {
-            ""
-        } else millisToLifeString(millis * 1000)
-    }
+    fun millisToLifeStringPHP(millis: Long): String =
+        if (millis <= 0) "" else millisToLifeString(millis * 1000)
 
     /**
      * 时间格式：
@@ -379,8 +349,8 @@ object TimeUtils {
     fun millisToLifeString(millis: Long): String {
         val now = System.currentTimeMillis()
         val todayStart = string2Millis(millisToStringDate(now, "yyyy-MM-dd"), "yyyy-MM-dd")
-        if (now - millis <= oneHourMillis && now - millis > 0) { // 一小时内
-            val m = millisToStringShort(now - millis, false, false)
+        if (now - millis in 1..oneHourMillis) { // 一小时内
+            val m = millisToStringShort(now - millis, isWhole = false, isFormat = false)
             return if ("" == m) "1分钟内" else m + "前"
         }
         if (millis >= todayStart && millis <= oneDayMillis + todayStart) { // 大于今天开始开始值，小于今天开始值加一天（即今天结束值）
@@ -501,8 +471,7 @@ object TimeUtils {
     /**
      * 获得今天开始的毫秒值
      */
-    val todayStartMillis: Long
-        get() = getOneDayStartMillis(System.currentTimeMillis())
+    fun getTodayStartMillis(): Long = getOneDayStartMillis(System.currentTimeMillis())
 
     private fun getOneDayStartMillis(millis: Long): Long {
         val dateStr = millisToStringDate(millis, "yyyy-MM-dd")
@@ -512,116 +481,102 @@ object TimeUtils {
     /**
      * 字符串转日期
      *
-     *
      * yyyy-MM-dd HH:mm:ss  -> Date 对象
      */
-    fun strToDate(str: String?): Date? {
-        var str = str
-        if (str == null) {
-            str = "1970-01-01 00:00:00"
+    fun strToDate(str: String?): Date? =
+        str?.let {
+            try {
+                val dateFormat = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
+                dateFormat.parse(str)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+                null
+            }
         }
-        try {
-            val dateFormat = SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss", Locale.getDefault()
-            )
-            return dateFormat.parse(str)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        return null
-    }
 
     /**
      * 获取现在时间
      *
      * @return返回短时间格式 yyyy-MM-dd
      */
-    val nowDateyyyyMMdd: Date
-        get() {
-            val currentTime = Date()
-            val formatter = SimpleDateFormat(DATE_FORMAT2)
-            val dateString = formatter.format(currentTime)
-            val pos = ParsePosition(8)
-            return formatter.parse(dateString, pos)
-        }
+    fun getNowDateyyyyMMdd(): Date {
+        val currentTime = Date()
+        val formatter = SimpleDateFormat(DATE_FORMAT2)
+        val dateString = formatter.format(currentTime)
+        val pos = ParsePosition(8)
+        return formatter.parse(dateString, pos)
+    }
 
     /**
      * 获取现在时间
      *
      * @return返回字符串格式 yyyy-MM-dd HH:mm:ss
      */
-    val dateSecondStr: String
-        get() = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())
+    fun getDateSecondStr(): String = SimpleDateFormat(DATE_FORMAT).format(Date())
 
     /**
      * 获取当前时间
      *
      * @return 返回格式 yyyy-MM-dd HH:mm
      */
-    val dateMinuteStr: String
-        get() = SimpleDateFormat("yyyy-MM-dd HH:mm").format(Date())
+    fun getDateMinuteStr(): String = SimpleDateFormat("yyyy-MM-dd HH:mm").format(Date())
 
     /**
      * 获取当前时间 -- 今天的年月日
      *
      * @return 返回格式 yyyy-MM-dd
      */
-    val stringDateyyyy_MM_dd: String
-        get() {
-            val currentTime = Date()
-            val formatter = SimpleDateFormat(DATE_FORMAT2)
-            return formatter.format(currentTime)
-        }
+    fun getStringDateyyyy_MM_dd(): String {
+        val currentTime = Date()
+        val formatter = SimpleDateFormat(DATE_FORMAT2)
+        return formatter.format(currentTime)
+    }
 
     /**
      * 获取当前时间
      *
      * @return 返回格式 yyyy.MM.dd
      */
-    val stringDateyyyyMMdd: String
-        get() {
-            val formatter = sdf(DATE_FORMAT3)
-            return formatter.format(Date())
-        }
+    fun getStringDateyyyyMMdd(): String {
+        val formatter = sdf(DATE_FORMAT3)
+        return formatter.format(Date())
+    }
 
     /**
      * 获取前月的第一天
      *
      * @return yyyy.MM.dd
      */
-    val firstDayOfThisMonth: String
-        get() {
-            val cale = Calendar.getInstance()
-            cale.add(Calendar.MONTH, 0)
-            cale[Calendar.DAY_OF_MONTH] = 1
-            return sdf(DATE_FORMAT3).format(cale.time)
-        }
+    fun getFirstDayOfThisMonth(): String {
+        val cale = Calendar.getInstance()
+        cale.add(Calendar.MONTH, 0)
+        cale[Calendar.DAY_OF_MONTH] = 1
+        return sdf(DATE_FORMAT3).format(cale.time)
+    }
 
     /**
      * 获取前月的最后一天
      *
      * @return yyyy.MM.dd
      */
-    val lastDayOfThisMonth: String
-        get() {
-            val cale = Calendar.getInstance()
-            cale.add(Calendar.MONTH, 1)
-            cale[Calendar.DAY_OF_MONTH] = 0
-            return sdf(DATE_FORMAT3).format(cale.time)
-        }//设置为1号,当前日期既为本年第一天
+    fun getLastDayOfThisMonth(): String {
+        val cale = Calendar.getInstance()
+        cale.add(Calendar.MONTH, 1)
+        cale[Calendar.DAY_OF_MONTH] = 0
+        return sdf(DATE_FORMAT3).format(cale.time)
+    }
 
     /**
      * 获取今年第一天日期
      *
      * @return String 日期格式：今年第一天 2018-01-01
      */
-    val currYearFirst: String
-        get() {
-            val c = Calendar.getInstance()
-            c.add(Calendar.YEAR, 0)
-            c[Calendar.DAY_OF_YEAR] = 1 //设置为1号,当前日期既为本年第一天
-            return dateToString(c.time)
-        }
+    fun getCurrYearFirst(): String {
+        val c = Calendar.getInstance()
+        c.add(Calendar.YEAR, 0)
+        c[Calendar.DAY_OF_YEAR] = 1 //设置为1号,当前日期既为本年第一天
+        return dateToString(c.time)
+    }
 
     /**
      * 获取某年第一天日期
@@ -689,14 +644,8 @@ object TimeUtils {
         try {
             val date1 = dateFormat.parse(setDate)
             val date2 = dateFormat.parse(nowDate)
-            if (date1 == null || date2 == null) {
-                return false
-            }
-            return if (date1.time <= date2.time) {
-                true
-            } else {
-                false
-            }
+            if (date1 == null || date2 == null) return false
+            return date1.time <= date2.time
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -718,11 +667,7 @@ object TimeUtils {
             if (date1 == null || date2 == null) {
                 return false
             }
-            return if (date1.time <= date2.time) {
-                true
-            } else {
-                false
-            }
+            return date1.time <= date2.time
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -737,9 +682,7 @@ object TimeUtils {
      * @return true setDate <= nowDate and default
      */
     fun compared2(setDate: Date, nowDate: Date): Boolean {
-        return if (setDate.time <= nowDate.time) {
-            true
-        } else false
+        return setDate.time <= nowDate.time
     }
 
     /**
@@ -748,9 +691,9 @@ object TimeUtils {
      * @param in 格式为 2014-09-30 09:50
      * @return 返回格式为 1345185923140
      */
-    fun dateToLong(@Format `in`: String): Long {
+    fun dateToLong(@Format format: String): Long {
         try {
-            val date = sdf(`in`).parse(`in`) ?: return 0
+            val date = sdf(format).parse(format) ?: return 0
             val cal = Calendar.getInstance()
             cal.time = date
             return cal.timeInMillis
@@ -766,7 +709,6 @@ object TimeUtils {
      * @param millis 格式为1345185923140L
      * @return 返回格式为 年-月-日 时：分：秒
      */
-    @JvmOverloads
     fun longToDate(millis: Long, @Format template: String = DATE_FORMAT): String {
         val gc = Calendar.getInstance()
         gc.time = Date(millis)
@@ -793,9 +735,7 @@ object TimeUtils {
                 .append(":")
                 .append(str[4])
             sb.toString()
-        } else {
-            ""
-        }
+        } else ""
     }
 
     /**
@@ -804,8 +744,8 @@ object TimeUtils {
      * @param dateTime
      * @return
      */
-    fun transTime2(dateTime: String): String {
-        return if (!TextUtils.isEmpty(dateTime)) {
+    fun transTime2(dateTime: String): String =
+        if (!TextUtils.isEmpty(dateTime)) {
             val str = dateTime.split("-").toTypedArray()
             val sb = StringBuilder()
             sb.append(str[0])
@@ -818,10 +758,7 @@ object TimeUtils {
                 .append(":")
                 .append(str[4])
             sb.toString()
-        } else {
-            ""
-        }
-    }
+        } else ""
 
     /**
      * 将2015-10-18-16-47-30格式时间转换为 2015-10-18
@@ -839,9 +776,7 @@ object TimeUtils {
                 .append("-")
                 .append(str[2])
             sb.toString()
-        } else {
-            ""
-        }
+        } else ""
     }
 
     /**
@@ -853,9 +788,7 @@ object TimeUtils {
     fun transTime4(dateTime: String): String {
         return if (!TextUtils.isEmpty(dateTime)) {
             dateTime.replace("-", ".")
-        } else {
-            ""
-        }
+        } else ""
     }
 
     /**
@@ -868,9 +801,7 @@ object TimeUtils {
         return if (!TextUtils.isEmpty(dateTime)) {
             val newTime = dateTime.substring(0, 10)
             newTime.replace("-", ".")
-        } else {
-            ""
-        }
+        } else ""
     }
 
     /**
@@ -906,16 +837,10 @@ object TimeUtils {
     }
 
     @StringDef(
-        DATE_FORMAT,
-        DATE_FORMAT1,
-        DATE_FORMAT2,
-        DATE_FORMAT3,
-        DATE_FORMAT4,
-        DATE_FORMAT5,
-        DATE_FORMAT6
+        DATE_FORMAT, DATE_FORMAT1, DATE_FORMAT2,
+        DATE_FORMAT3, DATE_FORMAT4, DATE_FORMAT5, DATE_FORMAT6
     )
-    @Retention(
-        RetentionPolicy.SOURCE
-    )
+
+    @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
     internal annotation class Format
 }

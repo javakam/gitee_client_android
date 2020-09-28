@@ -22,7 +22,6 @@ import jp.wasabeef.glide.transformations.BlurTransformation
 /**
  * Title: GlideUtils
  *
- *
  * Description: 图片加载
  * <pre>
  * 从v3迁移到v4 :  https://muyangmin.github.io/glide-docs-cn/doc/migrating.html
@@ -31,36 +30,31 @@ import jp.wasabeef.glide.transformations.BlurTransformation
  * 禁用内存缓存功能
  * diskCacheStrategy()方法基本上就是Glide硬盘缓存功能的一切，它可以接收五种参数：
  *
- *
  * DiskCacheStrategy.NONE： 表示不缓存任何内容。
  * DiskCacheStrategy.DATA： 表示只缓存原始图片。
  * DiskCacheStrategy.RESOURCE： 表示只缓存转换过后的图片。
  * DiskCacheStrategy.ALL ： 表示既缓存原始图片，也缓存转换过后的图片。
  * DiskCacheStrategy.AUTOMATIC： 表示让Glide根据图片资源智能地选择使用哪一种缓存策略（默认选项）
  *
- *
  * 功能包括加载图片，圆形图片，圆角图片，指定圆角图片，模糊图片，灰度图片等等
  * 目前只加了这几个常用功能，其他请参考glide-transformations
  * https://github.com/wasabeef/glide-transformations
- *
- *
- *
  *
  * @author javakam
  * @date 2018/10/19  14:46
  */
 object GlideUtils {
+
     private const val INVALID = -2
-    fun load(activity: Activity, imageView: ImageView, url: String?, resId: Int) {
+
+    fun load(activity: Activity, imageView: ImageView, url: String?, resId: Int) =
         load(activity, imageView, url, resId, resId, INVALID, INVALID, false, null)
-    }
 
     fun load(
         activity: Activity, imageView: ImageView, url: String?,
         @DrawableRes placeholder: Int, @DimenRes size: Int
-    ) {
+    ) =
         load(activity, imageView, url, placeholder, placeholder, size, size, false, null)
-    }
 
     fun load(
         activity: Activity,
@@ -95,7 +89,7 @@ object GlideUtils {
             target = object : CustomTarget<Drawable?>() {
                 override fun onResourceReady(
                     resource: Drawable,
-                    transition: Transition<in Drawable>?
+                    transition: Transition<in Drawable?>?
                 ) {
                     if (!activity.isDestroyed) {
                         imageView.setImageDrawable(resource)
@@ -125,16 +119,14 @@ object GlideUtils {
         @DrawableRes errorRe: Int,
         blur: Int
     ) {
-        if (!checkActivity(context)) {
-            return
-        }
+        if (!checkActivity(context) || imageView == null) return
         val options = RequestOptions()
             .centerCrop()
             .placeholder(placeholderRes)
             .transform(BlurTransformation(context, blur))
             .error(errorRe) //.priority(Priority.HIGH)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-        Glide.with(context!!).load(url).apply(options).into(imageView!!)
+        Glide.with(context!!).load(url).apply(options).into(imageView)
     }
 
     /**
@@ -147,16 +139,14 @@ object GlideUtils {
         @DrawableRes placeholderRes: Int,
         @DrawableRes errorRes: Int
     ) {
-        if (!checkActivity(context)) {
-            return
-        }
+        if (!checkActivity(context) || imageView == null) return
         val options = RequestOptions()
             .centerCrop()
             .circleCrop() //设置圆形
             .placeholder(placeholderRes)
             .error(errorRes) //.priority(Priority.HIGH)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-        Glide.with(context!!).load(url).apply(options).into(imageView!!)
+        Glide.with(context!!).load(url).apply(options).into(imageView)
     }
 
     /**
@@ -172,13 +162,11 @@ object GlideUtils {
     private fun loadGif(
         context: Context,
         url: String,
-        imageView: ImageView,
+        imageView: ImageView?,
         @DrawableRes placeholderRes: Int,
         @DrawableRes errorRes: Int
     ) {
-        if (!checkActivity(context)) {
-            return
-        }
+        if (!checkActivity(context) || imageView == null) return
         val options = RequestOptions()
             .placeholder(placeholderRes)
             .error(errorRes)
@@ -209,9 +197,7 @@ object GlideUtils {
     }
 
     private fun checkActivity(context: Context?): Boolean {
-        if (context == null) {
-            return false
-        }
+        if (context == null) return false
 
         //Fixed java.lang.IllegalArgumentException: You cannot start a load for a destroyed activity
         var activity: Activity? = null

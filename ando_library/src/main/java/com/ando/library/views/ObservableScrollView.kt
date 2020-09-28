@@ -6,8 +6,18 @@ import android.widget.ScrollView
 
 /**
  * <pre>
- * <com.ando.base.views.ObservableScrollView android:id="@+id/observableScrollView" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/white" android:descendantFocusability="blocksDescendants" android:fillViewport="true" android:overScrollMode="never" android:paddingBottom="@dimen/dp_40" android:scrollbars="vertical">
-</com.ando.base.views.ObservableScrollView></pre> *
+ * <com.ando.base.views.ObservableScrollView
+ *      android:id="@+id/observableScrollView"
+ *      android:layout_width="match_parent"
+ *      android:layout_height="match_parent"
+ *      android:background="@color/white"
+ *      android:descendantFocusability="blocksDescendants"
+ *      android:fillViewport="true"
+ *      android:overScrollMode="never"
+ *      android:paddingBottom="@dimen/dp_40"
+ *      android:scrollbars="vertical">
+ * </com.ando.base.views.ObservableScrollView>
+ * </pre>
  */
 class ObservableScrollView : ScrollView {
     interface ScrollViewListener {
@@ -16,14 +26,13 @@ class ObservableScrollView : ScrollView {
 
     private var scrollViewListener: ScrollViewListener? = null
 
-    constructor(context: Context?) : super(context) {}
-    constructor(
-        context: Context?, attrs: AttributeSet?,
-        defStyle: Int
-    ) : super(context, attrs, defStyle) {
-    }
-
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {}
+    constructor(context: Context?) : super(context)
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(
+        context,
+        attrs,
+        defStyle
+    )
 
     fun setScrollViewListener(scrollViewListener: ScrollViewListener?) {
         this.scrollViewListener = scrollViewListener

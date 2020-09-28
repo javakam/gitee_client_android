@@ -43,7 +43,7 @@ object ThreadProvider {
     private const val TAG = "ThreadProvider"
 
     //自定义线程池
-    val CUSTOM_THREAD_POOL_EXECUTOR: Executor? = null
+    var CUSTOM_THREAD_POOL_EXECUTOR: Executor? = null
 
     //Java虚拟机可用的处理器数量 -- 即 CPU核❤数
     val CPU_COUNT = Runtime.getRuntime().availableProcessors()
@@ -58,7 +58,7 @@ object ThreadProvider {
 
     //非核心线程闲置时的超时时长，超过这个时长，非核心线程就会被回收。
     //当 allowCoreThreadTimeOut 属性为 true 时，keepAliveTime 同样作用于核心线程。  单位:秒
-    private const val KEEP_ALIVE_SECONDS = 20
+    private const val KEEP_ALIVE_SECONDS: Long = 20
 
     //线程池中的任务队列。
     //通过 线程池 的 execute 方法提交的 Runnable 对象会存储在里面。
@@ -76,28 +76,29 @@ object ThreadProvider {
         }
     }
 
-    fun exec(runnable: Runnable?) {
-        CUSTOM_THREAD_POOL_EXECUTOR!!.execute(runnable)
-    }
+    fun exec(runnable: Runnable?) = CUSTOM_THREAD_POOL_EXECUTOR?.execute(runnable)
 
     init {
         //征服手持机 Android6.0: CPU核心数 : 8
-        L.d(TAG, "CPU_COUNT : " + CPU_COUNT)
+        L.d(TAG, "CPU_COUNT : $CPU_COUNT")
         //征服手持机 Android6.0: 自定义线程池的配置：CORE_POOL_SIZE: 4  MAXIMUM_POOL_SIZE: 17  KEEP_ALIVE_SECONDS: 60
         L.d(
             TAG,
-            "自定义线程池的配置：" + "CORE_POOL_SIZE: " + CORE_POOL_SIZE + "  MAXIMUM_POOL_SIZE: " + MAXIMUM_POOL_SIZE
+            "自定义线程池的配置：" + "CORE_POOL_SIZE: " + CORE_POOL_SIZE
+                    + "  MAXIMUM_POOL_SIZE: " + MAXIMUM_POOL_SIZE
                     + "  KEEP_ALIVE_SECONDS: " + KEEP_ALIVE_SECONDS
         )
+
         val threadPoolExecutor: ThreadPoolExecutor = ThreadPoolExecutor(
             CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE_SECONDS,
-            TimeUnit.SECONDS,  //指定 keepAliveTime 的时间单位
+            TimeUnit.SECONDS,
             sPoolWorkQueue, threadFactory
         )
-        com.ando.library.thread.threadPoolExecutor.allowCoreThreadTimeOut(true)
-        CUSTOM_THREAD_POOL_EXECUTOR = com.ando.library.thread.threadPoolExecutor
+        threadPoolExecutor.allowCoreThreadTimeOut(true)
+        CUSTOM_THREAD_POOL_EXECUTOR = threadPoolExecutor
+
         //或者简单点的线程池
-//        Executor exec = new ThreadPoolExecutor(15, 200, 10,
-//                TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
+//      Executor exec = new ThreadPoolExecutor(15, 200, 10,
+//          TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
     }
 }

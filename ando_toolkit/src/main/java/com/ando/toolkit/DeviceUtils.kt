@@ -23,12 +23,13 @@ import java.util.*
  * DeviceUtils.getAppName(this)        证券日报
  * DeviceUtils.getVersionName(this)    1.0.6
  * DeviceUtils.getVersionCode(this)    100
-</pre> *
+ * </pre>
  *
  * @author javakam
  * @date 2020-02-27
  */
 object DeviceUtils {
+
     /**
      * 获取版本号  123
      */
@@ -132,9 +133,7 @@ object DeviceUtils {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         @SuppressLint("MissingPermission") val info = connectivityManager.activeNetworkInfo
-        return if (info != null && info.type == ConnectivityManager.TYPE_WIFI) {
-            true
-        } else false
+        return info != null && info.type == ConnectivityManager.TYPE_WIFI
     }
     /////////////////////////////////获取MAC地址//////////////////////////////////
     /**
@@ -145,9 +144,9 @@ object DeviceUtils {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             mac = getMacDefault(context)
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            mac = macAddress
+            mac = getMacAddress()
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            mac = macFromHardware
+            mac = getMacFromHardware()
         }
         return mac
     }
@@ -179,62 +178,60 @@ object DeviceUtils {
             mac = mac.toUpperCase(Locale.ENGLISH)
         }
         return mac
-    }// 赋予默认值//去空格
+    }
 
     /**
      * Android 6.0-Android 7.0 获取mac地址
      */
-    val macAddress: String?
-        get() {
-            var macSerial: String? = null
-            var str = ""
-            try {
-                val pp = Runtime.getRuntime().exec("cat/sys/class/net/wlan0/address")
-                val ir = InputStreamReader(pp.inputStream)
-                val input = LineNumberReader(ir)
-                while (null != str) {
-                    str = input.readLine()
-                    if (str != null) {
-                        macSerial = str.trim { it <= ' ' } //去空格
-                        break
-                    }
+    fun getMacAddress(): String? {
+        var macSerial: String? = null
+        var str = ""
+        try {
+            val pp = Runtime.getRuntime().exec("cat/sys/class/net/wlan0/address")
+            val ir = InputStreamReader(pp.inputStream)
+            val input = LineNumberReader(ir)
+            while (str.isBlank()) {
+                str = input.readLine()
+                if (str != null) {
+                    macSerial = str.trim { it <= ' ' } //去空格
+                    break
                 }
-            } catch (ex: IOException) {
-                // 赋予默认值
-                ex.printStackTrace()
             }
-            return macSerial
+        } catch (ex: IOException) {
+            // 赋予默认值
+            ex.printStackTrace()
         }
+        return macSerial
+    }
 
     /**
      * Android 7.0之后获取Mac地址
      * 遍历循环所有的网络接口，找到接口是 wlan0
      * 必须的权限 <uses-permission android:name="android.permission.INTERNET"></uses-permission>
      */
-    val macFromHardware: String
-        get() {
-            try {
-                val all = NetworkInterface.getNetworkInterfaces()
-                while (all.hasMoreElements()) {
-                    val nif = all.nextElement()
-                    if (!nif.name.equals("wlan0", ignoreCase = true)) {
-                        continue
-                    }
-                    val macBytes = nif.hardwareAddress ?: return ""
-                    val res1 = StringBuilder()
-                    for (b in macBytes) {
-                        res1.append(String.format("%02X:", b))
-                    }
-                    if (!TextUtils.isEmpty(res1)) {
-                        res1.deleteCharAt(res1.length - 1)
-                    }
-                    return res1.toString()
+    fun getMacFromHardware(): String {
+        try {
+            val all = NetworkInterface.getNetworkInterfaces()
+            while (all.hasMoreElements()) {
+                val nif = all.nextElement()
+                if (!nif.name.equals("wlan0", ignoreCase = true)) {
+                    continue
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
+                val macBytes = nif.hardwareAddress ?: return ""
+                val res1 = StringBuilder()
+                for (b in macBytes) {
+                    res1.append(String.format("%02X:", b))
+                }
+                if (!TextUtils.isEmpty(res1)) {
+                    res1.deleteCharAt(res1.length - 1)
+                }
+                return res1.toString()
             }
-            return ""
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+        return ""
+    }
 
     /**
      * 获取手机相对分辨率
@@ -244,28 +241,25 @@ object DeviceUtils {
      */
     fun getScreenRelatedInformation(context: Context): String {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        if (windowManager != null) {
-            val outMetrics = DisplayMetrics()
-            windowManager.defaultDisplay.getMetrics(outMetrics)
-            val widthPixels = outMetrics.widthPixels
-            val heightPixels = outMetrics.heightPixels
-            val densityDpi = outMetrics.densityDpi
-            val density = outMetrics.density
-            val scaledDensity = outMetrics.scaledDensity
-            //可用显示大小的绝对宽度（以像素为单位）。
-            //屏幕密度表示为每英寸点数。
-            //显示器的逻辑密度。
-            //显示屏上显示的字体缩放系数。
-            L.d(
-                """
-    widthPixels = $widthPixels,heightPixels = $heightPixels
-    ,densityDpi = $densityDpi
-    ,density = $density,scaledDensity = $scaledDensity
-    """.trimIndent()
-            )
-            return widthPixels.toString() + "x" + heightPixels
-        }
-        return ""
+        val outMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(outMetrics)
+        val widthPixels = outMetrics.widthPixels
+        val heightPixels = outMetrics.heightPixels
+        val densityDpi = outMetrics.densityDpi
+        val density = outMetrics.density
+        val scaledDensity = outMetrics.scaledDensity
+        //可用显示大小的绝对宽度（以像素为单位）。
+        //屏幕密度表示为每英寸点数。
+        //显示器的逻辑密度。
+        //显示屏上显示的字体缩放系数。
+        L.d(
+            """
+                widthPixels = $widthPixels,heightPixels = $heightPixels
+                ,densityDpi = $densityDpi
+                ,density = $density,scaledDensity = $scaledDensity
+            """.trimIndent()
+        )
+        return widthPixels.toString() + "x" + heightPixels
     }
 
     /**
@@ -276,58 +270,50 @@ object DeviceUtils {
      */
     fun getRealScreenRelatedInformation(context: Context): String {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        if (windowManager != null) {
-            val outMetrics = DisplayMetrics()
-            windowManager.defaultDisplay.getRealMetrics(outMetrics)
-            val widthPixels = outMetrics.widthPixels
-            val heightPixels = outMetrics.heightPixels
-            val densityDpi = outMetrics.densityDpi
-            val density = outMetrics.density
-            val scaledDensity = outMetrics.scaledDensity
-            //可用显示大小的绝对宽度（以像素为单位）。
-            //可用显示大小的绝对高度（以像素为单位）。
-            //屏幕密度表示为每英寸点数。
-            //显示器的逻辑密度。
-            //显示屏上显示的字体缩放系数。
-            L.d(
-                """
-    widthPixels = $widthPixels,heightPixels = $heightPixels
-    ,densityDpi = $densityDpi
-    ,density = $density,scaledDensity = $scaledDensity
-    """.trimIndent()
-            )
-            return widthPixels.toString() + "x" + heightPixels
-        }
-        return ""
+        val outMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getRealMetrics(outMetrics)
+        val widthPixels = outMetrics.widthPixels
+        val heightPixels = outMetrics.heightPixels
+        val densityDpi = outMetrics.densityDpi
+        val density = outMetrics.density
+        val scaledDensity = outMetrics.scaledDensity
+        //可用显示大小的绝对宽度（以像素为单位）。
+        //可用显示大小的绝对高度（以像素为单位）。
+        //屏幕密度表示为每英寸点数。
+        //显示器的逻辑密度。
+        //显示屏上显示的字体缩放系数。
+        L.d(
+            """
+                widthPixels = $widthPixels,heightPixels = $heightPixels
+                ,densityDpi = $densityDpi
+                ,density = $density,scaledDensity = $scaledDensity
+            """.trimIndent()
+        )
+        return widthPixels.toString() + "x" + heightPixels
     }
 
     /**
      * 获取当前手机系统版本号
      */
-    val systemVersion: String
-        get() = Build.VERSION.RELEASE
+    fun getSystemVersion(): String? = Build.VERSION.RELEASE
 
     /**
      * 获取手机型号
      */
-    val systemModel: String
-        get() = Build.MODEL
+    fun getSystemModel(): String? = Build.MODEL
 
     /**
      * 获取手机厂商
      */
-    val deviceBrand: String
-        get() = Build.BRAND
+    fun getDeviceBrand(): String? = Build.BRAND
 
     /**
      * 获取手机设备名
      */
-    val systemDevice: String
-        get() = Build.DEVICE
+    fun getSystemDevice(): String? = Build.DEVICE
 
     /**
      * 获取 CPU ABI
      */
-    val cpuABIS: Array<String>
-        get() = Build.SUPPORTED_ABIS
+    fun getCpuABIS(): Array<String?>? = Build.SUPPORTED_ABIS
 }

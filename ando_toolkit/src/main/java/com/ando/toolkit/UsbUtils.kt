@@ -9,23 +9,38 @@ import android.text.TextUtils
 import java.io.File
 import java.util.*
 
-class UsbUtils<T> private constructor() //构造函数私有化
-{
+/*
+companion object {
+    private var usbUtils: UsbUtils? = null
+    fun getInstance(): UsbUtils {
+        if (usbUtils == null) {
+            synchronized(UsbUtils::class.java) {
+                if (usbUtils == null) {
+                    usbUtils = UsbUtils()
+                }
+            }
+        }
+        return usbUtils!!
+    }
+}
+ */
+object UsbUtils {
     /**
      * Android 2.3之后的系统
      * 获取外部存储列表
      */
-    fun getStocmtragePaths(cxt: Context): Array<String> {
+    fun getStoragePaths(cxt: Context): Array<String> {
         val pathsList: MutableList<String> = ArrayList()
         val storageManager = cxt.getSystemService(Context.STORAGE_SERVICE) as StorageManager
         try {
-            @SuppressLint("DiscouragedPrivateApi") val method =
-                StorageManager::class.java.getDeclaredMethod("getVolumePaths")
+            @SuppressLint("DiscouragedPrivateApi")
+            val method = StorageManager::class.java.getDeclaredMethod("getVolumePaths")
             method.isAccessible = true
             val result = method.invoke(storageManager)
-            if (result is Array<String>) {
+            if (result is Array<*>) {
                 var statFs: StatFs
-                for (path in result) {
+                for (r in result) {
+                    val path = r as String
                     if (!TextUtils.isEmpty(path) && File(path).exists()) {
                         statFs = StatFs(path)
                         if (statFs.blockCount * statFs.blockSize != 0) {
@@ -44,25 +59,4 @@ class UsbUtils<T> private constructor() //构造函数私有化
         return pathsList.toTypedArray()
     }
 
-    companion object {
-        /**
-         * 单利模式  双重检测
-         */
-        private var usbUtils: UsbUtils<*>? = null
-
-        // 解决指令重排序问题
-        val instance: UsbUtils<*>?
-            get() {
-                if (usbUtils == null) {
-                    synchronized(UsbUtils::class.java) {
-                        var temp = usbUtils // 解决指令重排序问题
-                        if (temp == null) {
-                            temp = UsbUtils<Any?>()
-                            usbUtils = temp
-                        }
-                    }
-                }
-                return usbUtils
-            }
-    }
 }

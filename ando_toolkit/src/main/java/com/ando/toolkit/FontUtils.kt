@@ -6,6 +6,7 @@ import android.os.Build
 import java.util.*
 
 object FontUtils {
+
     fun initFont(context: Context, fontAssetName: String?) {
         val regular = Typeface.createFromAsset(context.assets, fontAssetName)
         replaceFont("MONOSPACE", regular)
@@ -13,7 +14,7 @@ object FontUtils {
 
     private fun replaceFont(staticTypefaceFieldName: String, newTypeface: Typeface) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val newMap: MutableMap<String?, Typeface?> = HashMap<Any?, Any?>()
+            val newMap: MutableMap<String?, Typeface?> = HashMap()
             newMap[staticTypefaceFieldName] = newTypeface
             try {
                 val staticField = Typeface::class.java.getDeclaredField("sSystemFontMap")

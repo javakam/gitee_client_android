@@ -21,7 +21,7 @@ fun noNull(s: String?): String = if (s.isNullOrBlank()) "" else s
 
 fun setClipDate(text: String?) {
     val cm: ClipboardManager? =
-        GiteeApplication.instance.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager?
+        GiteeApplication.INSTANCE.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager?
     if (cm != null) {
         cm.setPrimaryClip(ClipData.newPlainText(null, text))//参数一：标签，可为空，参数二：要复制到剪贴板的文本
         if (cm.hasPrimaryClip()) {

@@ -16,12 +16,10 @@ import android.widget.LinearLayout
 /**
  * Title:WindowUtils
  *
- *
  * Description:Window窗体工具类
  *
- *
  * @author javakam
- * Date 2018/9/23 18:54
+ * @date 2018/9/23 18:54
  */
 object WindowUtils {
     /**
@@ -47,9 +45,7 @@ object WindowUtils {
                 Log.e(WindowUtils::class.java.simpleName, e.message!!)
             }
         }
-        if (drawable == null) {
-            return
-        }
+        if (drawable == null) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val rootView = activity.findViewById<View>(R.id.content) as FrameLayout
             val count = rootView.childCount
@@ -106,10 +102,8 @@ object WindowUtils {
     /**
      * 全屏显示
      */
-    fun hideStatusBar(window: Window) {
-        //全屏显示
-        val view = window.decorView
-        view.systemUiVisibility = (View.SYSTEM_UI_FLAG_LOW_PROFILE
+    fun hideStatusBar(window: Window?) {
+        window?.decorView?.systemUiVisibility = (View.SYSTEM_UI_FLAG_LOW_PROFILE
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY

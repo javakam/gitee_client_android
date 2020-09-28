@@ -27,7 +27,6 @@ import com.ando.toolkit.ext.ToastUtils
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
@@ -40,7 +39,6 @@ import java.util.concurrent.TimeUnit
  * @author javakam
  * @date 2019/3/17 13:17
  */
-@SuppressLint("SourceLockedOrientationActivity")
 abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
     /**
      * 系统DecorView的根View
@@ -51,6 +49,7 @@ abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
      * 是否退出App
      */
     private var isExit = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         initActivityStyle()
         super.onCreate(savedInstanceState)
@@ -115,7 +114,7 @@ abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
             val configuration = resources.configuration
             configuration.fontScale = 1.0f
             resources.updateConfiguration(configuration, resources.displayMetrics)
-            //            createConfigurationContext(configuration);
+            // createConfigurationContext(configuration);
         }
         return resources
     }
@@ -125,27 +124,15 @@ abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
         mView = null
     }
 
-    /**
-     * 获取String资源
-     *
-     * @param id
-     * @return
-     */
-    protected fun getStringArray(@ArrayRes id: Int): List<String> {
-        return Arrays.asList(*resources.getStringArray(id))
-    }
+    fun getStringArray(@ArrayRes id: Int): List<String> =
+        listOf(*resources.getStringArray(id))
 
-    /**
-     * 显示提示信息
-     *
-     * @param message
-     */
     fun showMessage(message: String?) {
         if (mView != null) {
             Snackbar.make(mView!!, message!!, Snackbar.LENGTH_SHORT).show()
             return
         }
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        shortToast(message)
     }
 
     /**
@@ -170,14 +157,11 @@ abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
         if (!isExit) {
             isExit = true // 准备退出
             shortToast(text)
-            //showMessage(getString(text));
-
             // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
             Flowable.timer(delay, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                .subscribe { aLong: Long? -> isExit = false }
+                .subscribe { isExit = false }
         } else {
             exit()
-
             //or 触发 Home 事件
 //            Intent backHome = new Intent(Intent.ACTION_MAIN);
 //            backHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -186,19 +170,11 @@ abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
         }
     }
 
-    fun shortToast(@StringRes text: Int) {
-        ToastUtils.shortToast(noNull(getString(text)))
-    }
+    fun shortToast(@StringRes text: Int) = ToastUtils.shortToast(noNull(getString(text)))
 
-    fun shortToast(text: String?) {
-        ToastUtils.shortToast(noNull(text))
-    }
+    fun shortToast(text: String?) = ToastUtils.shortToast(noNull(text))
 
-    fun longToast(@StringRes text: Int) {
-        ToastUtils.longToast(noNull(getString(text)))
-    }
+    fun longToast(@StringRes text: Int) = ToastUtils.longToast(noNull(getString(text)))
 
-    fun longToast(text: String?) {
-        ToastUtils.longToast(noNull(text))
-    }
+    fun longToast(text: String?) = ToastUtils.longToast(noNull(text))
 }

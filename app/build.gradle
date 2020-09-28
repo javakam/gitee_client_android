@@ -8,6 +8,16 @@ def config = rootProject.ext.android         //配置
 def version = rootProject.ext.version        //
 def library = rootProject.ext.dependencies   //依赖
 
+//************打包格式：getProductName()_版本号_渠道名_时间戳releaseTime()_构建类型.apk **************//
+//获取产品的名字
+static def getProductName() {
+    return "gitee"
+}
+//获取当前系统的时间
+static def releaseTime() {
+    return new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone("GMT+08:00"))
+}
+
 android {
     compileSdkVersion config.compileSdkVersion
     buildToolsVersion config.buildToolsVersion
@@ -23,13 +33,70 @@ android {
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        multiDexEnabled true
+        flavorDimensions "type"
+        ndk {
+            // 'armeabi', 'armeabi-v7a', 'arm64-v8a' , 'x86' , 'x86_64', 'mips','mips64'
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
+
     }
+
+/*    signingConfigs {
+        debug {
+//            storeFile file(keystoreProperties['storeFileDebug'])
+//            storePassword keystoreProperties['storePasswordDebug']
+//            keyAlias keystoreProperties['keyAliasDebug']
+//            keyPassword keystoreProperties['keyPasswordDebug']
+
+            keyAlias ''
+            keyPassword ''                    //密码
+            storeFile file('../keystore/stockdaily.jks')   //别名
+            storePassword ''                  //别名密码
+        }
+
+        release {
+            keyAlias ''
+            keyPassword ''                    //密码
+            storeFile file('../keystore/stockdaily.jks')   //别名
+            storePassword ''                  //别名密码
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }*/
 
     buildTypes {
         debug {}
         release {
-            minifyEnabled false
+            buildConfigField('String', 'ROOT_DIR', "\"gitee\"")
+            buildConfigField('boolean', 'BUGLY_LOG', 'false')
+            //debuggable false
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //signingConfig signingConfigs.release
+        }
+    }
+
+    productFlavors {
+        shop {
+            //manifestPlaceholders = [UMENG_CHANNEL_VALUE: "shop"]
+            applicationId "com.gitee.android"
+            dimension "type"
+            buildConfigField "Boolean", "IS_SKIP_LOGIN", "true"
+            buildConfigField "Boolean", "IS_GOOGLE_PLAY", "false"
+            buildConfigField "String", "APP", "\"gitee\""
+            buildConfigField "String", "URL_BASE", "\"http://www.gitee.com/\""
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            //应用名+版本号+渠道名+构建类型+时间戳${variant.flavorName}
+            def buildType = variant.getBuildType().getName()//release
+            def fileName = getProductName() + "_v${defaultConfig.versionName}_${defaultConfig.versionCode}_${variant.flavorName}_${releaseTime()}_${buildType}.apk"
+            outputFileName = fileName
         }
     }
 
@@ -60,18 +127,35 @@ android {
 
     packagingOptions {
         exclude 'META-INF/*.kotlin_module'
+
+        exclude 'META-INF/rxjava.properties'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
     }
 
 }
 
+greendao {
+    schemaVersion 1
+    daoPackage 'com.gitee.android.database.gen'
+    targetGenDir 'src/main/java'
+}
+
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
 
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:$version.lifecycle"
@@ -80,14 +164,42 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$version.lifecycle_save_state"
     implementation "androidx.lifecycle:lifecycle-common-java8:$version.lifecycle"
 
-    // eventbus
-    implementation "org.greenrobot:eventbus:$version.eventbus"
-    annotationProcessor "org.greenrobot:eventbus-annotation-processor:$version.eventbus"
-
-    // greendao
+    // GreenDao
     implementation 'org.greenrobot:greendao:3.3.0'
 
     implementation project(':ando_library')
 
+}
 
+
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            // Try to turn them all off automatically
+            options.compilerArgs << '-Xlint:none'
+            options.compilerArgs << '-nowarn' // same as '-Xlint:none'
+
+            // Turn them off manually
+            options.compilerArgs << '-Xlint:-auxiliaryclass'
+            options.compilerArgs << '-Xlint:-cast'
+            options.compilerArgs << '-Xlint:-classfile'
+            options.compilerArgs << '-Xlint:-deprecation'
+            options.compilerArgs << '-Xlint:-dep-ann'
+            options.compilerArgs << '-Xlint:-divzero'
+            options.compilerArgs << '-Xlint:-empty'
+            options.compilerArgs << '-Xlint:-fallthrough'
+            options.compilerArgs << '-Xlint:-finally'
+            options.compilerArgs << '-Xlint:-options'
+            options.compilerArgs << '-Xlint:-overloads'
+            options.compilerArgs << '-Xlint:-overrides'
+            options.compilerArgs << '-Xlint:-path'
+            options.compilerArgs << '-Xlint:-processing'
+            options.compilerArgs << '-Xlint:-rawtypes'
+            options.compilerArgs << '-Xlint:-serial'
+            options.compilerArgs << '-Xlint:-static'
+            options.compilerArgs << '-Xlint:-try'
+            options.compilerArgs << '-Xlint:-unchecked'
+            options.compilerArgs << '-Xlint:-varargs'
+        }
+    }
 }

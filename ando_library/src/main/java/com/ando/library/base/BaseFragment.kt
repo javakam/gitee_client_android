@@ -15,28 +15,27 @@ import com.ando.toolkit.ext.ToastUtils
 /**
  * Title:BaseFragment
  *
- *
  * Description:
- *
  *
  * @author javakam
  * @date 2019/3/17 13:24
  */
 abstract class BaseFragment : Fragment(), IBaseInterface {
+
     protected var activity: BaseActivity? = null
     protected var rootView: View? = null
 
     //
-    protected var isActivityCreated //Activity 是否已创建
-            = false
-    protected var isVisibleToUser //Fragment 是否对用户可见
-            = false
-    protected var isHidden //hidden
-            = false
+    @JvmField
+    protected var isActivityCreated = false//Activity 是否已创建
+    @JvmField
+    protected var isVisibleToUser = false //Fragment 是否对用户可见
+    @JvmField
+    protected var isHiddenToUser = false //hidden
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        activity = context as BaseActivity
+        activity = context as? BaseActivity
     }
 
     override fun onCreateView(
@@ -69,7 +68,7 @@ abstract class BaseFragment : Fragment(), IBaseInterface {
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        isHidden = hidden
+        isHiddenToUser = hidden
         //L.i("onHiddenChanged hidden ===> " + hidden);
     }
 
@@ -82,71 +81,60 @@ abstract class BaseFragment : Fragment(), IBaseInterface {
     /**
      * 通过Class跳转界面
      */
-    fun startActivityForResult(cls: Class<*>?, requestCode: Int) {
+    fun startActivityForResult(cls: Class<*>?, requestCode: Int) =
         startActivityForResult(cls, null, requestCode)
-    }
 
     /**
      * 含有Bundle通过Class跳转界面
      */
-    fun startActivityForResult(cls: Class<*>?, bundle: Bundle?, requestCode: Int) {
-        val intent = Intent()
-        intent.setClass(activity!!, cls!!)
-        if (bundle != null) {
-            intent.putExtras(bundle)
-        }
-        startActivityForResult(intent, requestCode)
-    }
-    /**
-     * 含有Bundle通过Class跳转界面
-     */
-    /**
-     * 通过Class跳转界面
-     */
-    @JvmOverloads
-    fun startActivity(cls: Class<*>?, bundle: Bundle? = null) {
-        if (getActivity() != null) {
-            val intent = Intent()
-            intent.setClass(activity!!, cls!!)
-            if (bundle != null) {
-                intent.putExtras(bundle)
+    fun startActivityForResult(cls: Class<*>?, bundle: Bundle?, requestCode: Int) =
+        activity?.let {
+            cls?.let { c ->
+                val intent = Intent()
+                intent.setClass(it, c)
+                if (bundle != null) {
+                    intent.putExtras(bundle)
+                }
+                startActivityForResult(intent, requestCode)
             }
-            startActivity(intent)
         }
-    }
 
-    fun shortToast(@StringRes text: Int) {
-        if (activity != null) {
-            activity!!.shortToast(text)
-        }
-    }
-
-    fun shortToast(text: String?) {
-        ToastUtils.shortToast(noNull(text))
-    }
-
-    fun longToast(@StringRes text: Int) {
-        ToastUtils.longToast(noNull(getString(text)))
-    }
-
-    fun longToast(text: String?) {
-        ToastUtils.longToast(noNull(text))
-    }
-
-    fun controlBackPress() {
-        //https://stackoverflow.com/questions/22552958/handling-back-press-when-using-fragments-in-android
-        view!!.isFocusableInTouchMode = true
-        view!!.requestFocus()
-        view!!.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                // handle back button
-                // Toast.makeText(activity, "handle back button", Toast.LENGTH_SHORT).show();
-                onBackPressed()
-                return@OnKeyListener true
+    fun startActivity(cls: Class<*>?, bundle: Bundle? = null) =
+        activity?.let {
+            cls?.let { c ->
+                val intent = Intent()
+                intent.setClass(it, c)
+                if (bundle != null) {
+                    intent.putExtras(bundle)
+                }
+                startActivity(intent)
             }
-            false
-        })
-    }
+        }
+
+    fun shortToast(@StringRes text: Int) = activity?.shortToast(text)
+
+    fun shortToast(text: String?) = activity?.shortToast(text)
+
+    fun longToast(@StringRes text: Int) = activity?.longToast(text)
+
+    fun longToast(text: String?) = activity?.longToast(text)
+
+    //https://stackoverflow.com/questions/22552958/handling-back-press-when-using-fragments-in-android
+    fun controlBackPress() =
+        view?.let { it ->
+            it.isFocusableInTouchMode = true
+            it.requestFocus()
+            it.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    // handle back button
+                    // Toast.makeText(activity, "handle back button", Toast.LENGTH_SHORT).show();
+                    onBackPressed()
+                    return@OnKeyListener true
+                }
+                false
+            })
+        }
 
     fun onBackPressed() {}
+
 }

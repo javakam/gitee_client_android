@@ -16,6 +16,7 @@ import java.lang.reflect.Method
  * Adapted from com.blankj.utilcode.util.ProcessUtils#getCurrentProcessName
  */
 object ProcessUtils {
+
     fun getCurrentProcessName(context: Context): String? {
         var name: String? = currentProcessNameByFile
         if (!TextUtils.isEmpty(name)) {
@@ -30,7 +31,7 @@ object ProcessUtils {
     }
 
     private val currentProcessNameByFile: String
-        private get() {
+        get() {
             var reader: BufferedReader? = null
             return try {
                 val file = File("/proc/" + Process.myPid() + "/" + "cmdline")

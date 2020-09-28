@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.res.Resources
 import android.os.Bundle
 import androidx.multidex.MultiDexApplication
+import com.ando.library.BuildConfig
 import com.ando.toolkit.ActivityCollector.add
 import com.ando.toolkit.ActivityCollector.finishAll
 import com.ando.toolkit.ActivityCollector.getAll
@@ -26,8 +27,7 @@ open class BaseApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-//        AppUtils.init(this, BuildConfig.DEBUG)
-        AppUtils.init(this, true)
+        AppUtils.init(this, BuildConfig.DEBUG)
 
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(

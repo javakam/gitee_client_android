@@ -74,6 +74,10 @@ dependencies {
     api "jp.wasabeef:glide-transformations:2.0.2"
     kapt "com.github.bumptech.glide:compiler:$version.glide"
 
+    // eventbus
+    api "org.greenrobot:eventbus:$version.eventbus"
+    annotationProcessor "org.greenrobot:eventbus-annotation-processor:$version.eventbus"
+
     //implementation 'com.ando:ando_toolkit:0.0.1'
     api project(':ando_toolkit')
 }

@@ -4,25 +4,27 @@ import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
+import kotlin.experimental.and
 
 /**
  * Title: MD5Utils
  *
- *
  * Description:
- *
  *
  * @author javakam
  * @date 2019/11/13  9:23
  */
 object MD5Utils {
-    fun getKey(deviceId: String?, key: String?, time: String?): String {
-        return md5Decode32(String.format(Locale.getDefault(), "%s%s%s", deviceId, key, time))
-    }
 
-    fun getKey(key: String?, time: String?): String {
-        return md5Decode32(String.format(Locale.getDefault(), "%s%s", key, time))
-    }
+    fun generateKey(vararg args: String?): String =
+        args.let {
+            val count: Int = args.size
+            val format = ""
+            for (i in 0..count) {
+                format.plus("%s")
+            }
+            md5Decode32(String.format(Locale.getDefault(), format, args))
+        }
 
     /**
      * 32位MD5加密
@@ -38,11 +40,11 @@ object MD5Utils {
         }
         //对生成的16字节数组进行补零操作
         val hex = StringBuilder(hash.size * 2)
-        for (b in hash) {
-            if (b and 0xFF < 0x10) {
+        for (b: Byte in hash) {
+            if (b and 0xFF.toByte() < 0x10) {
                 hex.append("0")
             }
-            hex.append(Integer.toHexString(b and 0xFF))
+            hex.append(Integer.toHexString((b and 0xFF.toByte()).toInt()))
         }
         return hex.toString()
     }
@@ -51,7 +53,5 @@ object MD5Utils {
      * 16位MD5加密
      * 实际是截取的32位加密结果的中间部分(8-24位)
      */
-    fun md5Decode16(content: String): String {
-        return md5Decode32(content).substring(8, 24)
-    }
+    fun md5Decode16(content: String): String = md5Decode32(content).substring(8, 24)
 }

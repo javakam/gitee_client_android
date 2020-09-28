@@ -29,7 +29,6 @@ object IoUtils {
 
     fun close(vararg c: Closeable?) {
         if (c.isNullOrEmpty()) return
-
         try {
             c.forEach { it?.close() }
         } catch (e: IOException) {

@@ -14,11 +14,12 @@ import android.widget.FrameLayout
  *
  * <pre>
  * WebView 部分情况下会显示异常 , 关闭硬件加速即可 :  mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-</pre> *
+ * </pre>
+ * @author javakam
+ * @date 2020-09-28 10:51:53
  */
-class GrayFrameLayout(context: Context?, attrs: AttributeSet?) : FrameLayout(
-    context!!, attrs
-) {
+class GrayFrameLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
+
     private val mPaint = Paint()
     override fun dispatchDraw(canvas: Canvas) {
         canvas.saveLayer(null, mPaint, Canvas.ALL_SAVE_FLAG)
@@ -37,7 +38,8 @@ class GrayFrameLayout(context: Context?, attrs: AttributeSet?) : FrameLayout(
         cm.setSaturation(0f)
         mPaint.colorFilter = ColorMatrixColorFilter(cm)
 
-        // java.lang.ClassCastException: android.view.ContextThemeWrapper cannot be cast to android.app.Activity
+        // java.lang.ClassCastException: android.view.ContextThemeWrapper cannot be cast
+        // to android.app.Activity
         if (context is Activity) {
             context.window.decorView.setLayerType(LAYER_TYPE_HARDWARE, mPaint)
         }

@@ -3,35 +3,30 @@ package com.ando.library.base
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
-abstract class BaseStatePagersAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(
-    fm!!, BEHAVIOR_SET_USER_VISIBLE_HINT
-) {
+//https://blog.csdn.net/c6E5UlI1N/article/details/90307961
+abstract class BaseStatePagersAdapter(fm: FragmentManager?) :
+    FragmentStatePagerAdapter(fm!!, BEHAVIOR_SET_USER_VISIBLE_HINT) {
+
     protected var mTitles: List<String>? = null
     protected var mFragments: List<BaseFragment>? = null
+
     fun setData(fragments: List<BaseFragment>?, titles: List<String>?) {
         this.mFragments = fragments
-        mTitles = titles
+        this.mTitles = titles
     }
 
     fun updateData(fragments: List<BaseFragment>?, titles: List<String>?) {
-        this.mFragments = fragments
-        mTitles = titles
+        setData(fragments, titles)
         notifyDataSetChanged()
     }
 
-    override fun getItem(i: Int): BaseFragment {
-        return mFragments!![i]
-    }
+    override fun getItem(i: Int): BaseFragment = mFragments?.get(i) as BaseFragment
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        return mTitles!![position]
-    }
+    override fun getPageTitle(position: Int): CharSequence? =
+        mTitles?.get(position) as CharSequence
 
-    override fun getCount(): Int {
-        return if (mTitles == null) 0 else mTitles!!.size
-    }
+    override fun getCount(): Int = mTitles?.size ?: 0
 
-    override fun getItemPosition(`object`: Any): Int {
-        return POSITION_NONE
-    }
+    override fun getItemPosition(`object`: Any): Int = POSITION_NONE
+
 }

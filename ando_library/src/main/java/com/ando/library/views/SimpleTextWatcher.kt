@@ -6,16 +6,13 @@ import android.text.TextWatcher
 /**
  * Title: SimpleTextWatcher
  *
- *
  * Description:
- *
- *
- * Simple implementation of the [TextWatcher] interface with stub
+ *      Simple implementation of the [TextWatcher] interface with stub
  * implementations of each method. Extend this if you do not intend to override
  * every method of [TextWatcher].
  *
- * Author javakam
- * Date 2018/11/2 9:54
+ * @author javakam
+ * @date 2018/11/2 9:54
  */
 class SimpleTextWatcher : TextWatcher {
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {

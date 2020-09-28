@@ -3,42 +3,36 @@ package com.ando.library.base
 /**
  * Title:BaseLazyFragment
  *
- *
  * Description:
- *
  *
  * @author javakam
  * @date 2019/3/17 13:24
  */
 abstract class BaseLazyFragment : BaseFragment(), IBaseLazyInterface {
-    protected var isDataInitiated //Fragment 是否已加载过数据
-            = false
+
+    @JvmField
+    protected var isDataInitiated = false//Fragment 是否已加载过数据
 
     /**
-     * After
      * <pre>
      * @Override
      * public void onActivityCreated(Bundle savedInstanceState) {
-     * super.onActivityCreated(savedInstanceState);
-     * initData() ;
+     *      super.onActivityCreated(savedInstanceState);
+     *      initData() ;
      * }
-    </pre> *
+     * </pre>
      * [com.ando.library.base.BaseFragment.onActivityCreated]
      */
     override fun initData() {
-        prepareFetchData()
+        prepareFetchData(false)
     }
 
     @Deprecated("Use {@link FragmentTransaction#setMaxLifecycle}")
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if (this.isVisibleToUser) {
-            prepareFetchData()
+            prepareFetchData(false)
         }
-    }
-
-    override fun prepareFetchData() {
-        prepareFetchData(false)
     }
 
     override fun prepareFetchData(forceUpdate: Boolean) {
@@ -50,15 +44,16 @@ abstract class BaseLazyFragment : BaseFragment(), IBaseLazyInterface {
             return
         }
 
-//        Logger.d("123","prepareFetchData isActivityCreated " + isActivityCreated + "   isVisibleToUser  " + isVisibleToUser + "    isAdded()   " + isAdded()
-//                + " isResumed() " + isResumed() + "  isVisible()   " + isVisible());
+//      L.d("123","prepareFetchData isActivityCreated " + isActivityCreated + "   isVisibleToUser  " + isVisibleToUser + "    isAdded()   " + isAdded()
+//              + " isResumed() " + isResumed() + "  isVisible()   " + isVisible());
 
         //正常懒加载
         if (!isDataInitiated && isActivityCreated && isVisibleToUser) {
-            //在该方法中初始化 Fragment 的数据<p>
+            //在该方法中初始化 Fragment 的数据
             //initLayout -> initViews -> onActivityCreated -> initData -> prepareFetchData -> initLazyData
             initLazyData()
             isDataInitiated = true
         }
     }
+
 }

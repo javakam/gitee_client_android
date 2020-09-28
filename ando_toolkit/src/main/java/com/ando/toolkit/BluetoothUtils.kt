@@ -13,15 +13,14 @@ import java.util.*
 /**
  * Title:BluetoothUtils
  *
- *
  * Description: 蓝牙连接工具
- *
  *
  * @author javakam
  * @date 2019/11/15 13:38
  */
 @SuppressLint("MissingPermission")
 class BluetoothUtils private constructor() {
+
     private val mAdapter: BluetoothAdapter?
     private var mScanListener: OnScanListener? = null
     private var mBondListener: OnBondListener? = null
@@ -86,9 +85,9 @@ class BluetoothUtils private constructor() {
      */
     fun open(open: Boolean) {
         if (open) {
-            mAdapter!!.enable()
+            mAdapter?.enable()
         } else {
-            mAdapter!!.disable()
+            mAdapter?.disable()
         }
     }
 
@@ -97,25 +96,21 @@ class BluetoothUtils private constructor() {
      */
     val bondedDevices: ArrayList<BluetoothDevice>
         get() {
-            val devices = mAdapter!!.bondedDevices
+            val devices = mAdapter?.bondedDevices
             val list = ArrayList<BluetoothDevice>()
-            list.addAll(devices)
+            devices?.let { list.addAll(it) }
             return list
         }
 
     /**
      * 扫描蓝牙设备
      */
-    fun startScan(): Boolean {
-        return mAdapter!!.startDiscovery()
-    }
+    fun startScan(): Boolean = mAdapter?.startDiscovery() ?: false
 
     /**
      * 取消蓝牙扫描
      */
-    fun stopScan(): Boolean {
-        return mAdapter!!.cancelDiscovery()
-    }
+    fun stopScan(): Boolean = mAdapter?.cancelDiscovery() ?: false
 
     /**
      * 蓝牙配对
@@ -191,9 +186,7 @@ class BluetoothUtils private constructor() {
         val action = intent.action
         // 扫描判断
         if (BluetoothDevice.ACTION_FOUND == action) { // 每扫描到一个设备，系统都会发送此广播。
-            if (mScanListener == null) {
-                return
-            }
+            if (mScanListener == null)  return
             // 获取蓝牙设备
             val device = intent
                 .getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
@@ -204,9 +197,7 @@ class BluetoothUtils private constructor() {
 
         // 配对判断
         if (BluetoothDevice.ACTION_BOND_STATE_CHANGED == action) {
-            if (mBondListener == null) {
-                return
-            }
+            if (mBondListener == null) return
             val device = intent
                 .getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
             mBondListener!!.onBond(device)
@@ -214,9 +205,7 @@ class BluetoothUtils private constructor() {
 
         // 状态改变
         if (BluetoothAdapter.ACTION_STATE_CHANGED == action) {
-            if (mOpenListener == null) {
-                return
-            }
+            if (mOpenListener == null) return
             val state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, 0)
             if (state == BluetoothAdapter.STATE_ON) { // 蓝牙开启
                 mOpenListener!!.onOpen(true)

@@ -5,23 +5,17 @@ import java.math.BigDecimal
 /**
  * Title:NumberUtils
  *
- *
  * Description:数据工具类
- *
  *
  * @author javakam
  * Date 2018/8/17 14:40
  */
 object NumberUtils {
-    private fun setScale(value: Float, scale: Int): Float {
-        val decimal: BigDecimal = BigDecimal(value)
-        return decimal.setScale(scale, BigDecimal.ROUND_HALF_UP).toFloat()
-    }
+    private fun setScale(value: Float?, scale: Int): Float =
+        BigDecimal(value?.toDouble() ?: 0.0).setScale(scale, BigDecimal.ROUND_HALF_UP).toFloat()
 
-    private fun setScale(value: Double, scale: Int): Double {
-        val decimal = BigDecimal(value)
-        return decimal.setScale(scale, BigDecimal.ROUND_HALF_UP).toDouble()
-    }
+    private fun setScale(value: Double?, scale: Int): Double =
+        BigDecimal(value ?: 0.0).setScale(scale, BigDecimal.ROUND_HALF_UP).toDouble()
 
     fun parseInteger(value: String?): Int {
         val result = 0
@@ -35,10 +29,7 @@ object NumberUtils {
         return result
     }
 
-    fun parseInteger(value: Number?): Int {
-        val result = 0
-        return value?.toInt() ?: result
-    }
+    fun parseInteger(value: Number?): Int = value?.toInt() ?: 0
 
     fun parseLong(value: String?): Long {
         val result: Long = 0
@@ -52,10 +43,7 @@ object NumberUtils {
         return result
     }
 
-    fun parseLong(value: Number?): Long {
-        val result: Long = 0
-        return value?.toLong() ?: result
-    }
+    fun parseLong(value: Number?): Long = value?.toLong() ?: 0L
 
     fun parseFloat(value: String?, scale: Int): Float {
         var result = 0.00f
@@ -70,12 +58,8 @@ object NumberUtils {
         return result
     }
 
-    fun parseFloat(value: Number?, scale: Int): Float {
-        val result = 0.00f
-        return if (value != null) {
-            setScale(value.toFloat(), scale)
-        } else result
-    }
+    fun parseFloat(value: Number?, scale: Int): Float =
+        if (value != null) setScale(value.toFloat(), scale) else 0F
 
     fun parseDouble(value: String?, scale: Int): Double {
         var result = 0.00
@@ -90,10 +74,6 @@ object NumberUtils {
         return result
     }
 
-    fun parseDouble(value: Number?, scale: Int): Double {
-        val result = 0.00
-        return if (value != null) {
-            setScale(value.toDouble(), scale)
-        } else result
-    }
+    fun parseDouble(value: Number?, scale: Int): Double =
+        if (value != null) setScale(value.toDouble(), scale) else 0.00
 }

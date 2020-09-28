@@ -5,16 +5,16 @@ import java.io.IOException
 import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.net.Socket
+import java.nio.charset.StandardCharsets
 
 /**
  * 封装Pos机打印工具类
- *
  *
  * http://blog.csdn.net/haovip123/article/details/50739670
  */
 class PrintUtils(ip: String?, port: Int, encoding: String?) {
     //定义编码方式
-    private val encoding: String? = null
+    private lateinit var encoding: String
     private var sock: Socket? = null
 
     // 通过socket流进行读写
@@ -26,9 +26,9 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      */
     @Throws(IOException::class)
     protected fun closeIOAndSocket() {
-        writer!!.close()
-        socketOut!!.close()
-        sock!!.close()
+        writer?.close()
+        socketOut?.close()
+        sock?.close()
     }
 
     /**
@@ -40,39 +40,39 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
     @Throws(IOException::class)
     protected fun qrCode(qrData: String) {
         val moduleSize = 8
-        val length = qrData.toByteArray(charset(encoding!!)).size
+        val length = qrData.toByteArray(charset(encoding)).size
 
         //打印二维码矩阵
-        writer!!.write(0x1D) // init
-        writer!!.write("(k") // adjust height of barcode
-        writer!!.write(length + 3) // pl
-        writer!!.write(0) // ph
-        writer!!.write(49) // cn
-        writer!!.write(80) // fn
-        writer!!.write(48) //
-        writer!!.write(qrData)
-        writer!!.write(0x1D)
-        writer!!.write("(k")
-        writer!!.write(3)
-        writer!!.write(0)
-        writer!!.write(49)
-        writer!!.write(69)
-        writer!!.write(48)
-        writer!!.write(0x1D)
-        writer!!.write("(k")
-        writer!!.write(3)
-        writer!!.write(0)
-        writer!!.write(49)
-        writer!!.write(67)
-        writer!!.write(moduleSize)
-        writer!!.write(0x1D)
-        writer!!.write("(k")
-        writer!!.write(3) // pl
-        writer!!.write(0) // ph
-        writer!!.write(49) // cn
-        writer!!.write(81) // fn
-        writer!!.write(48) // m
-        writer!!.flush()
+        writer?.write(0x1D) // init
+        writer?.write("(k") // adjust height of barcode
+        writer?.write((length + 3).toString()) // pl
+        writer?.write(0) // ph
+        writer?.write(49) // cn
+        writer?.write(80) // fn
+        writer?.write(48) //
+        writer?.write(qrData)
+        writer?.write(0x1D)
+        writer?.write("(k")
+        writer?.write(3)
+        writer?.write(0)
+        writer?.write(49)
+        writer?.write(69)
+        writer?.write(48)
+        writer?.write(0x1D)
+        writer?.write("(k")
+        writer?.write(3)
+        writer?.write(0)
+        writer?.write(49)
+        writer?.write(67)
+        writer?.write(moduleSize)
+        writer?.write(0x1D)
+        writer?.write("(k")
+        writer?.write(3) // pl
+        writer?.write(0) // ph
+        writer?.write(49) // cn
+        writer?.write(81) // fn
+        writer?.write(48) // m
+        writer?.flush()
     }
 
     /**
@@ -80,13 +80,13 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      */
     @Throws(IOException::class)
     protected fun feedAndCut() {
-        writer!!.write(0x1D)
-        writer!!.write(86)
-        writer!!.write(65)
+        writer?.write(0x1D)
+        writer?.write(86)
+        writer?.write(65)
         //        writer.write(0);
         //切纸前走纸多少
-        writer!!.write(100)
-        writer!!.flush()
+        writer?.write(100)
+        writer?.flush()
 
         //另外一种切纸的方式
         //        byte[] bytes = {29, 86, 0};
@@ -102,9 +102,9 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
     @Throws(IOException::class)
     protected fun printLine(lineNum: Int) {
         for (i in 0 until lineNum) {
-            writer!!.write("\n")
+            writer?.write("\n")
         }
-        writer!!.flush()
+        writer?.flush()
     }
 
     /**
@@ -112,8 +112,8 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      */
     @Throws(IOException::class)
     protected fun printLine() {
-        writer!!.write("\n")
-        writer!!.flush()
+        writer?.write("\n")
+        writer?.flush()
     }
 
     /**
@@ -124,9 +124,9 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
     @Throws(IOException::class)
     protected fun printTabSpace(length: Int) {
         for (i in 0 until length) {
-            writer!!.write("\t")
+            writer?.write("\t")
         }
-        writer!!.flush()
+        writer?.flush()
     }
 
     /**
@@ -137,9 +137,9 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
     @Throws(IOException::class)
     protected fun printWordSpace(length: Int) {
         for (i in 0 until length) {
-            writer!!.write("  ")
+            writer?.write("  ")
         }
-        writer!!.flush()
+        writer?.flush()
     }
 
     /**
@@ -149,10 +149,10 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      */
     @Throws(IOException::class)
     protected fun printLocation(position: Int) {
-        writer!!.write(0x1B)
-        writer!!.write(97)
-        writer!!.write(position)
-        writer!!.flush()
+        writer?.write(0x1B)
+        writer?.write(97)
+        writer?.write(position)
+        writer?.flush()
     }
 
     /**
@@ -160,11 +160,11 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      */
     @Throws(IOException::class)
     protected fun printLocation(light: Int, weight: Int) {
-        writer!!.write(0x1B)
-        writer!!.write(0x24)
-        writer!!.write(light)
-        writer!!.write(weight)
-        writer!!.flush()
+        writer?.write(0x1B)
+        writer?.write(0x24)
+        writer?.write(light)
+        writer?.write(weight)
+        writer?.flush()
     }
 
     /**
@@ -173,8 +173,8 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
     @Throws(IOException::class)
     protected fun printText(text: String) {
         val content = text.toByteArray(charset("gbk"))
-        socketOut!!.write(content)
-        socketOut!!.flush()
+        socketOut?.write(content)
+        socketOut?.flush()
     }
 
     /**
@@ -183,11 +183,11 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
     @Throws(IOException::class)
     protected fun printTextNewLine(text: String) {
         //换行
-        writer!!.write("\n")
-        writer!!.flush()
+        writer?.write("\n")
+        writer?.flush()
         val content = text.toByteArray(charset("gbk"))
-        socketOut!!.write(content)
-        socketOut!!.flush()
+        socketOut?.write(content)
+        socketOut?.flush()
     }
 
     /**
@@ -195,9 +195,9 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      */
     @Throws(IOException::class)
     protected fun initPos() {
-        writer!!.write(0x1B)
-        writer!!.write(0x40)
-        writer!!.flush()
+        writer?.write(0x1B)
+        writer?.write(0x40)
+        writer?.flush()
     }
 
     /**
@@ -209,16 +209,16 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
     protected fun bold(flag: Boolean) {
         if (flag) {
             //常规粗细
-            writer!!.write(0x1B)
-            writer!!.write(69)
-            writer!!.write(0xF)
-            writer!!.flush()
+            writer?.write(0x1B)
+            writer?.write(69)
+            writer?.write(0xF)
+            writer?.flush()
         } else {
             //加粗
-            writer!!.write(0x1B)
-            writer!!.write(69)
-            writer!!.write(0)
-            writer!!.flush()
+            writer?.write(0x1B)
+            writer?.write(69)
+            writer?.write(0)
+            writer?.flush()
         }
     }
 
@@ -231,8 +231,8 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      */
     init {
         sock = Socket(ip, port)
-        socketOut = DataOutputStream(sock.getOutputStream())
-        this.encoding = encoding
+        socketOut = DataOutputStream(sock?.getOutputStream())
+        this.encoding = encoding ?: StandardCharsets.UTF_8.name()
         writer = OutputStreamWriter(socketOut, encoding)
     }
 }

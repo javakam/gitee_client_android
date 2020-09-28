@@ -15,12 +15,12 @@ class GiteeApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
+        INSTANCE = this
     }
 
     companion object {
         @SuppressLint("StaticFieldLeak")
-        lateinit var instance: Application
+        lateinit var INSTANCE: Application
     }
 
 }
