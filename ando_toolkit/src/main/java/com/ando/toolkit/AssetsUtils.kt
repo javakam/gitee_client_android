@@ -8,7 +8,6 @@ import java.io.InputStreamReader
 /**
  * Title: AssetsUtils
  *
- *
  * Description: 读取 main -> assets 目录下的文件
  * <pre>
  * eg: AssetsUtils.getBeanByClass(Application.get(), "video.json", VideoBean.class);
@@ -19,7 +18,6 @@ import java.io.InputStreamReader
  */
 object AssetsUtils {
 
-    @JvmStatic
     fun getJson(context: Context, fileName: String): String {
         //将json数据变成字符串
         val stringBuilder = StringBuilder()

@@ -20,6 +20,7 @@ object DeviceIdUtils {//serial需要一个初始化
 
     /**
      * 支持 Android 10 -> Manifest.permission.READ_PHONE_STATE
+     * <p>
      * https://juejin.im/post/5cad5b7ce51d456e5a0728b0
      */
     @SuppressLint("MissingPermission", "HardwareIds")
@@ -33,9 +34,8 @@ object DeviceIdUtils {//serial需要一个初始化
         +Build.USER.length % 10 //13 位
 
         try {
-            serial = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                Build.getSerial()
-            } else Build.SERIAL
+            serial = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) Build.getSerial()
+            else Build.SERIAL
             //API>=9 使用serial号
             return UUID(
                 mSzDevIDShort.hashCode().toLong(), serial.hashCode().toLong()
@@ -159,11 +159,7 @@ object DeviceIdUtils {//serial需要一个初始化
             "3883756" + Build.BOARD.length % 10 + Build.BRAND.length % 10 + Build.DEVICE.length % 10
         +Build.HARDWARE.length % 10 + Build.ID.length % 10 + Build.MODEL.length % 10
         +Build.PRODUCT.length % 10 + Build.SERIAL.length % 10
-
-        UUID(
-            dev.hashCode().toLong(),
-            Build.SERIAL.hashCode().toLong()
-        ).toString()
+        UUID(dev.hashCode().toLong(), Build.SERIAL.hashCode().toLong()).toString()
     } catch (ex: Exception) {
         ex.printStackTrace()
         ""

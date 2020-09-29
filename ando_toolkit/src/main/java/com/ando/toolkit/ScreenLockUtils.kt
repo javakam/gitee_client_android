@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.KeyguardManager
 import android.content.Context
+import android.graphics.Color
 import android.os.PowerManager
 import android.os.PowerManager.WakeLock
 import android.util.Log
@@ -64,6 +65,8 @@ object ScreenLockUtils {
         val mKeyguardLock = mKeyguardManager.newKeyguardLock(activity.javaClass.name)
         mKeyguardLock.disableKeyguard()
         mIsUnlockArray[activity] = true
+
+
     }
 
 }

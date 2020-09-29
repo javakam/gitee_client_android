@@ -23,13 +23,9 @@ object ActivityCollector {
     private var mCurActivity: Activity? = null
     private val activityList = Stack<WeakReference<Activity>?>()
 
-    fun size(): Int {
-        return activityList.size
-    }
+    fun size(): Int = activityList.size
 
-    fun add(weakRefActivity: WeakReference<Activity>?) {
-        activityList.add(weakRefActivity)
-    }
+    fun add(weakRefActivity: WeakReference<Activity>?) = activityList.add(weakRefActivity)
 
     fun remove(weakRefActivity: WeakReference<Activity>?) {
         val result = activityList.remove(weakRefActivity)
@@ -40,13 +36,9 @@ object ActivityCollector {
         mCurActivity = activity
     }
 
-    fun getCurActivity(): Activity? {
-        return mCurActivity
-    }
+    fun getCurActivity(): Activity? = mCurActivity
 
-    fun getAll(): Stack<WeakReference<Activity>?> {
-        return activityList
-    }
+    fun getAll(): Stack<WeakReference<Activity>?> = activityList
 
     fun finishAll() {
         if (activityList.isNotEmpty()) {
@@ -75,10 +67,6 @@ object ActivityCollector {
         val appProcesses = activityManager.runningAppProcesses
         for (appProcess in appProcesses) {
             if (appProcess.processName == context.packageName) {
-                /*
-                BACKGROUND=400 EMPTY=500 FOREGROUND=100
-                GONE=1000 PERCEPTIBLE=130 SERVICE=300 ISIBLE=200
-                 */
                 L.i(
                     context.packageName, "此 appimportace ="
                             + appProcess.importance
@@ -96,6 +84,5 @@ object ActivityCollector {
         }
         return false
     }
-
 
 }

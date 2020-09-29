@@ -21,7 +21,7 @@ import java.util.*
 @SuppressLint("MissingPermission")
 class BluetoothUtils private constructor() {
 
-    private val mAdapter: BluetoothAdapter?
+    private val mAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
     private var mScanListener: OnScanListener? = null
     private var mBondListener: OnBondListener? = null
     private var mOpenListener: OnOpenListener? = null
@@ -223,7 +223,4 @@ class BluetoothUtils private constructor() {
         }
     }
 
-    init {
-        mAdapter = BluetoothAdapter.getDefaultAdapter()
-    }
 }

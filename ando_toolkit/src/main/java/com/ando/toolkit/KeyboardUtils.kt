@@ -10,7 +10,7 @@ import android.view.*
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import com.ando.toolkit.AppUtils.getContext
+import com.ando.toolkit.ToolKit.getContext
 import java.util.*
 
 /**

@@ -9,7 +9,7 @@ import android.os.Binder
 import android.os.Build
 import android.os.Environment
 import android.text.TextUtils
-import com.ando.toolkit.AppUtils.getContext
+import com.ando.toolkit.ToolKit.getContext
 import com.ando.toolkit.Utils.closeIOQuietly
 import com.ando.toolkit.config.ScreenType
 import java.io.File

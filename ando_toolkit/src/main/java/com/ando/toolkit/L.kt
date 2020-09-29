@@ -10,7 +10,7 @@ import android.util.Log
  */
 object L {
     private const val TAG = "123"
-    var isDebug = AppUtils.isDebug // 是否需要打印bug，可以在application的onCreate函数里面初始化
+    var isDebug = ToolKit.isDebug // 是否需要打印bug，可以在application的onCreate函数里面初始化
 
     // 下面四个是默认tag的函数
     @JvmStatic

@@ -4,7 +4,7 @@ import android.content.Context
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.annotation.StringRes
-import com.ando.toolkit.AppUtils.getContext
+import com.ando.toolkit.ToolKit.getContext
 
 /**
  * Title: ToastExt
@@ -27,19 +27,16 @@ object ToastUtils {
 
     private var toast: Toast? = null
 
-    @JvmStatic
     fun shortToast(@StringRes resId: Int) {
         shortToast(
             getContext().resources.getString(resId)
         )
     }
 
-    @JvmStatic
     fun shortToast(text: String?) {
         shortToast(getContext(), text)
     }
 
-    @JvmStatic
     fun shortToast(context: Context?, text: String?) {
         if (TextUtils.isEmpty(text)) {
             return
@@ -52,7 +49,6 @@ object ToastUtils {
         toast?.show()
     }
 
-    @JvmStatic
     fun longToast(text: String?) {
         longToast(getContext(), text)
     }

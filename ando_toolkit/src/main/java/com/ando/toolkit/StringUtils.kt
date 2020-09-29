@@ -7,22 +7,13 @@ object StringUtils {
     /**
      * 自动生成32位的 UUID
      */
-    @JvmStatic
+    
     fun generateUUID(): String = UUID.randomUUID().toString().replace("-", "")
-
-    @JvmStatic
-    fun isBlank(text: CharSequence?): Boolean = text.isNullOrBlank()
-
-    @JvmStatic
-    fun isNotBlank(text: CharSequence?): Boolean = !isBlank(text)
-
-    @JvmStatic
+    
     fun noNull(text: CharSequence?): String = if (text.isNullOrBlank()) "" else text.toString()
-
-    @JvmStatic
+    
     fun noNull(any: Any?): String = if (any is CharSequence) noNull(any) else ""
 
-    @JvmStatic
     fun noNullZero(text: CharSequence?): CharSequence = if (text.isNullOrBlank()) "0" else text
 
     //字符串转换unicode
@@ -45,7 +36,6 @@ object StringUtils {
         return string.toString()
     }
 
-
     // Equals
     //-----------------------------------------------------------------------
 
@@ -53,7 +43,6 @@ object StringUtils {
      *
      * Compares two CharSequences, returning `true` if they represent
      * equal sequences of characters.
-     *
      *
      * `null`s are handled without exceptions. Two `null`
      * references are considered to be equal. The comparison is **case sensitive**.
@@ -73,7 +62,6 @@ object StringUtils {
      * @see Object.equals
      * @see .equalsIgnoreCase
      */
-    @JvmStatic
     fun equals(cs1: CharSequence?, cs2: CharSequence?): Boolean {
         if (cs1 === cs2) {
             return true
@@ -120,7 +108,6 @@ object StringUtils {
      * @date 3.0 Changed signature from equalsIgnoreCase(String, String) to equalsIgnoreCase(CharSequence, CharSequence)
      * @see .equals
      */
-    @JvmStatic
     fun equalsIgnoreCase(
         cs1: CharSequence?,
         cs2: CharSequence?

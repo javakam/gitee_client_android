@@ -69,7 +69,6 @@ object ThemeUtils {
         return typedValue.float
     }
 
-    @JvmOverloads
     fun resolveInt(context: Context, attrRes: Int, defaultValue: Int = 0): Int {
         val a = context.obtainStyledAttributes(intArrayOf(attrRes))
         return try {
@@ -183,7 +182,6 @@ object ThemeUtils {
         }
     }
 
-    @JvmOverloads
     fun resolveDimension(context: Context, @AttrRes attr: Int, fallback: Int = -1): Int {
         val a = context.theme.obtainStyledAttributes(intArrayOf(attr))
         return try {
@@ -193,7 +191,6 @@ object ThemeUtils {
         }
     }
 
-    @JvmOverloads
     fun resolveBoolean(
         context: Context,
         @AttrRes attr: Int,

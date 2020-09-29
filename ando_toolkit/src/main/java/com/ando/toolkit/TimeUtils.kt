@@ -3,6 +3,7 @@ package com.ando.toolkit
 import android.annotation.SuppressLint
 import android.text.TextUtils
 import androidx.annotation.StringDef
+import com.ando.toolkit.ext.yes
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 import java.text.ParseException
@@ -272,8 +273,9 @@ object TimeUtils {
     private const val oneHourMillis = 60 * 60 * 1000 // 一小时的毫秒数
     private const val oneDayMillis = 24 * oneHourMillis // 一天的毫秒数
     private const val oneYearMillis = 365 * oneDayMillis // 一年的毫秒数
-    fun millisToLifeStringPHPZQRB(millis: String): String {
-        val millisLong = if (StringUtils.isBlank(millis)) 0 else millis.toLong()
+
+    fun millisToLifeStringPHPZQRB(millis: String?): String {
+        val millisLong = if (millis.isNullOrBlank()) 0 else millis.toLong()
         return if (millisLong <= 0) "" else millisToLifeStringPHPZQRB(millisLong)
     }
 
@@ -318,8 +320,8 @@ object TimeUtils {
     /**
      * millis "1578455259"
      */
-    fun millisToLifeStringPHP(millis: String): String {
-        val millisLong = if (StringUtils.isBlank(millis)) 0 else millis.toLong()
+    fun millisToLifeStringPHP(millis: String?): String {
+        val millisLong = if (millis.isNullOrBlank()) 0 else millis.toLong()
         return millisToLifeStringPHP(millisLong)
     }
 
