@@ -12,6 +12,7 @@ import android.view.Window
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.ando.toolkit.ext.DimensionUtils.getStatusBarHeight
 
 /**
  * Title:WindowUtils
@@ -51,7 +52,7 @@ object WindowUtils {
             val count = rootView.childCount
             if (count > 0) {
                 val layout = rootView.getChildAt(0)
-                val statusBarHeight = getStatusBarHeight(activity)
+                val statusBarHeight = getStatusBarHeight()
                 val layoutParams = layout.layoutParams as FrameLayout.LayoutParams
                 layoutParams.topMargin = statusBarHeight
                 val statusBarView: ImageView
@@ -69,18 +70,6 @@ object WindowUtils {
                 statusBarView.setImageDrawable(drawable)
             }
         }
-    }
-
-    /**
-     * 利用反射获取顶部状态栏高度
-     */
-    fun getStatusBarHeight(activity: Activity): Int {
-        var result = 0 //获取状态栏高度的资源id
-        val resourceId = activity.resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            result = activity.resources.getDimensionPixelSize(resourceId)
-        }
-        return result
     }
 
     /**

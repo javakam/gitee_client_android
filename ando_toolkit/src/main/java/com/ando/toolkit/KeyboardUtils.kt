@@ -190,15 +190,12 @@ class KeyboardUtils : OnGlobalLayoutListener {
      * return KeyboardUtils.onDisableBackKeyDown(keyCode) && super.onKeyDown(keyCode, event) ;
      * }
      */
-    fun onDisableBackKeyDown(keyCode: Int): Boolean {
+    fun onDisableBackKeyDown(keyCode: Int): Boolean =
         when (keyCode) {
-            KeyEvent.KEYCODE_BACK -> return false
-            KeyEvent.KEYCODE_HOME -> return false
-            else -> {
-            }
+            KeyEvent.KEYCODE_BACK -> false
+            KeyEvent.KEYCODE_HOME -> false
+            else -> true
         }
-        return true
-    }
 
     /**
      * 点击屏幕空白区域隐藏软键盘
@@ -214,9 +211,7 @@ class KeyboardUtils : OnGlobalLayoutListener {
     fun dispatchTouchEvent(ev: MotionEvent, activity: Activity) {
         if (ev.action == MotionEvent.ACTION_DOWN) {
             val v = activity.currentFocus
-            if (isShouldHideKeyboard(v, ev)) {
-                closeSoftInput(v)
-            }
+            if (isShouldHideKeyboard(v, ev)) closeSoftInput(v)
         }
     }
 
@@ -234,9 +229,7 @@ class KeyboardUtils : OnGlobalLayoutListener {
     fun dispatchTouchEvent(ev: MotionEvent, dialog: Dialog) {
         if (ev.action == MotionEvent.ACTION_DOWN) {
             val v = dialog.currentFocus
-            if (isShouldHideKeyboard(v, ev)) {
-                closeSoftInput(v)
-            }
+            if (isShouldHideKeyboard(v, ev)) closeSoftInput(v)
         }
     }
 
@@ -359,9 +352,7 @@ class KeyboardUtils : OnGlobalLayoutListener {
                 }
                 if (obj.context === context) {
                     declaredField[imm] = null
-                } else {
-                    return
-                }
+                } else return
             } catch (th: Throwable) {
                 th.printStackTrace()
             }

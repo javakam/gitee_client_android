@@ -1,6 +1,9 @@
 package com.ando.toolkit.ext
 
+import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
+import android.graphics.Rect
 import android.view.View
 import androidx.annotation.DimenRes
 import androidx.fragment.app.Fragment
@@ -23,15 +26,15 @@ val Context.screenDensityDpi: Int
     get() = resources.displayMetrics.densityDpi
 
 /**
- * screen width in pixels
+ * 屏幕的宽度 screen width in pixels
  */
-val Context.screenWidth
+val Context.screenWidth: Int
     get() = resources.displayMetrics.widthPixels
 
 /**
- * screen height in pixels
+ * 屏幕的高度 screen height in pixels
  */
-val Context.screenHeight
+val Context.screenHeight: Int
     get() = resources.displayMetrics.heightPixels
 
 /**
@@ -133,4 +136,25 @@ fun View.realDpi(): Int {
     val xdpi = metric.xdpi
     val ydpi = metric.ydpi
     return ((xdpi + ydpi) / 2.0f + 0.5f).toInt()
+}
+
+object DimensionUtils {
+    /**
+     * 获取状态栏高度高度  the height of status bar
+     */
+    fun getStatusBarHeight(): Int {
+        val res = Resources.getSystem()
+        val resourceId = res.getIdentifier("status_bar_height", "dimen", "android")
+        return if (resourceId > 0) res.getDimensionPixelSize(resourceId) else 0
+    }
+
+    /**
+     * 获取系统状态栏高度  todo 2020年9月30日 14:56:48 测试
+     */
+    fun getStatusBarHeightDecor(activity: Activity): Int {
+        val localRect = Rect()
+        activity.window.decorView.getWindowVisibleDisplayFrame(localRect)
+        return localRect.top
+    }
+
 }

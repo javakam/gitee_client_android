@@ -14,20 +14,15 @@ import androidx.fragment.app.Fragment
 /**
  * Title:ActivityUtils
  *
- *
  * Description:Activity 工具类
- *
  *
  * @author javakam
  * @date 2019/11/15 14:44
  */
 object ActivityUtils {
 
-    // 得到当前的ActivityThread对象
-    @JvmStatic
-    fun isActivityLive(activity: Activity?): Boolean {
-        return activity != null && !activity.isFinishing && !activity.isDestroyed
-    }
+    fun isActivityLive(activity: Activity?): Boolean =
+        activity != null && !activity.isFinishing && !activity.isDestroyed
 
     /**
      * 切换全屏状态
@@ -55,7 +50,6 @@ object ActivityUtils {
      *
      * @param activity Activity
      */
-    @JvmStatic
     fun setFullScreen(activity: Activity) = toggleFullScreen(activity, true)
 
     /**
@@ -63,7 +57,6 @@ object ActivityUtils {
      *
      * @param activity Activity
      */
-    @JvmStatic
     fun hideTitleBar(activity: Activity) {
         activity.requestWindowFeature(Window.FEATURE_NO_TITLE)
     }
@@ -98,8 +91,6 @@ object ActivityUtils {
 
     /**
      * 使UI适配输入法
-     *
-     * @param activity Activity
      */
     fun adjustSoftInput(activity: Activity) {
         activity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
@@ -114,15 +105,10 @@ object ActivityUtils {
         val authority = "com.android.launcher2.settings"
         var cursor: Cursor? = null
         try {
-            val uri =
-                Uri.parse("content://$authority/favorites?notify=true")
-            cursor = cr.query(
-                uri, arrayOf("title", "iconResource"),
-                "title=?", arrayOf(appName), null
-            )
-            if (null != cursor && cursor.count > 0) {
-                isInstallShortCut = true
-            }
+            val uri = Uri.parse("content://$authority/favorites?notify=true")
+            cursor =
+                cr.query(uri, arrayOf("title", "iconResource"), "title=?", arrayOf(appName), null)
+            if (null != cursor && cursor.count > 0) isInstallShortCut = true
         } catch (e: Exception) {
         } finally {
             cursor?.close()
@@ -130,19 +116,6 @@ object ActivityUtils {
         return isInstallShortCut
     }
 
-    /**
-     * 获取系统状态栏高度
-     *
-     * @param activity Activity
-     * @return 状态栏高度
-     */
-    fun getStatusBarHeight(activity: Activity): Int {
-        val localRect = Rect()
-        activity.window.decorView.getWindowVisibleDisplayFrame(localRect)
-        return localRect.top
-    }
-
-    @JvmStatic
     fun startActivity(context: Any, intent: Intent) {
         if (context is Activity) {
             if (isActivityLive(context)) {
@@ -156,7 +129,6 @@ object ActivityUtils {
         }
     }
 
-    @JvmStatic
     fun startActivityForResult(context: Any, intent: Intent, requestCode: Int) {
         if (context is Activity) {
             if (isActivityLive(context)) {

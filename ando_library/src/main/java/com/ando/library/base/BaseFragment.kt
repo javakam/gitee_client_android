@@ -26,11 +26,8 @@ abstract class BaseFragment : Fragment(), IBaseInterface {
     protected var rootView: View? = null
 
     //
-    @JvmField
     protected var isActivityCreated = false//Activity 是否已创建
-    @JvmField
     protected var isVisibleToUser = false //Fragment 是否对用户可见
-    @JvmField
     protected var isHiddenToUser = false //hidden
 
     override fun onAttach(context: Context) {
@@ -77,47 +74,6 @@ abstract class BaseFragment : Fragment(), IBaseInterface {
         rootView = null
         activity = null
     }
-
-    /**
-     * 通过Class跳转界面
-     */
-    fun startActivityForResult(cls: Class<*>?, requestCode: Int) =
-        startActivityForResult(cls, null, requestCode)
-
-    /**
-     * 含有Bundle通过Class跳转界面
-     */
-    fun startActivityForResult(cls: Class<*>?, bundle: Bundle?, requestCode: Int) =
-        activity?.let {
-            cls?.let { c ->
-                val intent = Intent()
-                intent.setClass(it, c)
-                if (bundle != null) {
-                    intent.putExtras(bundle)
-                }
-                startActivityForResult(intent, requestCode)
-            }
-        }
-
-    fun startActivity(cls: Class<*>?, bundle: Bundle? = null) =
-        activity?.let {
-            cls?.let { c ->
-                val intent = Intent()
-                intent.setClass(it, c)
-                if (bundle != null) {
-                    intent.putExtras(bundle)
-                }
-                startActivity(intent)
-            }
-        }
-
-    fun shortToast(@StringRes text: Int) = activity?.shortToast(text)
-
-    fun shortToast(text: String?) = activity?.shortToast(text)
-
-    fun longToast(@StringRes text: Int) = activity?.longToast(text)
-
-    fun longToast(text: String?) = activity?.longToast(text)
 
     //https://stackoverflow.com/questions/22552958/handling-back-press-when-using-fragments-in-android
     fun controlBackPress() =

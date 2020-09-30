@@ -16,14 +16,15 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.ando.os.utils.R
-import com.ando.toolkit.DensityUtils.dp2px
-import com.ando.toolkit.DensityUtils.sp2px
-import com.ando.toolkit.L.d
-import com.ando.toolkit.Utils.getScreenHeight
+import com.ando.toolkit.ext.dp2px
+import com.ando.toolkit.ext.screenHeight
+import com.ando.toolkit.ext.sp2px
+import com.ando.toolkit.log.L.d
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.SnackbarLayout
 import com.google.android.material.snackbar.SnackbarContentLayout
 import java.lang.ref.WeakReference
+import kotlin.math.max
 
 /**
  * Snackbar工具类
@@ -481,14 +482,14 @@ class SnackbarUtils {
                 android:textAlignment="viewStart"/>
         */
         //文字高度+paddingTop+paddingBottom : 14sp + 14dp*2
-        val snackBarHeight = dp2px(snackbar?.view?.context, 28f) + sp2px(
-            snackbar?.view?.context, 14f
-        )
+
+        val snackBarHeight = snackbar?.view?.context?.dp2px(28f)
+            ?.plus(snackbar?.view?.context?.sp2px(14f) ?: 0)
         d(
             TAG,
             "直接获取MessageView高度:" + snackbar?.view?.findViewById<View>(R.id.snackbar_text)?.height
         )
-        return snackBarHeight
+        return snackBarHeight ?: 0
     }
 
     /**
@@ -506,11 +507,11 @@ class SnackbarUtils {
         marginLeft: Int,
         marginRight: Int
     ): SnackbarUtils {
-        var marginLeft = marginLeft
-        var marginRight = marginRight
+        var mLeft = marginLeft
+        var mRight = marginRight
         if (snackbar != null) {
-            marginLeft = Math.max(marginLeft, 0)
-            marginRight = Math.max(marginRight, 0)
+            mLeft = max(mLeft, 0)
+            mRight = max(mRight, 0)
             val locations = IntArray(2)
             targetView.getLocationOnScreen(locations)
             d(TAG, "距离屏幕左侧:" + locations[0] + "==距离屏幕顶部:" + locations[1])
@@ -521,9 +522,9 @@ class SnackbarUtils {
                 gravityFrameLayout(Gravity.BOTTOM)
                 val params = snackbar?.view?.layoutParams
                 (params as MarginLayoutParams).setMargins(
-                    marginLeft,
+                    mLeft,
                     0,
-                    marginRight,
+                    mRight,
                     snackbar?.view?.resources?.displayMetrics?.heightPixels ?: 0 - locations[1]
                 )
                 snackbar?.view?.layoutParams = params
@@ -539,11 +540,11 @@ class SnackbarUtils {
         marginLeft: Int,
         marginRight: Int
     ): SnackbarUtils {
-        var marginLeft = marginLeft
-        var marginRight = marginRight
+        var mLeft = marginLeft
+        var mRight = marginRight
         if (snackbar != null) {
-            marginLeft = Math.max(marginLeft, 0)
-            marginRight = Math.max(marginRight, 0)
+            mLeft = max(mLeft, 0)
+            mRight = max(mRight, 0)
             val locations = IntArray(2)
             targetView.getLocationOnScreen(locations)
             d(TAG, "距离屏幕左侧:" + locations[0] + "==距离屏幕顶部:" + locations[1])
@@ -554,9 +555,9 @@ class SnackbarUtils {
                 gravityCoordinatorLayout(Gravity.BOTTOM)
                 val params = snackbar?.view?.layoutParams
                 (params as MarginLayoutParams).setMargins(
-                    marginLeft,
+                    mLeft,
                     0,
-                    marginRight,
+                    mRight,
                     snackbar?.view?.resources?.displayMetrics?.heightPixels ?: 0 - locations[1]
                 )
                 snackbar?.view?.layoutParams = params
@@ -589,7 +590,7 @@ class SnackbarUtils {
             val locations = IntArray(2)
             targetView.getLocationOnScreen(locations)
             val snackbarHeight = calculateSnackBarHeight()
-            val screenHeight = getScreenHeight(snackbar?.view?.context)
+            val screenHeight = snackbar?.view?.context?.screenHeight ?: 0
             //必须保证指定View的底部可见 且 单行Snackbar可以完整的展示
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 //为什么要'+2'? 因为在Android L(Build.VERSION_CODES.LOLLIPOP)以上,例如Button会有一定的'阴影(shadow)',阴影的大小由'高度(elevation)'决定.
@@ -601,7 +602,7 @@ class SnackbarUtils {
                         marginLeft,
                         0,
                         marginRight,
-                        screenHeight - (locations[1] + targetView.height + snackbarHeight + 2)
+                        screenHeight.minus((locations[1] + targetView.height + snackbarHeight + 2))
                     )
                     snackbar?.view?.layoutParams = params
                 }
@@ -613,7 +614,8 @@ class SnackbarUtils {
                         marginLeft,
                         0,
                         marginRight,
-                        screenHeight - (locations[1] + targetView.height + snackbarHeight)
+                        screenHeight?.minus((locations[1] + targetView.height + snackbarHeight))
+                            ?: 0
                     )
                     snackbar?.view?.layoutParams = params
                 }
@@ -636,7 +638,7 @@ class SnackbarUtils {
             val locations = IntArray(2)
             targetView.getLocationOnScreen(locations)
             val snackbarHeight = calculateSnackBarHeight()
-            val screenHeight = getScreenHeight(snackbar?.view?.context)
+            val screenHeight = snackbar?.view?.context?.screenHeight ?: 0
             //必须保证指定View的底部可见 且 单行Snackbar可以完整的展示
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 //为什么要'+2'? 因为在Android L(Build.VERSION_CODES.LOLLIPOP)以上,例如Button会有一定的'阴影(shadow)',阴影的大小由'高度(elevation)'决定.
@@ -648,7 +650,7 @@ class SnackbarUtils {
                         marginLeft,
                         0,
                         marginRight,
-                        screenHeight - (locations[1] + targetView.height + snackbarHeight + 2)
+                        screenHeight.minus((locations[1] + targetView.height + snackbarHeight + 2))
                     )
                     snackbar?.view?.layoutParams = params
                 }

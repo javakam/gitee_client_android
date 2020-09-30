@@ -25,7 +25,7 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      * 关闭IO流和Socket
      */
     @Throws(IOException::class)
-    protected fun closeIOAndSocket() {
+    fun closeIOAndSocket() {
         writer?.close()
         socketOut?.close()
         sock?.close()
@@ -38,7 +38,7 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      * @throws IOException
      */
     @Throws(IOException::class)
-    protected fun qrCode(qrData: String) {
+    fun qrCode(qrData: String) {
         val moduleSize = 8
         val length = qrData.toByteArray(charset(encoding)).size
 
@@ -100,7 +100,7 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      * length 需要打印的空行数
      */
     @Throws(IOException::class)
-    protected fun printLine(lineNum: Int) {
+    fun printLine(lineNum: Int) {
         for (i in 0 until lineNum) {
             writer?.write("\n")
         }
@@ -111,7 +111,7 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      * 打印换行(只换一行)
      */
     @Throws(IOException::class)
-    protected fun printLine() {
+    fun printLine() {
         writer?.write("\n")
         writer?.flush()
     }
@@ -122,7 +122,7 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      * @param length 需要打印空白的长度
      */
     @Throws(IOException::class)
-    protected fun printTabSpace(length: Int) {
+    fun printTabSpace(length: Int) {
         for (i in 0 until length) {
             writer?.write("\t")
         }
@@ -135,7 +135,7 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      * @param length 需要打印空白的长度
      */
     @Throws(IOException::class)
-    protected fun printWordSpace(length: Int) {
+    fun printWordSpace(length: Int) {
         for (i in 0 until length) {
             writer?.write("  ")
         }
@@ -148,7 +148,7 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      * @param position 打印位置  0：居左(默认) 1：居中 2：居右
      */
     @Throws(IOException::class)
-    protected fun printLocation(position: Int) {
+    fun printLocation(position: Int) {
         writer?.write(0x1B)
         writer?.write(97)
         writer?.write(position)
@@ -159,7 +159,7 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      * 绝对打印位置
      */
     @Throws(IOException::class)
-    protected fun printLocation(light: Int, weight: Int) {
+    fun printLocation(light: Int, weight: Int) {
         writer?.write(0x1B)
         writer?.write(0x24)
         writer?.write(light)
@@ -171,7 +171,7 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      * 打印文字
      */
     @Throws(IOException::class)
-    protected fun printText(text: String) {
+    fun printText(text: String) {
         val content = text.toByteArray(charset("gbk"))
         socketOut?.write(content)
         socketOut?.flush()
@@ -181,7 +181,7 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      * 新起一行，打印文字
      */
     @Throws(IOException::class)
-    protected fun printTextNewLine(text: String) {
+    fun printTextNewLine(text: String) {
         //换行
         writer?.write("\n")
         writer?.flush()
@@ -194,7 +194,7 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      * 初始化打印机
      */
     @Throws(IOException::class)
-    protected fun initPos() {
+    fun initPos() {
         writer?.write(0x1B)
         writer?.write(0x40)
         writer?.flush()
@@ -206,7 +206,7 @@ class PrintUtils(ip: String?, port: Int, encoding: String?) {
      * @param flag false为不加粗
      */
     @Throws(IOException::class)
-    protected fun bold(flag: Boolean) {
+    fun bold(flag: Boolean) {
         if (flag) {
             //常规粗细
             writer?.write(0x1B)

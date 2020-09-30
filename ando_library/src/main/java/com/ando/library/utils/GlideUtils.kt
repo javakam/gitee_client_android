@@ -82,7 +82,7 @@ object GlideUtils {
         if (width != INVALID && height != INVALID) {
             options = options.override(width, height)
         }
-        //        if (signature) {
+//        if (signature) {
 //            options = options.signature(new ObjectKey(UUID.randomUUID().toString()));
 //        }
         if (target == null) {

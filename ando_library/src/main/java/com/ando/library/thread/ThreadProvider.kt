@@ -1,6 +1,6 @@
 package com.ando.library.thread
 
-import com.ando.toolkit.L
+import com.ando.toolkit.log.L
 import java.util.concurrent.*
 import java.util.concurrent.atomic.AtomicInteger
 

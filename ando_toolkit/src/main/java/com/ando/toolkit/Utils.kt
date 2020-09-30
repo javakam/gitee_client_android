@@ -1,20 +1,15 @@
 package com.ando.toolkit
 
+import ando.file.core.FileUri
 import android.content.Context
-import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.ColorInt
-import java.io.Closeable
-import java.io.File
-import java.io.IOException
 import kotlin.math.log10
 import kotlin.math.sqrt
 
@@ -25,84 +20,13 @@ import kotlin.math.sqrt
  * @date 2018/11/26 下午5:07
  */
 object Utils {
-
     /**
-     * 屏幕的宽度
-     */
-    @JvmStatic
-    fun getScreenWidth(context: Context): Int = context.resources.displayMetrics.widthPixels
-
-    /**
-     * 屏幕的高度
-     */
-    @JvmStatic
-    fun getScreenHeight(context: Context?): Int = context?.resources?.displayMetrics?.heightPixels?:0
-
-    private const val STATUS_BAR_HEIGHT_RES_NAME = "status_bar_height"
-
-    /**
-     * 计算状态栏高度高度 getStatusBarHeight
-     */
-    fun getStatusBarHeight(): Int =
-        getInternalDimensionSize(Resources.getSystem(), STATUS_BAR_HEIGHT_RES_NAME)
-
-    private fun getInternalDimensionSize(res: Resources, key: String): Int {
-        var result = 0
-        val resourceId = res.getIdentifier(key, "dimen", "android")
-        if (resourceId > 0) {
-            result = res.getDimensionPixelSize(resourceId)
-        }
-        return result
-    }
-
-    /**
-     * get ListView height according to every children
-     */
-    fun getListViewHeightBasedOnChildren(view: ListView?): Int {
-        var height = getAbsListViewHeightBasedOnChildren(view)
-        var adapter: ListAdapter? = null
-        var adapterCount: Int = 0
-        if (view != null && view.adapter.also { adapter = it } != null &&
-            adapter?.count.also {
-                if (it != null) {
-                    adapterCount = it
-                }
-            } ?: 0 > 0) {
-            height += view.dividerHeight * (adapterCount - 1)
-        }
-        return height
-    }
-
-    /**
-     * get AbsListView height according to every children
-     *
-     * @param view
-     * @return
-     */
-    fun getAbsListViewHeightBasedOnChildren(view: AbsListView?): Int {
-        var adapter: ListAdapter? = null
-        if (view == null || view.adapter.also { adapter = it } == null) return 0
-        var height = 0
-        for (i in 0 until (adapter?.count ?: 0)) {
-            val item = adapter?.getView(i, null, view)
-            (item as? ViewGroup)?.layoutParams = RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-            )
-            item?.measure(0, 0)
-            height += item?.measuredHeight ?: 0
-        }
-        height += view.paddingTop + view.paddingBottom
-        return height
-    }
-
-    /**
-     * View设备背景
+     * View 设备背景
      */
     fun setBackground(context: Context, v: View, res: Int) {
         val bm = BitmapFactory.decodeResource(context.resources, res)
         val bd = BitmapDrawable(context.resources, bm)
-        v.setBackgroundDrawable(bd)
+        v.background = bd
     }
 
     /**
@@ -144,9 +68,7 @@ object Utils {
         val d = imageView.drawable
         if (d is BitmapDrawable) {
             val bmp = d.bitmap
-            if (bmp != null && !bmp.isRecycled) {
-                bmp.recycle()
-            }
+            if (bmp != null && !bmp.isRecycled) bmp.recycle()
         }
         imageView.setImageBitmap(null)
         if (d != null) {
@@ -157,7 +79,7 @@ object Utils {
     /**
      * 放大缩小图片
      *
-     * @param bitmap 源Bitmap
+     * @param bitmap 源 Bitmap
      * @param w      宽
      * @param h      高
      * @return 目标Bitmap
@@ -170,63 +92,6 @@ object Utils {
         val scaleHeight = h.toFloat() / height
         matrix.postScale(scaleWidth, scaleHeight)
         return Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true)
-    }
-
-    /**
-     * 安静关闭 IO
-     *
-     * @param closeables closeables
-     */
-    @JvmStatic
-    fun closeIOQuietly(vararg closeables: Closeable?) {
-        for (closeable in closeables) {
-            if (closeable != null) {
-                try {
-                    closeable.close()
-                } catch (ignored: IOException) {
-                }
-            }
-        }
-    }
-
-    /**
-     * Indicates if this file represents a file on the underlying file system.
-     *
-     * @param filePath 文件路径
-     * @return 是否存在文件
-     */
-    fun isFileExist(filePath: String?): Boolean {
-        if (TextUtils.isEmpty(filePath)) return false
-        val file = File(filePath ?: return false)
-        return file.exists() && file.isFile
-    }
-
-    /**
-     * 获取bitmap
-     *
-     * @param filePath 文件路径
-     * @return bitmap
-     */
-    fun getBitmap(filePath: String?): Bitmap? =
-        if (!isFileExist(filePath)) null else BitmapFactory.decodeFile(filePath)
-
-    /**
-     * 检查是否为空指针
-     */
-    fun checkNull(obj: Any?, hint: String?) {
-        if (null == obj) {
-            throw NullPointerException(hint)
-        }
-    }
-
-    /**
-     * 检查是否为空指针
-     */
-    fun <T> checkNotNull(t: T?, message: String?): T {
-        if (t == null) {
-            throw NullPointerException(message)
-        }
-        return t
     }
 
     /**
@@ -243,10 +108,13 @@ object Utils {
     }
 
     /**
-     * 将Drawable转化为Bitmap
-     *
-     * @param drawable Drawable
-     * @return Bitmap
+     * 获取 Bitmap
+     */
+    fun getBitmap(filePath: String?): Bitmap? =
+        if (!isFileExist(filePath)) null else BitmapFactory.decodeFile(filePath)
+
+    /**
+     * Drawable -> Bitmap
      */
     fun getBitmapFromDrawable(drawable: Drawable): Bitmap {
         val width = drawable.intrinsicWidth
@@ -262,10 +130,7 @@ object Utils {
     }
 
     /**
-     * 将Drawable转化为Bitmap
-     *
-     * @param drawable Drawable
-     * @return Bitmap
+     * Drawable -> Bitmap
      */
     fun getBitmapFromDrawable(drawable: Drawable, color: Int): Bitmap {
         val width = drawable.intrinsicWidth
@@ -282,20 +147,6 @@ object Utils {
         canvas = Canvas(bitmap)
         canvas.drawColor(color, PorterDuff.Mode.SRC_IN)
         return bitmap
-    }
-
-    /**
-     * 获取应用的图标
-     */
-    fun getAppIcon(context: Context): Drawable? {
-        try {
-            val pm = context.packageManager
-            val info = pm.getApplicationInfo(context.packageName, 0)
-            return info.loadIcon(pm)
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-        }
-        return null
     }
 
     /**
@@ -331,5 +182,13 @@ object Utils {
         }
         return colorFilter
     }
+
+    /**
+     * Indicates if this file represents a file on the underlying file system.
+     *
+     * @param filePath 文件路径
+     * @return 是否存在文件
+     */
+    private fun isFileExist(filePath: String?): Boolean = (FileUri.getUriByPath(filePath) != null)
 
 }

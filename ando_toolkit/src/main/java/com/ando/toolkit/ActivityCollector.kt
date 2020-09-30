@@ -5,6 +5,7 @@ import android.app.ActivityManager
 import android.app.ActivityManager.RunningAppProcessInfo
 import android.content.Context
 import android.text.TextUtils
+import com.ando.toolkit.log.L
 import java.lang.ref.WeakReference
 import java.util.*
 

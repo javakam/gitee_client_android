@@ -9,21 +9,6 @@ import android.text.TextUtils
 import java.io.File
 import java.util.*
 
-/*
-companion object {
-    private var usbUtils: UsbUtils? = null
-    fun getInstance(): UsbUtils {
-        if (usbUtils == null) {
-            synchronized(UsbUtils::class.java) {
-                if (usbUtils == null) {
-                    usbUtils = UsbUtils()
-                }
-            }
-        }
-        return usbUtils!!
-    }
-}
- */
 object UsbUtils {
     /**
      * Android 2.3之后的系统

@@ -219,13 +219,13 @@ object ThemeUtils {
         }
 
     fun getActionTextStateList(context: Context, newPrimaryColor: Int): ColorStateList {
-        var newPrimaryColor = newPrimaryColor
+        var color = newPrimaryColor
         val fallBackButtonColor = resolveColor(context, R.attr.textColorPrimary)
-        if (newPrimaryColor == 0) {
-            newPrimaryColor = fallBackButtonColor
+        if (color == 0) {
+            color = fallBackButtonColor
         }
         val states = arrayOf(intArrayOf(-R.attr.state_enabled), intArrayOf())
-        val colors = intArrayOf(adjustAlpha(newPrimaryColor, 0.4f), newPrimaryColor)
+        val colors = intArrayOf(adjustAlpha(color, 0.4f), color)
         return ColorStateList(states, colors)
     }
 

@@ -1,7 +1,7 @@
 package com.ando.library.views
 
 import android.view.View
-import com.ando.toolkit.L
+import com.ando.toolkit.log.L
 
 /**
  * Title: AbstractDoubleClickListener

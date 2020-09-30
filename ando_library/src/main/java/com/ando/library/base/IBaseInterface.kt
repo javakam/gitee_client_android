@@ -8,6 +8,5 @@ interface IBaseInterface {
     fun initListener() {}
     fun initData() {}
     val layoutView: View?
-        get() = null
     val layoutId: Int
 }

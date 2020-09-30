@@ -155,50 +155,30 @@ object ScreenShotUtils {
     }
 
     /**
-     * 获得屏幕高度
-     */
-    fun getScreenWidth(context: Context): Int {
-        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val outMetrics = DisplayMetrics()
-        wm.defaultDisplay.getMetrics(outMetrics)
-        return outMetrics.widthPixels
-    }
-
-    /**
      * get the height of screen *
      */
-    fun getScreenH(ctx: Context): Int {
-        var h = 0
-        h = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB_MR2) {
+    fun getScreenH(ctx: Context): Int =
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB_MR2) {
             val p = Point()
             (ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getSize(
                 p
             )
             p.y
         } else {
-            (ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
-                .height
+            (ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.height
         }
-        return h
-    }
 
     /**
      * get the width of screen **
      */
-    fun getScreenW(ctx: Context): Int {
-        var w = 0
-        w = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB_MR2) {
+    fun getScreenW(ctx: Context): Int =
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB_MR2) {
             val p = Point()
-            (ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getSize(
-                p
-            )
+            (ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getSize(p)
             p.x
         } else {
-            (ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
-                .width
+            (ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.width
         }
-        return w
-    }
 
     /**
      * get the height of status *
@@ -207,30 +187,6 @@ object ScreenShotUtils {
         val s = Rect()
         ctx.window.decorView.getWindowVisibleDisplayFrame(s)
         return s.top
-    }
-
-    /**
-     * get the height of status *
-     */
-    fun getStatusHeight(activity: Context): Int {
-        val resourceId = activity.resources.getIdentifier("status_bar_height", "dimen", "android")
-        return if (resourceId > 0) activity.resources.getDimensionPixelSize(resourceId) else 0
-    }
-
-    /**
-     * get the height of status *
-     */
-    fun getStatusH(ctx: Context): Int {
-        var statusHeight = -1
-        try {
-            @SuppressLint("PrivateApi") val clazz = Class.forName("com.android.internal.R\$dimen")
-            val `object` = clazz.newInstance()
-            val height = clazz.getField("status_bar_height")[`object`].toString().toInt()
-            statusHeight = ctx.resources.getDimensionPixelSize(height)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return statusHeight
     }
 
     /**

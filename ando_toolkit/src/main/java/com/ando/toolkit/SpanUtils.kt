@@ -1251,23 +1251,22 @@ class SpanUtils {
 
         private fun drawable2Bitmap(drawable: Drawable): Bitmap {
             if (drawable is BitmapDrawable) {
-                val bitmapDrawable = drawable
-                if (bitmapDrawable.bitmap != null) {
-                    return bitmapDrawable.bitmap
+                if (drawable.bitmap != null) {
+                    return drawable.bitmap
                 }
             }
-            val bitmap: Bitmap
-            bitmap = if (drawable.intrinsicWidth <= 0 || drawable.intrinsicHeight <= 0) {
-                Bitmap.createBitmap(
-                    1, 1,
-                    if (drawable.opacity != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
-                )
-            } else {
-                Bitmap.createBitmap(
-                    drawable.intrinsicWidth, drawable.intrinsicHeight,
-                    if (drawable.opacity != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
-                )
-            }
+            val bitmap: Bitmap =
+                if (drawable.intrinsicWidth <= 0 || drawable.intrinsicHeight <= 0) {
+                    Bitmap.createBitmap(
+                        1, 1,
+                        if (drawable.opacity != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
+                    )
+                } else {
+                    Bitmap.createBitmap(
+                        drawable.intrinsicWidth, drawable.intrinsicHeight,
+                        if (drawable.opacity != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
+                    )
+                }
             val canvas = Canvas(bitmap)
             drawable.setBounds(0, 0, canvas.width, canvas.height)
             drawable.draw(canvas)
@@ -1443,7 +1442,6 @@ class SpanUtils {
                     it.intrinsicWidth, it.intrinsicHeight
                 )
             }
-
         }
 
         constructor(d: Drawable, verticalAlignment: Int) : super(verticalAlignment) {

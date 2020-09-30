@@ -5,9 +5,8 @@ import java.util.*
 object StringUtils {
 
     /**
-     * 自动生成32位的 UUID
+     * 生成32位的 UUID
      */
-    
     fun generateUUID(): String = UUID.randomUUID().toString().replace("-", "")
     
     fun noNull(text: CharSequence?): String = if (text.isNullOrBlank()) "" else text.toString()

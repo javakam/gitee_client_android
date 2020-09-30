@@ -21,4 +21,30 @@ gradlew clean build bintrayUpload -PbintrayUser=BINTRAY_USERNAME -PbintrayKey=BI
 apply plugin: 'com.github.panpf.bintray-publish'
 ```
 
+
 ## 混淆
+
+
+## 单例
+```kotlin
+companion object {
+    private var usbUtils: UsbUtils? = null
+    fun getInstance(): UsbUtils {
+        if (usbUtils == null) {
+            synchronized(UsbUtils::class.java) {
+                if (usbUtils == null) {
+                    usbUtils = UsbUtils()
+                }
+            }
+        }
+        return usbUtils!!
+    }
+}
+```
+
+## 参考项目
+
+https://github.com/zyyoona7/KExtensions/blob/master/lib/src/main/java/com/zyyoona7/extensions/
+
+
+https://github.com/shiweibsw/Android-kotlin-extend-utils/blob/master/app/src/main/java/com/kd/kotlin/extend/utils/

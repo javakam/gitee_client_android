@@ -27,7 +27,7 @@ object ResUtils {
     /**
      * 获取resources对象
      */
-    val resources: Resources get() = getContext().resources
+    private val resources: Resources get() = getContext().resources
 
     /**
      * 获取字符串

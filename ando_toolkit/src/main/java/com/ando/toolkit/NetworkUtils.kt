@@ -18,13 +18,11 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.RequiresPermission
 import com.ando.toolkit.ToolKit.getContext
 import com.ando.toolkit.ShellUtils.execCmd
+import com.ando.toolkit.log.L
 import java.io.IOException
 import java.io.InputStreamReader
 import java.io.LineNumberReader
-import java.net.InetAddress
-import java.net.NetworkInterface
-import java.net.SocketException
-import java.net.UnknownHostException
+import java.net.*
 import java.util.*
 
 object NetworkUtils {
@@ -350,16 +348,54 @@ object NetworkUtils {
             return cm.activeNetworkInfo
         }
 
+    private fun intToIp(ipAddress: Int): String {
+        return (ipAddress and 0xFF).toString() + "." +
+                (ipAddress shr 8 and 0xFF) + "." +
+                (ipAddress shr 16 and 0xFF) + "." +
+                (ipAddress shr 24 and 0xFF)
+    }
+
+    /**
+     * @param useIPv4 true ipV4 ; false ipV6
+     * @return ip address ; null no network
+     */
+    @RequiresPermission(Manifest.permission.INTERNET)
+    fun getIPAddress(useIPv4: Boolean): String? = try {
+        val en = NetworkInterface.getNetworkInterfaces()
+        while (en.hasMoreElements()) {
+            val enumIpAddress = en.nextElement().inetAddresses
+            while (enumIpAddress.hasMoreElements()) {
+                val inetAddress = enumIpAddress.nextElement()
+                if (!inetAddress.isLoopbackAddress) {
+                    if (useIPv4) {
+                        if (!inetAddress.isLinkLocalAddress) {
+                            inetAddress.hostAddress
+                        }
+                    } else {
+                        if (inetAddress is Inet6Address) {
+                            inetAddress.getHostAddress()
+                        }
+                    }
+                }
+            }
+        }
+        null
+    } catch (ex: Exception) {
+        L.e("IP Address Ex ", ex.toString())
+        null
+    }
+
+    //todo 2020年9月30日 14:23:59 测试该方法
     /**
      * Return the ip address.
      *
      * Must hold `<uses-permission android:name="android.permission.INTERNET" />`
      *
-     * @param useIPv4 True to use ipv4, false otherwise.
-     * @return the ip address
+     * @param useIPv4 true to use ipv4, false otherwise.
+     * @return the ip address , null 无网络连接
      */
     @RequiresPermission(Manifest.permission.INTERNET)
-    fun getIPAddress(useIPv4: Boolean): String {
+    fun getIPAddress2(useIPv4: Boolean): String? {
         try {
             val nis = NetworkInterface.getNetworkInterfaces()
             val adds = LinkedList<InetAddress>()
@@ -394,7 +430,7 @@ object NetworkUtils {
         } catch (e: SocketException) {
             e.printStackTrace()
         }
-        return ""
+        return null
     }
 
     /**
@@ -460,7 +496,7 @@ object NetworkUtils {
         get() {
             @SuppressLint("WifiManagerLeak") val wm =
                 getContext().getSystemService(Context.WIFI_SERVICE) as WifiManager
-            return Formatter.formatIpAddress(wm.dhcpInfo.ipAddress)?:""
+            return Formatter.formatIpAddress(wm.dhcpInfo.ipAddress) ?: ""
         }
 
     /**
@@ -473,7 +509,7 @@ object NetworkUtils {
         get() {
             @SuppressLint("WifiManagerLeak") val wm =
                 getContext().getSystemService(Context.WIFI_SERVICE) as WifiManager
-            return Formatter.formatIpAddress(wm.dhcpInfo.gateway)?:""
+            return Formatter.formatIpAddress(wm.dhcpInfo.gateway) ?: ""
         }
 
     /**
@@ -486,7 +522,7 @@ object NetworkUtils {
         get() {
             @SuppressLint("WifiManagerLeak") val wm =
                 getContext().getSystemService(Context.WIFI_SERVICE) as WifiManager
-            return Formatter.formatIpAddress(wm.dhcpInfo.netmask)?:""
+            return Formatter.formatIpAddress(wm.dhcpInfo.netmask) ?: ""
         }
 
     /**
@@ -499,7 +535,7 @@ object NetworkUtils {
         get() {
             @SuppressLint("WifiManagerLeak") val wm =
                 getContext().getSystemService(Context.WIFI_SERVICE) as WifiManager
-            return Formatter.formatIpAddress(wm.dhcpInfo.serverAddress)?:""
+            return Formatter.formatIpAddress(wm.dhcpInfo.serverAddress) ?: ""
         }
 
 

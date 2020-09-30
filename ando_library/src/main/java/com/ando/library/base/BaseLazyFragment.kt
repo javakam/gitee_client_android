@@ -10,8 +10,8 @@ package com.ando.library.base
  */
 abstract class BaseLazyFragment : BaseFragment(), IBaseLazyInterface {
 
-    @JvmField
-    protected var isDataInitiated = false//Fragment 是否已加载过数据
+    //Fragment 是否已加载过数据
+    protected var isDataInitiated = false
 
     /**
      * <pre>

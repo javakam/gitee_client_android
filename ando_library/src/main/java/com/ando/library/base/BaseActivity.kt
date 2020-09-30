@@ -24,6 +24,7 @@ import com.ando.library.base.BaseApplication.Companion.isGray
 import com.ando.library.views.GrayFrameLayout
 import com.ando.toolkit.StringUtils.noNull
 import com.ando.toolkit.ext.ToastUtils
+import com.ando.toolkit.ext.toastShort
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -32,9 +33,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Title:BaseActivity
  *
- *
  * Description:
- *
  *
  * @author javakam
  * @date 2019/3/17 13:17
@@ -105,7 +104,6 @@ abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
     /**
      * 重写 getResource 方法，防止系统字体影响
      *
-     *
      * https://www.jianshu.com/p/5effff3db399
      */
     override fun getResources(): Resources { //禁止app字体大小跟随系统字体大小调节
@@ -124,15 +122,14 @@ abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
         mView = null
     }
 
-    fun getStringArray(@ArrayRes id: Int): List<String> =
-        listOf(*resources.getStringArray(id))
+    fun getStringArray(@ArrayRes id: Int): List<String> = listOf(*resources.getStringArray(id))
 
     fun showMessage(message: String?) {
         if (mView != null) {
             Snackbar.make(mView!!, message!!, Snackbar.LENGTH_SHORT).show()
             return
         }
-        shortToast(message)
+        toastShort(message)
     }
 
     /**
@@ -156,7 +153,7 @@ abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
     protected fun exitBy2Click(delay: Long, @StringRes text: Int) {
         if (!isExit) {
             isExit = true // 准备退出
-            shortToast(text)
+            toastShort(text)
             // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
             Flowable.timer(delay, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .subscribe { isExit = false }
@@ -169,12 +166,4 @@ abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
 //            startActivity(backHome);
         }
     }
-
-    fun shortToast(@StringRes text: Int) = ToastUtils.shortToast(noNull(getString(text)))
-
-    fun shortToast(text: String?) = ToastUtils.shortToast(noNull(text))
-
-    fun longToast(@StringRes text: Int) = ToastUtils.longToast(noNull(getString(text)))
-
-    fun longToast(text: String?) = ToastUtils.longToast(noNull(text))
 }

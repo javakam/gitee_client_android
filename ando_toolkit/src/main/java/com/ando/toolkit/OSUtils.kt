@@ -10,7 +10,6 @@ import android.os.Build
 import android.os.Environment
 import android.text.TextUtils
 import com.ando.toolkit.ToolKit.getContext
-import com.ando.toolkit.Utils.closeIOQuietly
 import com.ando.toolkit.config.ScreenType
 import java.io.File
 import java.io.FileInputStream
@@ -28,6 +27,7 @@ import java.util.regex.Pattern
 object OSUtils {
 
     private val PATTERN_FLYME_VERSION = Pattern.compile("(\\d+\\.){2}\\d")
+
     //
     const val ROM_MIUI = "miui"
     const val ROM_EMUI = "emui"
@@ -59,7 +59,7 @@ object OSUtils {
     private var sScreenType = 0
     private var sIsTabletChecked = false
     private const val sIsTabletValue = false
-    private val BRAND = Build.BRAND.toLowerCase()
+    private val BRAND = Build.BRAND.toLowerCase(Locale.ROOT)
 
     /**
      * 检验设备屏幕的尺寸
@@ -288,7 +288,7 @@ object OSUtils {
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
-                closeIOQuietly(fileInputStream)
+                fileInputStream?.close()
             }
         }
         var clzSystemProperties: Class<*>? = null
