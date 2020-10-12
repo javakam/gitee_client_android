@@ -52,11 +52,11 @@ abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         initActivityStyle()
         super.onCreate(savedInstanceState)
-        val layoutId = layoutId
+        val layoutId = getLayoutId()
         if (layoutId > 0) {
             setContentView(layoutId)
         } else {
-            setContentView(layoutView)
+            setContentView(getLayoutView())
         }
         mView = findViewById(R.id.content)
         initView(savedInstanceState)

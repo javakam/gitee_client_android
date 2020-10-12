@@ -23,7 +23,9 @@ import com.ando.toolkit.ext.ToastUtils
 abstract class BaseFragment : Fragment(), IBaseInterface {
 
     protected var activity: BaseActivity? = null
+        private set
     protected var rootView: View? = null
+        private set
 
     //
     protected var isActivityCreated = false//Activity 是否已创建
@@ -40,10 +42,10 @@ abstract class BaseFragment : Fragment(), IBaseInterface {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        rootView = if (layoutId > 0) {
-            inflater.inflate(layoutId, container, false)
+        rootView = if (getLayoutId() > 0) {
+            inflater.inflate(getLayoutId(), container, false)
         } else {
-            layoutView
+            getLayoutView()
         }
         initView(savedInstanceState)
         initListener()

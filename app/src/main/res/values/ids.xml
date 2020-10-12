@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--  MainActivity 页面容器  -->
+    <item name="main_container" type="id" />
+
     <!--  沉浸式状态栏  -->
     <item name="status_bar_view" type="id" />
 

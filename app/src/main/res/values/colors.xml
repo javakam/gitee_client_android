@@ -4,7 +4,9 @@
     <color name="colorPrimaryDark">#005d2b</color>
     <color name="colorAccent">#03DAC5</color>
 
+    <drawable name="drawable_transparent">#00000000</drawable>
     <color name="color_main_blue">#3368AE</color>
+    <color name="color_nav_normal">#b3c2d9</color>
 
     <color name="font_black">#000000</color>
     <color name="font_black_light">#808080</color>

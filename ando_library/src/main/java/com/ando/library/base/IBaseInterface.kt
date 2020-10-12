@@ -7,6 +7,7 @@ interface IBaseInterface {
     fun initView(savedInstanceState: Bundle?)
     fun initListener() {}
     fun initData() {}
-    val layoutView: View?
-    val layoutId: Int
+
+    fun getLayoutView(): View? = null
+    fun getLayoutId(): Int
 }

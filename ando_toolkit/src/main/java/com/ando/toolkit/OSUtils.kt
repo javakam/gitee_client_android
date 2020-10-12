@@ -291,7 +291,7 @@ object OSUtils {
                 fileInputStream?.close()
             }
         }
-        var clzSystemProperties: Class<*>? = null
+        val clzSystemProperties: Class<*>?
         try {
             clzSystemProperties = Class.forName("android.os.SystemProperties")
             val getMethod: Method = clzSystemProperties.getDeclaredMethod(

@@ -16,16 +16,22 @@ object L {
         ZLog.logEnabled = enable
     }
 
+    fun v(msg: String?) = ZLog.v(msg)
     fun v(tag: String = "", msg: String?) = ZLog.v(msg, tag)
 
+    fun d(msg: String?) = ZLog.d(msg)
     fun d(tag: String = "", msg: String?) = ZLog.d(msg, tag)
 
+    fun i(msg: String?) = ZLog.i(msg)
     fun i(tag: String = "", msg: String?) = ZLog.i(msg, tag)
 
+    fun w(msg: String?) = ZLog.w(msg)
     fun w(tag: String = "", msg: String?) = ZLog.w(msg, tag)
 
-    fun e(tag: String = "", msg: String?) = ZLog.e(msg, tag)
+    fun e(msg: String?) = ZLog.e(msg)
+    fun e(tag: String, msg: String?) = ZLog.e(msg, tag)
 
+    fun logJson(msg: String?) = ZLog.json(msg)
     fun logJson(tag: String = "", msg: String) = ZLog.json(msg, tag)
 
 }
