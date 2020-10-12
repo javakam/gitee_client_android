@@ -8,7 +8,7 @@ import com.ando.os.utils.R
 /**
  * 倒计时Button帮助类
  *
- * @author javakam
+ * @author changbao
  * @date 2018/11/22 上午12:38
  */
 class CountDownTimerHelper constructor(

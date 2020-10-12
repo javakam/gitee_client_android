@@ -17,7 +17,7 @@ import com.ando.toolkit.ext.ToastUtils
  *
  * Description:
  *
- * @author javakam
+ * @author changbao
  * @date 2019/3/17 13:24
  */
 abstract class BaseFragment : Fragment(), IBaseInterface {

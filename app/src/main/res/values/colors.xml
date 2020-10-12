@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    <color name="colorPrimary">#6200EE</color>-->
-<!--    <color name="colorPrimaryDark">#3700B3</color>-->
-<!--    <color name="colorAccent">#03DAC5</color>-->
-
     <color name="colorPrimary">#49bb79</color>
     <color name="colorPrimaryDark">#005d2b</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <color name="color_main_blue">#3368AE</color>
+
+    <color name="font_black">#000000</color>
+    <color name="font_black_light">#808080</color>
+    <color name="font_gray">#918D8D</color>
+    <color name="font_gray_B3C2D9">#B3C2D9</color>
+    <color name="font_gray_BAC8DC">#BAC8DC</color>
+    <color name="font_gray_999999">#999999</color>
+    <color name="font_gray_878787">#878787</color>
+    <color name="font_gray_717171">#717171</color>
+    <color name="font_gray_6E6E6E">#6E6E6E</color>
+    <color name="font_gray_646464">#646464</color>
+    <color name="font_gray_585858">#585858</color>
+    <color name="font_gray_4E4E4E">#4E4E4E</color>
+    <color name="font_gray_BCBCBC">#BCBCBC</color>
+    <color name="color_red_940000">#940000</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="gray_EEEEEE">#EEEEEE</color>
+    <color name="gray_DDDDDD">#DDDDDD</color>
+    <color name="color_black_transparent">#EE000000</color>
+
 </resources>

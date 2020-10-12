@@ -10,7 +10,7 @@ import org.json.JSONObject
  * <p>
  * Description: https://github.com/zyyoona7/KExtensions/blob/master/lib/src/main/java/com/zyyoona7/extensions/log/ZLog.kt
  * </p>
- * @author javakam
+ * @author changbao
  * @date 2020/9/30 10:40
  */
 internal object ZLog {

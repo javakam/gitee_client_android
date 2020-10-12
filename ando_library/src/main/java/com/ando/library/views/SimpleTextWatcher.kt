@@ -11,7 +11,7 @@ import android.text.TextWatcher
  * implementations of each method. Extend this if you do not intend to override
  * every method of [TextWatcher].
  *
- * @author javakam
+ * @author changbao
  * @date 2018/11/2 9:54
  */
 class SimpleTextWatcher : TextWatcher {

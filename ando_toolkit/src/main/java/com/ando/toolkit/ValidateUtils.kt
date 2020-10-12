@@ -8,7 +8,7 @@ import java.util.regex.Pattern
  *
  * Description:有效性验证
  *
- * @author javakam
+ * @author changbao
  * @date 2019/10/31 10:39
  */
 object ValidateUtils {

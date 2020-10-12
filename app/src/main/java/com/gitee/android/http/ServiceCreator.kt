@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * <p>
  * Description:
  * </p>
- * @author javakam
+ * @author changbao
  * @date 2020/8/13  16:04
  */
 object ServiceCreator {

@@ -18,7 +18,7 @@ import com.ando.toolkit.log.L
 /**
  * Drawable工具类
  *
- * @author javakam
+ * @author changbao
  * @date 2019/1/3 下午3:47
  */
 class DrawableUtils private constructor() {

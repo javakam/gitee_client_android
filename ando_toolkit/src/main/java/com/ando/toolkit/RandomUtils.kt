@@ -9,7 +9,7 @@ import java.util.*
  * Description:随机工具类 modified form Trinea RandomUtils
  *
  *
- * @author javakam
+ * @author changbao
  * @date 2019/11/13 11:42
  */
 object RandomUtils {

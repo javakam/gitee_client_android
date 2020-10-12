@@ -3,7 +3,7 @@ package com.ando.toolkit.config
 /**
  * 屏幕类型
  *
- * @author javakam
+ * @author changbao
  * @date 2018/11/22 下午5:24
  */
 object ScreenType {

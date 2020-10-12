@@ -9,7 +9,7 @@ import retrofit2.http.Path
  * <p>
  * Description:
  * </p>
- * @author javakam
+ * @author changbao
  * @date 2020/8/13  16:05
  */
 interface ApiService {

@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment
  *
  * Description:Activity 工具类
  *
- * @author javakam
+ * @author changbao
  * @date 2019/11/15 14:44
  */
 object ActivityUtils {

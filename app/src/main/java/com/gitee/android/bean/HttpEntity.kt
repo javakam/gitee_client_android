@@ -8,7 +8,7 @@ package com.gitee.android.bean
 // * <p>
 // * Description:
 // * </p>
-// * @author javakam
+// * @author changbao
 // * @date 2020/9/24  16:49
 // */
 //

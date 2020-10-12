@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  沉浸式状态栏  -->
+    <item name="status_bar_view" type="id" />
+
+    <!--  播放器基类  -->
+    <item name="video_view" type="id" />
+
+    <!--  下拉刷新/加载更多  -->
+    <item name="refreshLayout" type="id" />
+    <item name="refreshRecycler" type="id" />
+
+    <!--  状态视图  -->
+    <item name="stateLayout" type="id" />
+
+    <!--  TitleView  -->
+    <item name="titleView" type="id" />
+
+    <!--  WebView  -->
+    <item name="webView" type="id" />
+
+    <!--  RecyclerView  -->
+    <item name="recyclerView" type="id" />
+
+    <!--  Fragment容器  -->
+    <item name="fragmentContainer" type="id" />
+
+    <!--  导航条  -->
+    <item name="magicIndicator" type="id" />
+
+
+</resources>

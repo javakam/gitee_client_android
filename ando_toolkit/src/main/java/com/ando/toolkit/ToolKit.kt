@@ -8,7 +8,7 @@ import android.content.Context
  *
  * Description:
  *
- * @author javakam
+ * @author changbao
  * @date 2019/3/17 14:45
  */
 object ToolKit {

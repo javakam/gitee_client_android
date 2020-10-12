@@ -25,7 +25,7 @@ import java.util.*
  * Description: 截屏工具类
  *
  *
- * @author javakam
+ * @author changbao
  * @date 2020/1/3 10:58
  */
 object ScreenShotUtils {

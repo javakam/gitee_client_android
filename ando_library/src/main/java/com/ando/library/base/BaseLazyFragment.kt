@@ -5,7 +5,7 @@ package com.ando.library.base
  *
  * Description:
  *
- * @author javakam
+ * @author changbao
  * @date 2019/3/17 13:24
  */
 abstract class BaseLazyFragment : BaseFragment(), IBaseLazyInterface {

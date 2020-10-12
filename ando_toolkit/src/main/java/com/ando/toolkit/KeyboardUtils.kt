@@ -16,7 +16,7 @@ import java.util.*
 /**
  * 软键盘工具
  *
- * @author javakam
+ * @author changbao
  * @date 2019/1/14 下午10:04
  */
 class KeyboardUtils : OnGlobalLayoutListener {

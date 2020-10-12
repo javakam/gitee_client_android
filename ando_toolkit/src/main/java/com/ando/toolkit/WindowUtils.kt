@@ -19,7 +19,7 @@ import com.ando.toolkit.ext.DimensionUtils.getStatusBarHeight
  *
  * Description:Window窗体工具类
  *
- * @author javakam
+ * @author changbao
  * @date 2018/9/23 18:54
  */
 object WindowUtils {

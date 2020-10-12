@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit
  *
  * Description:
  *
- * @author javakam
+ * @author changbao
  * @date 2019/3/17 13:17
  */
 abstract class BaseActivity : AppCompatActivity(), IBaseInterface {

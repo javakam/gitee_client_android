@@ -13,7 +13,7 @@ import java.io.InputStreamReader
  * eg: AssetsUtils.getBeanByClass(Application.get(), "video.json", VideoBean.class);
  * </pre>
  *
- * @author javakam
+ * @author changbao
  * @date 2019/11/7  10:12
  */
 object AssetsUtils {

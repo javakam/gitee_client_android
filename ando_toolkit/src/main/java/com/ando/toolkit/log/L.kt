@@ -5,7 +5,7 @@ package com.ando.toolkit.log
  * <p>
  * Description:扩展函数 - 日志打印
  * </p>
- * @author javakam
+ * @author changbao
  * @date 2020/9/30  10:41
  */
 object L {
@@ -16,16 +16,16 @@ object L {
         ZLog.logEnabled = enable
     }
 
-    fun v(msg: String?, tag: String = "") = ZLog.v(msg, tag)
+    fun v(tag: String = "", msg: String?) = ZLog.v(msg, tag)
 
-    fun d(msg: String?, tag: String = "") = ZLog.d(msg, tag)
+    fun d(tag: String = "", msg: String?) = ZLog.d(msg, tag)
 
-    fun i(msg: String?, tag: String = "") = ZLog.i(msg, tag)
+    fun i(tag: String = "", msg: String?) = ZLog.i(msg, tag)
 
-    fun w(msg: String?, tag: String = "") = ZLog.w(msg, tag)
+    fun w(tag: String = "", msg: String?) = ZLog.w(msg, tag)
 
-    fun e(msg: String?, tag: String = "") = ZLog.e(msg, tag)
+    fun e(tag: String = "", msg: String?) = ZLog.e(msg, tag)
 
-    fun logJson(msg: String, tag: String = "") = ZLog.json(msg, tag)
+    fun logJson(tag: String = "", msg: String) = ZLog.json(msg, tag)
 
 }

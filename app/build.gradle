@@ -79,17 +79,17 @@ android {
         }
     }
 
-    productFlavors {
-        shop {
-            //manifestPlaceholders = [UMENG_CHANNEL_VALUE: "shop"]
-            applicationId "com.gitee.android"
-            dimension "type"
-            buildConfigField "Boolean", "IS_SKIP_LOGIN", "true"
-            buildConfigField "Boolean", "IS_GOOGLE_PLAY", "false"
-            buildConfigField "String", "APP", "\"gitee\""
-            buildConfigField "String", "URL_BASE", "\"http://www.gitee.com/\""
-        }
-    }
+//    productFlavors {
+//        shop {
+//            //manifestPlaceholders = [UMENG_CHANNEL_VALUE: "shop"]
+//            applicationId "com.gitee.android"
+//            dimension "type"
+//            buildConfigField "Boolean", "IS_SKIP_LOGIN", "true"
+//            buildConfigField "Boolean", "IS_GOOGLE_PLAY", "false"
+//            buildConfigField "String", "APP", "\"gitee\""
+//            buildConfigField "String", "URL_BASE", "\"http://www.gitee.com/\""
+//        }
+//    }
 
     android.applicationVariants.all { variant ->
         variant.outputs.all {
@@ -167,6 +167,13 @@ dependencies {
     // GreenDao
     implementation 'org.greenrobot:greendao:3.3.0'
 
+    // SmartRefreshLayout
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'
+    implementation  'com.scwang.smart:refresh-header-classics:2.0.1'
+    implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'
+    // implementation  'com.scwang.smart:refresh-header-material:2.0.1'
+
+    //
     implementation project(':ando_library')
 
 }

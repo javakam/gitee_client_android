@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Title: View 按键防抖动
  *
- * @author javakam
+ * @author changbao
  * Date 2017/10/29 17:14
  */
 
