@@ -1,6 +1,5 @@
 package com.gitee.android.common
 
-import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -8,18 +7,9 @@ import com.ando.library.base.BaseFragment
 import com.gitee.android.R
 
 /**
- * Title:
- * <p>
- * Description:
- * </p>
- * @author javakam
- * @date 2020/10/12  14:36
- */
-
-/**
  * 切换 底部Fragment
  * <p>
- * 注意 ID 必须为 :  transaction.add(R.id.fl_main_container, fragment)
+ * 注意 ID 必须为 :  transaction.add(R.id.main_container, fragment)
  */
 fun switchFragment(
     manager: FragmentManager,

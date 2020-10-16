@@ -3,46 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
-  >
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@id/main_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        />
+        android:layout_weight="1" />
 
     <RadioGroup
         android:id="@+id/indicator_nav_main"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="@color/gray_DDDDDD"
+        android:background="@color/color_nav_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
-        android:paddingBottom="3dp"
-      >
+        android:paddingBottom="3dp">
 
         <RadioButton
-            android:id="@+id/rb_news"
+            android:id="@+id/rb_home"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/drawable_transparent"
             android:button="@null"
+            android:checked="true"
             android:drawableTop="@drawable/sel_main_nav_news"
             android:drawablePadding="3dp"
             android:gravity="center"
-            android:text="@string/nav_news"
+            android:text="@string/nav_home"
             android:textColor="@color/color_main_nav"
             android:textSize="@dimen/font_11" />
 
         <RadioButton
-            android:id="@+id/rb_epaper"
+            android:id="@+id/rb_dynamic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -51,21 +49,7 @@
             android:drawableTop="@drawable/sel_main_nav_news"
             android:drawablePadding="3dp"
             android:gravity="center"
-            android:text="@string/nav_news"
-            android:textColor="@color/color_main_nav"
-            android:textSize="@dimen/font_11" />
-
-        <RadioButton
-            android:id="@+id/rb_point"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/drawable_transparent"
-            android:button="@null"
-            android:drawableTop="@drawable/sel_main_nav_news"
-            android:drawablePadding="3dp"
-            android:gravity="center"
-            android:text="@string/nav_news"
+            android:text="@string/nav_dynamic"
             android:textColor="@color/color_main_nav"
             android:textSize="@dimen/font_11" />
 
@@ -79,7 +63,7 @@
             android:drawableTop="@drawable/sel_main_nav_news"
             android:drawablePadding="3dp"
             android:gravity="center"
-            android:text="@string/nav_news"
+            android:text="@string/nav_mine"
             android:textColor="@color/color_main_nav"
             android:textSize="@dimen/font_11" />
 

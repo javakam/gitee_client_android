@@ -5,8 +5,9 @@
     <color name="colorAccent">#03DAC5</color>
 
     <drawable name="drawable_transparent">#00000000</drawable>
-    <color name="color_main_blue">#3368AE</color>
-    <color name="color_nav_normal">#b3c2d9</color>
+    <color name="color_main_blue">#2196F3</color>
+    <color name="color_nav_normal">#b3afd9</color>
+    <color name="color_nav_bg">#FAFAFA</color>
 
     <color name="font_black">#000000</color>
     <color name="font_black_light">#808080</color>
@@ -21,7 +22,6 @@
     <color name="font_gray_585858">#585858</color>
     <color name="font_gray_4E4E4E">#4E4E4E</color>
     <color name="font_gray_BCBCBC">#BCBCBC</color>
-    <color name="color_red_940000">#940000</color>
 
     <color name="white">#FFFFFF</color>
     <color name="gray_EEEEEE">#EEEEEE</color>
