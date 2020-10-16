@@ -4,6 +4,9 @@ import org.greenrobot.eventbus.EventBus
 
 object EventBusUtils {
 
+    /**
+     * 注: 需要在 Fragment.onViewCreated() 中执行
+     */
     fun <T> register(event: T) {
         if (!EventBus.getDefault().isRegistered(event)) {
             EventBus.getDefault().register(event)
