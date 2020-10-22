@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/wx_article_tabs_fragment">
+
+<!--    <fragment-->
+<!--        android:id="@+id/wx_article_tabs_fragment"-->
+<!--        android:name="com.ando.wo.ui.wechat.WxArticleTabsFragment"-->
+<!--        android:label="LabelTabList"-->
+<!--        tools:layout="@layout/fragment_wx_article_tabs">-->
+
+<!--        <action-->
+<!--            android:id="@+id/action_tabs_fragment_to_details_fragment"-->
+<!--            app:destination="@id/article_details_fragment"-->
+<!--            app:enterAnim="@anim/slide_in_right"-->
+<!--            app:exitAnim="@anim/slide_out_left"-->
+<!--            app:popEnterAnim="@anim/slide_in_left"-->
+<!--            app:popExitAnim="@anim/slide_out_right" />-->
+<!--    </fragment>-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/article_details_fragment"-->
+<!--        android:name="com.ando.wo.ui.wechat.WxArticleDetailFragment"-->
+<!--        android:label="LabelDetail"-->
+<!--        tools:layout="@layout/fragment_wx_article_details">-->
+
+<!--        <action-->
+<!--            android:id="@+id/action_article_details_fragment_to_read_fragment"-->
+<!--            app:destination="@id/read_fragment"-->
+<!--            app:enterAnim="@anim/slide_in_right"-->
+<!--            app:exitAnim="@anim/slide_out_left"-->
+<!--            app:popEnterAnim="@anim/slide_in_left"-->
+<!--            app:popExitAnim="@anim/slide_out_right" />-->
+
+<!--        <argument-->
+<!--            android:name="tabId"-->
+<!--            app:argType="string" />-->
+<!--    </fragment>-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/read_fragment"-->
+<!--        android:name="com.ando.wo.ui.read.ReaderFragment"-->
+<!--        android:label="LabelRead"-->
+<!--        tools:layout="@layout/fragment_article_reader">-->
+
+<!--        <argument-->
+<!--            android:name="title"-->
+<!--            app:argType="string" />-->
+
+<!--        <argument-->
+<!--            android:name="link"-->
+<!--            app:argType="string" />-->
+<!--    </fragment>-->
+
+</navigation>

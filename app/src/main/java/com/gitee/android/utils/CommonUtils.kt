@@ -17,8 +17,6 @@ import com.gitee.android.GiteeApplication
  * @date 2020/8/17  14:52
  */
 
-fun noNull(s: String?): String = if (s.isNullOrBlank()) "" else s
-
 fun setClipDate(text: String?) {
     val cm: ClipboardManager? =
         GiteeApplication.INSTANCE.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager?

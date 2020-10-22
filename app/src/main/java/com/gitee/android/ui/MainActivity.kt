@@ -6,7 +6,10 @@ import android.widget.RadioGroup
 import com.ando.library.base.BaseFragment
 import com.gitee.android.R
 import com.gitee.android.common.switchFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     companion object {
