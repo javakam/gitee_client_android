@@ -42,9 +42,39 @@ companion object {
 }
 ```
 
+## 添加矢量图SVG
+https://developer.android.com/studio/write/vector-asset-studio?hl=zh-cn
+
 ## 参考项目
+
+https://github.com/k3marek/GithubBrowser
+
+https://github.com/omjoonkim/GitHubBrowserApp
 
 https://github.com/zyyoona7/KExtensions/blob/master/lib/src/main/java/com/zyyoona7/extensions/
 
-
 https://github.com/shiweibsw/Android-kotlin-extend-utils/blob/master/app/src/main/java/com/kd/kotlin/extend/utils/
+
+## Tips
+
+1. NavController,BottomNavigationView 不同步问题
+
+https://medium.com/@freedom.chuks7/how-to-use-jet-pack-components-bottomnavigationview-with-navigation-ui-19fb120e3fb9
+
+2. xml中 fragment -> FragmentContainerView 异常
+
+https://stackoverflow.com/questions/58320487/using-fragmentcontainerview-with-navigation-component
+
+```
+error:
+navController = Navigation.findNavController(this, R.id.nav_host)
+
+success:
+val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+navController = navHostFragment.navController
+```
+
+
+
+
+

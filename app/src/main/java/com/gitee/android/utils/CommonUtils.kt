@@ -6,6 +6,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.ShareCompat
+import com.ando.toolkit.ToolKit
 import com.gitee.android.GiteeApplication
 
 /**
@@ -19,7 +20,7 @@ import com.gitee.android.GiteeApplication
 
 fun setClipDate(text: String?) {
     val cm: ClipboardManager? =
-        GiteeApplication.INSTANCE.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager?
+        ToolKit.getContext().getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager?
     if (cm != null) {
         cm.setPrimaryClip(ClipData.newPlainText(null, text))//参数一：标签，可为空，参数二：要复制到剪贴板的文本
         if (cm.hasPrimaryClip()) {

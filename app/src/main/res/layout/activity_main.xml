@@ -1,72 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout
-        android:id="@id/main_container"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
-    <RadioGroup
-        android:id="@+id/indicator_nav_main"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@color/color_nav_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="3dp">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:navGraph="@navigation/nav_main_graph" />
 
-        <RadioButton
-            android:id="@+id/rb_home"
-            android:layout_width="0dp"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavView"
+            style="@style/Widget.MaterialComponents.BottomNavigationView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/drawable_transparent"
-            android:button="@null"
-            android:checked="true"
-            android:drawableTop="@drawable/sel_main_nav_news"
-            android:drawablePadding="3dp"
-            android:gravity="center"
-            android:text="@string/nav_home"
-            android:textColor="@color/color_main_nav"
-            android:textSize="@dimen/font_11" />
+            android:layout_gravity="bottom"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_nav" />
 
-        <RadioButton
-            android:id="@+id/rb_dynamic"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/drawable_transparent"
-            android:button="@null"
-            android:drawableTop="@drawable/sel_main_nav_news"
-            android:drawablePadding="3dp"
-            android:gravity="center"
-            android:text="@string/nav_dynamic"
-            android:textColor="@color/color_main_nav"
-            android:textSize="@dimen/font_11" />
-
-        <RadioButton
-            android:id="@+id/rb_mine"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/drawable_transparent"
-            android:button="@null"
-            android:drawableTop="@drawable/sel_main_nav_news"
-            android:drawablePadding="3dp"
-            android:gravity="center"
-            android:text="@string/nav_mine"
-            android:textColor="@color/color_main_nav"
-            android:textSize="@dimen/font_11" />
-
-    </RadioGroup>
-
-</LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

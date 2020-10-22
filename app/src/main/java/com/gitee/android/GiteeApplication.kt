@@ -2,10 +2,10 @@ package com.gitee.android
 
 import ando.file.FileOperator
 import ando.file.core.FileDirectory
-import android.annotation.SuppressLint
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.ando.library.utils.CrashHandler
+import com.ando.toolkit.ToolKit
 import com.ando.toolkit.log.L
 import com.gitee.android.common.VIEW_REFRESH_COLOR
 import com.scwang.smart.refresh.footer.ClassicsFooter
@@ -44,17 +44,12 @@ class GiteeApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        INSTANCE = this
 
-        val isDebug = true
+        val isDebug = BuildConfig.DEBUG
+        ToolKit.init(this,isDebug)
         FileOperator.init(this, isDebug)
         CrashHandler.init(this, "${FileDirectory.getCacheDir().absolutePath}/Crash/")
         L.init("123", isDebug)
-    }
-
-    companion object {
-        @SuppressLint("StaticFieldLeak")
-        lateinit var INSTANCE: Application
     }
 
 }

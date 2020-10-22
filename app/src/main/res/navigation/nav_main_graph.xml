@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.gitee.android.ui.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
+
+<!--        <action-->
+<!--            android:id="@+id/action_home_to_dynamic"-->
+<!--            app:destination="@id/nav_dynamic" />-->
+
+        <!-- <argument-->
+        <!--     android:name="title"   -->
+        <!--     app:argType="string" /> -->
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_dynamic"
+        android:name="com.gitee.android.ui.DynamicFragment"
+        android:label="Dynamic"
+        tools:layout="@layout/fragment_dynamic">
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_mine"
+        android:name="com.gitee.android.ui.MineFragment"
+        android:label="Mine"
+        tools:layout="@layout/fragment_mine">
+
+
+    </fragment>
+
+</navigation>

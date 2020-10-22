@@ -11,7 +11,7 @@ fun ImageView.loadPic(url: String?) {
 }
 
 @BindingAdapter("isGone")
-fun bindIsGone(view: View, isGone: Boolean) {
+fun isGone(view: View, isGone: Boolean) {
     view.visibility = if (isGone) View.GONE else  View.VISIBLE
 }
 
