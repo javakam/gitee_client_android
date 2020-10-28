@@ -17,17 +17,6 @@
 
     </data>
 
-    <!--    <com.google.android.material.card.MaterialCardView-->
-    <!--        android:id="@+id/card_tab_name"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginBottom="1dp"-->
-    <!--        android:onClick="@{clickListener}"-->
-    <!--        app:cardElevation="3dp"-->
-    <!--        app:cardPreventCornerOverlap="false"-->
-    <!--        app:shapeAppearanceOverlay="@style/ShapeAppearance.Gitee.Card">-->
-    <!--    </com.google.android.material.card.MaterialCardView>-->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/const_tab_name"
         android:layout_width="match_parent"
@@ -35,13 +24,14 @@
         android:layout_marginBottom="1dp"
         android:onClick="@{clickListener}"
         android:paddingLeft="@dimen/dp_15"
-        android:paddingTop="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_10"
         android:paddingRight="@dimen/dp_15"
-        android:paddingBottom="@dimen/dp_5">
+        android:paddingBottom="@dimen/dp_10">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civ_article_avatar"
             loadPic="@{viewModel.tabAvatar}"
+            placeholder="@{com.gitee.android.R.mipmap.ic_head_default}"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
             app:layout_constraintHorizontal_bias="0"
@@ -53,18 +43,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/dp_3"
+            android:layout_marginStart="@dimen/dp_15"
             android:ellipsize="end"
-            android:gravity="left|center_vertical"
             android:maxLines="2"
-            android:padding="3dp"
             android:text="@{viewModel.tabName}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:textSize="@dimen/font_15"
+            android:textColor="@color/font_black"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintBottom_toBottomOf="@id/civ_article_avatar"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/civ_article_avatar"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/civ_article_avatar" />
+            app:layout_constraintTop_toTopOf="@id/civ_article_avatar" />
 
         <TextView
             android:id="@+id/tv_tab_desc"
@@ -73,16 +63,16 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/dp_3"
             android:ellipsize="end"
-            android:gravity="left|center_vertical"
             android:maxLines="5"
             android:text="@{Html.fromHtml(viewModel.tabDesc,Html.FROM_HTML_MODE_LEGACY)}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:textSize="@dimen/font_15"
+            android:textColor="@color/font_gray_585858"
+            android:textSize="@dimen/font_14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/civ_article_avatar"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_tab_name" />
+            app:layout_constraintTop_toBottomOf="@id/civ_article_avatar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,6 +1,7 @@
 package com.gitee.android.common
 
 import com.gitee.android.R
+import com.gitee.android.base.PageConfig
 
 /**
  * Title: Constants

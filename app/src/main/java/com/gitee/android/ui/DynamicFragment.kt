@@ -1,7 +1,6 @@
 package com.gitee.android.ui
 
 import android.os.Bundle
-import com.ando.library.base.BaseLazyFragment
 import com.ando.library.base.BaseMvcLazyFragment
 import com.gitee.android.R
 import dagger.hilt.android.AndroidEntryPoint

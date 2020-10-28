@@ -20,12 +20,13 @@
             type="Boolean" />
     </data>
 
-    <FrameLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_article_tabs"
+            android:id="@id/refreshRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
@@ -33,7 +34,6 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_list_home_article" />
 
-    </FrameLayout>
-
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </layout>

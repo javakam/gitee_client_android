@@ -22,12 +22,6 @@ import kotlinx.coroutines.Job
  * @author ChangBao
  * @date 2020/10/27  14:12
  */
-
-//"推荐项目", "热门项目", "最近更新"
-inline fun HomeTabFragment.fetch(block: () -> Unit) {
-
-}
-
 class HomeTabFragment : BaseFragment() {
     /// R.layout.fragment_home_tab
     companion object {
@@ -61,10 +55,9 @@ class HomeTabFragment : BaseFragment() {
         binding.resId = R.color.colorPrimary
         binding.lifecycleOwner = this
 
-
         val adapter = HomeArticleListAdapter()
-        binding.rvArticleTabs.adapter = adapter
-        binding.rvArticleTabs.addItemDecoration(
+        binding.refreshRecycler.adapter = adapter
+        binding.refreshRecycler.addItemDecoration(
             RecyclerItemDecoration(
                 baseActivity,
                 LinearLayoutManager.HORIZONTAL
@@ -78,17 +71,31 @@ class HomeTabFragment : BaseFragment() {
     private fun subscribeUi(adapter: HomeArticleListAdapter) {
 
         jobArticleTabs?.cancel()
-        jobArticleTabs = when (arguments?.getInt("pos", 0)) {
-            0 -> viewModel.getRecommendArticles(1)
-            1 -> viewModel.getHotArticles(1)
-            else -> viewModel.getRecentlyArticles(1)
+        when (arguments?.getInt("pos", 0)) {
+            0 -> {
+                jobArticleTabs = viewModel.getRecommendArticles(1)
+                //xml databinding
+                viewModel.recommendArticles.observe(viewLifecycleOwner, Observer { tabs ->
+                    binding.hasTabs = !tabs.isNullOrEmpty()
+                    adapter.submitList(tabs)
+                })
+            }
+            1 -> {
+                jobArticleTabs = viewModel.getHotArticles(1)
+                viewModel.hotArticles.observe(viewLifecycleOwner, Observer { tabs ->
+                    binding.hasTabs = !tabs.isNullOrEmpty()
+                    adapter.submitList(tabs)
+                })
+            }
+            else ->{
+                jobArticleTabs = viewModel.getRecentlyArticles(1)
+                viewModel.recentlyArticles.observe(viewLifecycleOwner, Observer { tabs ->
+                    binding.hasTabs = !tabs.isNullOrEmpty()
+                    adapter.submitList(tabs)
+                })
+            }
         }
 
-        //xml databinding
-        viewModel.recommendArticles.observe(viewLifecycleOwner, Observer { tabs ->
-            binding.hasTabs = !tabs.isNullOrEmpty()
-            adapter.submitList(tabs)
-        })
 
         //lifecycleScope.launch { }
     }

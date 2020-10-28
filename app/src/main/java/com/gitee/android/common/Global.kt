@@ -5,10 +5,21 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.ando.library.base.BaseFragment
 import com.gitee.android.R
+import com.gitee.android.base.PageConfig
+
+
+val defaultPageConfig= PageConfig(
+        enableRefresh = true,
+        enableLoadMore = true,
+        enableLazyLoading = true,
+        haveRecyclerView = true,
+        haveLoader = true,
+        usedVLayout = false
+)
 
 /**
- * 切换 底部Fragment
- * <p>
+ * 2. 底部Fragment
+ *
  * 注意 ID 必须为 :  transaction.add(R.id.main_container, fragment)
  */
 fun switchFragment(

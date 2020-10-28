@@ -32,6 +32,17 @@ import com.bumptech.glide.request.RequestOptions
  */
 object GlideUtils {
 
+    fun loadImage(imageView: ImageView, url: String?, placeholder: Int) {
+        if (url != null && url.startsWith("http")) {
+            Glide.with(imageView.context)
+                .load(url)
+                .apply(GlideOptionsProvider.noAnimate(placeholder))
+                .into(imageView)
+        } else {
+            Glide.with(imageView.context).load(placeholder).into(imageView)
+        }
+    }
+
     fun loadImage(imageView: ImageView, path: Any?) {
         Glide.with(imageView.context)
             .load(path)
@@ -95,7 +106,7 @@ object GlideUtils {
             .placeholder(placeholder)
         Glide.with(imageView.context)
             .load(path)
-            .apply(options) //                .transition(DrawableTransitionOptions.withCrossFade())
+            .apply(options) // .transition(DrawableTransitionOptions.withCrossFade())
             .dontAnimate()
             .into(imageView)
     }
@@ -174,17 +185,17 @@ object GlideUtils {
             .into(imageView)
     }
 
-    fun clearCache(context: Context?) {
-        Glide.get(context!!).clearMemory()
+    fun clearCache(context: Context) {
+        Glide.get(context).clearMemory()
         Glide.get(context).clearDiskCache()
     }
 
-    fun clearMemoryCache(context: Context?) {
-        Glide.get(context!!).clearMemory()
+    fun clearMemoryCache(context: Context) {
+        Glide.get(context).clearMemory()
     }
 
-    fun clearDiskCache(context: Context?) {
-        Glide.get(context!!).clearDiskCache()
+    fun clearDiskCache(context: Context) {
+        Glide.get(context).clearDiskCache()
     }
 
 }
