@@ -33,16 +33,15 @@ import androidx.recyclerview.widget.RecyclerView.ItemDecoration
  * @author changbao
  * @date 2019/11/22  9:35
  */
-class RecyclerViewDividerItemDecoration(context: Context, orientation: Int) : ItemDecoration() {
+class RecyclerItemDecoration(context: Context, orientation: Int) : ItemDecoration() {
     private var mPaint: Paint? = null
     private var mDivider: Drawable?
 
     //分割线高度，默认为1px
-    private var mDividerHeight = 2
+    private var mDividerHeight = 1
 
     //列表的方向：LinearLayoutManager.VERTICAL或LinearLayoutManager.HORIZONTAL
     private val mOrientation: Int
-
 
     /**
      * 自定义分割线
@@ -68,8 +67,8 @@ class RecyclerViewDividerItemDecoration(context: Context, orientation: Int) : It
     ) {
         mDividerHeight = dividerHeight
         mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        mPaint!!.color = dividerColor
-        mPaint!!.style = Paint.Style.FILL
+        mPaint?.color = dividerColor
+        mPaint?.style = Paint.Style.FILL
     }
 
     /**
@@ -86,7 +85,6 @@ class RecyclerViewDividerItemDecoration(context: Context, orientation: Int) : It
         outRect[0, 0, 0] = mDividerHeight
     }
 
-    //绘制分割线
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDraw(c, parent, state)
         if (mOrientation == LinearLayoutManager.VERTICAL) {
@@ -96,7 +94,9 @@ class RecyclerViewDividerItemDecoration(context: Context, orientation: Int) : It
         }
     }
 
-    //绘制横向分割线
+    /**
+     * 横向分割线
+     */
     private fun drawHorizontal(canvas: Canvas, parent: RecyclerView) {
         val left = parent.paddingLeft //获取分割线的左边距，即RecyclerView的padding值
         val right = parent.measuredWidth - parent.paddingRight //分割线右边距
@@ -111,19 +111,22 @@ class RecyclerViewDividerItemDecoration(context: Context, orientation: Int) : It
                 mDivider!!.setBounds(left, top, right, bottom)
                 mDivider!!.draw(canvas)
             }
-            if (mPaint != null) {
+            mPaint?.let {
                 canvas.drawRect(
                     left.toFloat(),
                     top.toFloat(),
                     right.toFloat(),
                     bottom.toFloat(),
-                    mPaint!!
+                    it
                 )
             }
+
         }
     }
 
-    //绘制纵向分割线
+    /**
+     * 纵向分割线
+     */
     private fun drawVertical(canvas: Canvas, parent: RecyclerView) {
         val top = parent.paddingTop
         val bottom = parent.measuredHeight - parent.paddingBottom
@@ -137,13 +140,13 @@ class RecyclerViewDividerItemDecoration(context: Context, orientation: Int) : It
                 mDivider!!.setBounds(left, top, right, bottom)
                 mDivider!!.draw(canvas)
             }
-            if (mPaint != null) {
+            mPaint?.let {
                 canvas.drawRect(
                     left.toFloat(),
                     top.toFloat(),
                     right.toFloat(),
                     bottom.toFloat(),
-                    mPaint!!
+                    it
                 )
             }
         }
@@ -157,14 +160,10 @@ class RecyclerViewDividerItemDecoration(context: Context, orientation: Int) : It
     init {
         require(!(orientation != LinearLayoutManager.VERTICAL && orientation != LinearLayoutManager.HORIZONTAL)) { "请输入正确的参数！" }
         mOrientation = orientation
-        val a = context.obtainStyledAttributes(ATTRS)
+        val attrs = intArrayOf(android.R.attr.listDivider)  //使用系统自带的listDivider
+        val a = context.obtainStyledAttributes(attrs)
         mDivider = a.getDrawable(0)
         a.recycle()
-    }
-
-    companion object {
-        //使用系统自带的listDivider
-        private val ATTRS = intArrayOf(android.R.attr.listDivider)
     }
 
 }

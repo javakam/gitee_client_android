@@ -14,18 +14,16 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
-import android.widget.Toast
-import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.menu.MenuView
 import androidx.appcompat.widget.Toolbar
 import com.ando.library.base.BaseApplication.Companion.exit
 import com.ando.library.base.BaseApplication.Companion.isGray
 import com.ando.library.views.GrayFrameLayout
-import com.ando.toolkit.StringUtils.noNull
-import com.ando.toolkit.ext.ToastUtils
+import com.ando.toolkit.ext.otherwise
 import com.ando.toolkit.ext.toastShort
-import com.google.android.material.snackbar.Snackbar
+import com.ando.toolkit.ext.yes
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
@@ -38,30 +36,16 @@ import java.util.concurrent.TimeUnit
  * @author changbao
  * @date 2019/3/17 13:17
  */
-abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
-    /**
-     * 系统DecorView的根View
-     */
-    protected var mView: View? = null
 
-    /**
-     * 是否退出App
-     */
-    private var isExit = false
-
+abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         initActivityStyle()
         super.onCreate(savedInstanceState)
-        val layoutId = getLayoutId()
-        if (layoutId > 0) {
-            setContentView(layoutId)
-        } else {
-            setContentView(getLayoutView())
-        }
-        mView = findViewById(R.id.content)
-        initView(savedInstanceState)
-        initListener()
-        initData()
+    }
+
+    protected open fun initActivityStyle() {
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
 
     // 灰度处理 : WebView 有时会显示异常
@@ -96,11 +80,6 @@ abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
         return super.onCreateView(name, context, attrs)
     }
 
-    protected fun initActivityStyle() {
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-    }
-
     /**
      * 重写 getResource 方法，防止系统字体影响
      *
@@ -117,21 +96,6 @@ abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
         return resources
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mView = null
-    }
-
-    fun getStringArray(@ArrayRes id: Int): List<String> = listOf(*resources.getStringArray(id))
-
-    fun showMessage(message: String?) {
-        if (mView != null) {
-            Snackbar.make(mView!!, message!!, Snackbar.LENGTH_SHORT).show()
-            return
-        }
-        toastShort(message)
-    }
-
     /**
      * 设置ToolBar和DrawerLayout
      */
@@ -145,6 +109,33 @@ abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
         supportActionBar!!.setHomeButtonEnabled(true) //设置返回键可用
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
+}
+
+abstract class BaseMvcActivity : BaseActivity(), IBaseInterface {
+    /**
+     * 系统DecorView的根View
+     */
+    protected lateinit var mView: View
+        private set
+
+    /**
+     * 是否退出App
+     */
+    private var isExit = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val layoutId = getLayoutId()
+        if (layoutId > 0) {
+            setContentView(layoutId)
+        } else {
+            setContentView(getLayoutView())
+        }
+        mView = findViewById(R.id.content)
+        initView(savedInstanceState)
+        initListener()
+        initData()
+    }
 
     /**
      * 连续点击两次退出App
@@ -152,18 +143,16 @@ abstract class BaseActivity : AppCompatActivity(), IBaseInterface {
     @SuppressLint("CheckResult")
     protected fun exitBy2Click(delay: Long, @StringRes text: Int) {
         if (!isExit) {
-            isExit = true // 准备退出
+            isExit = true
             toastShort(text)
             // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
-            Flowable.timer(delay, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+            Flowable
+                .timer(delay, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .subscribe { isExit = false }
         } else {
             exit()
-            //or 触发 Home 事件
-//            Intent backHome = new Intent(Intent.ACTION_MAIN);
-//            backHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            backHome.addCategory(Intent.CATEGORY_HOME);
-//            startActivity(backHome);
         }
     }
 }
+
+abstract class BaseMvvmActivity : BaseActivity()

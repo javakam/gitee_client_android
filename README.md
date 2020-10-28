@@ -42,6 +42,34 @@ companion object {
 }
 ```
 
+
+## DataBinding 在XML中的具体使用方式
+```
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/swipeRefresh"
+    bind:colorSchemeResources="@{resId}"
+    bind:onRefreshListener="@{() -> viewModel.onRefresh()}"
+    bind:refreshing="@{viewModel.refreshing}"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"></androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+<TextView
+    android:id="@+id/tv_article_tabs"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text='@{"复杂的表达式显示结果  "+@string/app_name+" -> "  + viewModel.wxArticleTabs.size()}' />
+
+<ImageView
+    android:id="@+id/iv_article_tabs_bind"
+    loadPic="@{viewModel.tempImageUrl}"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
+    android:layout_marginTop="3dp"
+    android:scaleType="centerCrop" />
+
+```
+
 ## 添加矢量图SVG
 https://developer.android.com/studio/write/vector-asset-studio?hl=zh-cn
 
@@ -74,6 +102,11 @@ val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as 
 navController = navHostFragment.navController
 ```
 
+3. Retrofit 姿势错误
+```
+ URL query string "{page}" must not have replace block. For dynamic query parameters use @Query.
+     for method ApiService.getRecommendProjects
+```
 
 
 

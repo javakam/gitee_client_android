@@ -7,7 +7,7 @@ package com.ando.library.views.loader
  * Description:加载状态
  *
  *
- * @author javakam
+ * @author ChangBao
  * @date 2019/11/15 15:02
  */
 enum class LoadState(private val state: String, private val value: Int) {

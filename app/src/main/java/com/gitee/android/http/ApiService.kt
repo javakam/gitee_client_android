@@ -1,8 +1,10 @@
 package com.gitee.android.http
 
+import com.gitee.android.bean.ArticleEntity
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * Title: ApiService
@@ -14,19 +16,13 @@ import retrofit2.http.Path
  */
 interface ApiService {
 
-/*
-    //eg https://wanandroid.com/wxarticle/chapters/json
-    @GET("wxarticle/chapters/json")
-    fun getWxArticleTabs(): Call<BaseResponse<List<WxArticleTabsEntity>>?>
+    @GET("v3/projects/featured/")
+    fun getRecommendProjects(@Query("page") page: Int = 1): Call<List<ArticleEntity>?>
 
+    @GET("v3/projects/popular/")
+    fun getHotProjects(@Query("page") page: Int = 1): Call<List<ArticleEntity>?>
 
-    //eg https://wanandroid.com/wxarticle/list/409/1/json
-    @GET("wxarticle/list/{chapterId}/{pageNumber}/json")
-    fun getWxArticleDetail(
-        @Path(value = "chapterId") chapterId: String,
-        @Path(value = "pageNumber") pageNumber: Int = 1
-    ): Call<BaseResponse<BasePage<List<Article>?>?>?>
-*/
-
+    @GET("v3/projects/latest/")
+    fun getRecentlyProjects(@Query("page") page: Int = 1): Call<List<ArticleEntity>?>
 
 }

@@ -1,24 +1,26 @@
 package com.gitee.android.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.widget.RadioGroup
+import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
-import com.ando.library.base.BaseFragment
+import com.ando.library.base.BaseMvvmActivity
 import com.gitee.android.R
-import com.gitee.android.common.switchFragment
 import com.gitee.android.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseMvvmActivity() {
 
     private lateinit var navController: NavController
+
+    override fun initActivityStyle() {
+        supportRequestWindowFeature(Window.FEATURE_ACTION_BAR)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

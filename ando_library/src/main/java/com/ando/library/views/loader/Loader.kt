@@ -19,7 +19,7 @@ import com.ando.toolkit.log.L.w
  * Description: 网络请求加载页,在请求完毕后通过[.setLoadState]设置请求结果
  *
  *
- * @author javakam
+ * @author ChangBao
  * @date 2019/11/15 15:03
  */
 abstract class Loader constructor(

@@ -1,5 +1,71 @@
 package com.gitee.android.bean
 
+import com.google.gson.annotations.SerializedName
+import org.greenrobot.greendao.annotation.Entity
+
+@Entity
+data class ArticleEntity(
+    val created_at: String,
+    val default_branch: String,
+    val description: String,
+    @SerializedName(value = "fork?")
+    val fork: Boolean,
+    val forks_count: Int,
+    val id: Int,
+    val issues_enabled: Boolean,
+    val language: String,
+    val last_push_at: String,
+    val name: String,
+    val name_with_namespace: String,
+    val namespace: Namespace,
+    val owner: Owner,
+    val paas: Any,
+    val parent_id: Int,
+    val parent_path_with_namespace: Any,
+    val path: String,
+    val path_with_namespace: String,
+    val `public`: Boolean,
+    val pull_requests_enabled: Boolean,
+    val recomm: Int,
+    val relation: Any,
+    val stared: Any,
+    val stars_count: Int,
+    val watched: Any,
+    val watches_count: Int,
+    val wiki_enabled: Boolean
+)
+
+data class Namespace(
+    val address: String,
+    val avatar: String,
+    val created_at: String,
+    val description: String,
+    val email: String,
+    val enterprise_id: Int,
+    val from: Any,
+    val id: Int,
+    val level: Int,
+    val location: String,
+    val name: String,
+    val outsourced: Boolean,
+    val owner_id: Int,
+    val path: String,
+    val `public`: Boolean,
+    val updated_at: String,
+    val url: String
+)
+
+data class Owner(
+    val created_at: String,
+    val email: String,
+    val id: Int,
+    val name: String,
+    val new_portrait: String,
+    val portrait_url: String,
+    val state: String,
+    val username: String
+)
+
 //import androidx.room.*
 //import com.google.gson.annotations.SerializedName
 //
@@ -34,54 +100,3 @@ package com.gitee.android.bean
 //    @SerializedName("children")
 //    val children: List<Any>? = null
 //}
-//
-//data class BasePage<T>(
-//    @SerializedName("datas") val datas: T?,
-//    @SerializedName("curPage") val curPage: Int? = 1,
-//    @SerializedName("offset") val offset: Int? = 0,
-//    @SerializedName("over") val over: Boolean = false,
-//    @SerializedName("pageCount") val pageCount: Int? = 0,
-//    @SerializedName("size") val size: Int? = 20,
-//    @SerializedName("total") val total: Int? = 0
-//)
-//
-//data class Article (
-//    @SerializedName("apkLink") val apkLink: String,
-//    @SerializedName("audit") val audit: Int,
-//    @SerializedName("author") val author: String,
-//    @SerializedName("canEdit") val canEdit: Boolean,
-//    @SerializedName("chapterId") val chapterId: Int,
-//    @SerializedName("chapterName") val chapterName: String,
-//    @SerializedName("collect") val collect: Boolean,
-//    @SerializedName("courseId") val courseId: Int,
-//    @SerializedName("desc") val desc: String,
-//    @SerializedName("descMd") val descMd: String,
-//    @SerializedName("envelopePic") val envelopePic: String,
-//    @SerializedName("fresh") val fresh: Boolean,
-//    @SerializedName("id") val id: Int,
-//    @SerializedName("link") val link: String,
-//    @SerializedName("niceDate") val niceDate: String,
-//    @SerializedName("niceShareDate") val niceShareDate: String,
-//    @SerializedName("origin") val origin: String,
-//    @SerializedName("prefix") val prefix: String,
-//    @SerializedName("projectLink") val projectLink: String,
-//    @SerializedName("publishTime") val publishTime: Long,
-//    @SerializedName("realSuperChapterId") val realSuperChapterId: Int,
-//    @SerializedName("selfVisible") val selfVisible: Int,
-//    @SerializedName("shareDate") val shareDate: Long,
-//    @SerializedName("shareUser") val shareUser: String,
-//    @SerializedName("superChapterId") val superChapterId: Int,
-//    @SerializedName("superChapterName") val superChapterName: String,
-//    @SerializedName("tags") val tags: List<Tag>,
-//    @SerializedName("title") val title: String,
-//    @SerializedName("type") val type: Int,
-//    @SerializedName("userId") val userId: Int,
-//    @SerializedName("visible") val visible: Int,
-//    @SerializedName("zan") val zan: Int,
-//    @SerializedName("top") var top: String
-//)
-//
-//data class Tag(
-//    @SerializedName("name") val name: String,
-//    @SerializedName("url") val url: String
-//)

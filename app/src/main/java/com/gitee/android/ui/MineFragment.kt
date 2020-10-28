@@ -2,6 +2,7 @@ package com.gitee.android.ui
 
 import android.os.Bundle
 import com.ando.library.base.BaseLazyFragment
+import com.ando.library.base.BaseMvcLazyFragment
 import com.gitee.android.R
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -10,11 +11,11 @@ import dagger.hilt.android.AndroidEntryPoint
  * <p>
  * Description: 我的
  * </p>
- * @author javakam
+ * @author ChangBao
  * @date 2020/10/16  15:20
  */
 @AndroidEntryPoint
-class MineFragment : BaseLazyFragment() {
+class MineFragment : BaseMvcLazyFragment() {
 
     override fun initView(savedInstanceState: Bundle?) {
     }

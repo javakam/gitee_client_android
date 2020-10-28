@@ -1,6 +1,7 @@
 package com.ando.library.base
 
 import android.app.Activity
+import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import androidx.multidex.MultiDexApplication
@@ -83,6 +84,18 @@ open class BaseApplication : MultiDexApplication() {
             finishAll()
             //Process.killProcess(Process.myPid())
             System.exit(0)
+        }
+
+        /**
+         * 触发 Home 事件
+         *
+         * 模拟用户退出到桌面, 并没有真正退出应用
+         */
+        fun exitHome(activity: Activity) {
+            val backHome = Intent(Intent.ACTION_MAIN)
+            backHome.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            backHome.addCategory(Intent.CATEGORY_HOME)
+            activity.startActivity(backHome)
         }
     }
 

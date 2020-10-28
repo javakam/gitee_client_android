@@ -1,5 +1,6 @@
 package com.gitee.android.http
 
+import com.gitee.android.bean.ArticleEntity
 import retrofit2.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -25,6 +26,15 @@ class NetWork {
 //        pageNumber: Int
 //    ): BaseResponse<BasePage<List<Article>?>?>? =
 //        giteeService.getWxArticleDetail(chapterId, pageNumber).await()
+
+    suspend fun getRecommendProjects(page: Int): List<ArticleEntity>? =
+        giteeService.getRecommendProjects(page).await()
+
+    suspend fun getHotProjects(page: Int): List<ArticleEntity>? =
+        giteeService.getHotProjects(page).await()
+
+    suspend fun getRecentlyProjects(page: Int): List<ArticleEntity>? =
+        giteeService.getRecentlyProjects(page).await()
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->

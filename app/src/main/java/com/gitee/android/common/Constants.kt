@@ -11,7 +11,7 @@ import com.gitee.android.R
  * @date 2020/8/18  10:10
  */
 
-const val BASE_URL =  "https://wanandroid.com/"
+const val BASE_URL =  "https://gitee.com/api/"
 const val DB_NAME = "gitee"
 
 const val VIEW_REFRESH_COLOR = R.color.color_main_blue //下拉刷新的颜色

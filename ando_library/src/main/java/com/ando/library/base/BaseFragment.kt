@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.ando.toolkit.ext.otherwise
+import com.ando.toolkit.ext.yes
 
 /**
  * Title:BaseFragment
@@ -16,43 +18,25 @@ import androidx.fragment.app.Fragment
  * @author changbao
  * @date 2019/3/17 13:24
  */
-abstract class BaseFragment : Fragment(), IBaseInterface {
+abstract class BaseFragment : Fragment() {
 
     //注:不要命名为 activity 会和 Fragment.getActivity 冲突
-    protected var baseActivity: BaseActivity? = null
-        private set
-    protected var rootView: View? = null
+    protected lateinit var baseActivity: BaseActivity
         private set
 
     //
-    protected var isActivityCreated = false//Activity 是否已创建
-    protected var isVisibleToUser = false //Fragment 是否对用户可见
-    protected var isHiddenToUser = false //hidden
+    var isActivityCreated = false//Activity 是否已创建
+    var isVisibleToUser = false //Fragment 是否对用户可见
+    var isHiddenToUser = false //hidden
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        baseActivity = context as? BaseActivity
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        rootView = if (getLayoutId() > 0) {
-            inflater.inflate(getLayoutId(), container, false)
-        } else {
-            getLayoutView()
-        }
-        initView(savedInstanceState)
-        initListener()
-        return rootView
+        baseActivity = context as BaseActivity
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         isActivityCreated = true
-        initData()
     }
 
     @Deprecated("Use {@link FragmentTransaction#setMaxLifecycle}")
@@ -66,12 +50,6 @@ abstract class BaseFragment : Fragment(), IBaseInterface {
         super.onHiddenChanged(hidden)
         isHiddenToUser = hidden
         //L.i("onHiddenChanged hidden ===> " + hidden);
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        rootView = null
-        baseActivity = null
     }
 
     //https://stackoverflow.com/questions/22552958/handling-back-press-when-using-fragments-in-android
@@ -91,5 +69,32 @@ abstract class BaseFragment : Fragment(), IBaseInterface {
         }
 
     fun onBackPressed() {}
+
+}
+
+abstract class BaseMvcFragment : BaseFragment(), IBaseInterface {
+
+    protected lateinit var rootView: View
+        private set
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        rootView = (getLayoutId() > 0).yes {
+            inflater.inflate(getLayoutId(), container, false)
+        }.otherwise {
+            getLayoutView()!!
+        }
+        initView(savedInstanceState)
+        initListener()
+        return rootView
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initData()
+    }
 
 }
