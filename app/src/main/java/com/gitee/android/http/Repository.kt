@@ -1,9 +1,15 @@
 package com.gitee.android.http
 
-import com.ando.toolkit.ext.no
 import com.gitee.android.bean.ArticleEntity
+import com.gitee.android.bean.Page
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * Title: Repository
@@ -16,36 +22,53 @@ import kotlinx.coroutines.withContext
 
 interface IRepository
 
-class GiteeRepo private constructor(private val network: NetWork) : IRepository {
+class GiteeRepo : IRepository {
 
-     suspend fun requestRecommendProjects(page: Int): List<ArticleEntity>? =
+    private val api = ApiService.get()
+
+    suspend fun getRecommendProjects(page: Int): Page<ArticleEntity>? =
         withContext(Dispatchers.IO) {
-            network.getRecommendProjects(page)
+            api.getRecommendProjects(page).await().value
         }
 
-     suspend fun requestHotProjects(page: Int): List<ArticleEntity>? =
+    suspend fun getHotProjects(page: Int): Page<ArticleEntity>? =
         withContext(Dispatchers.IO) {
-            network.getHotProjects(page)
+            api.getHotProjects(page).await().value
         }
 
-     suspend fun requestRecentlyProjects(page: Int): List<ArticleEntity>? =
+    suspend fun getRecentlyProjects(page: Int): Page<ArticleEntity>? =
         withContext(Dispatchers.IO) {
-            network.getRecentlyProjects(page)
+            api.getRecentlyProjects(page).await().value
         }
+
+    private suspend fun <T> Call<T>.await(): T {
+        return suspendCoroutine { continuation ->
+            enqueue(object : Callback<T> {
+                override fun onFailure(call: Call<T>, t: Throwable) {
+                    continuation.resumeWithException(t)
+                }
+
+                override fun onResponse(call: Call<T>, response: Response<T>) {
+                    val body = response.body()
+                    if (body != null) continuation.resume(body)
+                    else continuation.resumeWithException(RuntimeException("response body is null"))
+                }
+            })
+        }
+    }
 
     companion object {
+        private var usbUtils: GiteeRepo? = null
 
-        private lateinit var instance: GiteeRepo
-
-        fun getInstance(network: NetWork): GiteeRepo {
-            Companion::instance.isInitialized.no {
+        fun get(): GiteeRepo {
+            if (usbUtils == null) {
                 synchronized(GiteeRepo::class.java) {
-                    Companion::instance.isInitialized.no {
-                        instance = GiteeRepo(network)
+                    if (usbUtils == null) {
+                        usbUtils = GiteeRepo()
                     }
                 }
             }
-            return instance
+            return usbUtils!!
         }
     }
 

@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ando.toolkit.StringUtils
+import com.ando.toolkit.ext.clipBoard
 import com.ando.toolkit.ext.toastShort
 import com.gitee.android.R
 import com.gitee.android.bean.ArticleEntity
 import com.gitee.android.databinding.ItemListHomeArticleBinding
-import com.gitee.android.utils.setClipDate
 
 /**
  * Title: HomeArticleListAdapter
@@ -51,7 +51,7 @@ class HomeArticleListAdapter : ListAdapter<ArticleEntity, HomeArticleListAdapter
             }
 
             binding.constTabName.setOnLongClickListener {
-                setClipDate(binding.tvTabName.text.toString())
+                binding.tvTabName.text.toString().clipBoard()
                 it.toastShort("已复制")
                 true
             }

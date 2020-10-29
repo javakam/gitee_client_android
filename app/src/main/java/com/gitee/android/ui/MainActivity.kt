@@ -3,7 +3,6 @@ package com.gitee.android.ui
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Window
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
@@ -13,7 +12,7 @@ import com.gitee.android.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseMvvmActivity() {
+class MainActivity : BaseMvvmActivity<ActivityMainBinding>() {
 
     private lateinit var navController: NavController
 
@@ -22,10 +21,9 @@ class MainActivity : BaseMvvmActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val binding: ActivityMainBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_main)
+    override val layoutId: Int = R.layout.activity_main
+
+    override fun initView(savedInstanceState: Bundle?) {
 
         navController =
             (supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment).navController
@@ -33,6 +31,7 @@ class MainActivity : BaseMvvmActivity() {
             bottomNavView.setupWithNavController(navController)
             bottomNavView.selectedItemId = R.id.nav_home
         }
+
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()

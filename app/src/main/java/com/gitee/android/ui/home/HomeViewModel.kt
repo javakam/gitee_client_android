@@ -4,9 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import com.ando.toolkit.ext.toastShort
 import com.ando.toolkit.log.L
 import com.gitee.android.GiteeApplication.Companion.INSTANCE
+import com.gitee.android.base.BaseRefreshViewModel
 import com.gitee.android.bean.ArticleEntity
-import com.gitee.android.http.GiteeRepo
-import com.gitee.android.viewmodel.BaseViewModel
 import kotlinx.coroutines.Job
 
 /**
@@ -17,17 +16,18 @@ import kotlinx.coroutines.Job
  * @author ChangBao
  * @date 2020/10/27  14:59
  */
-class HomeViewModel internal constructor(private val repo: GiteeRepo) : BaseViewModel() {
-
+class HomeViewModel : BaseRefreshViewModel() {
 
     val recommendArticles = MutableLiveData<List<ArticleEntity>>()
     val hotArticles = MutableLiveData<List<ArticleEntity>>()
     val recentlyArticles = MutableLiveData<List<ArticleEntity>>()
 
-    fun getRecommendArticles(page: Int): Job =
+    fun getRecommendArticles(): Job =
         launch(
             {
-                recommendArticles.value = repo.requestRecommendProjects(page)
+//                recommendArticles.value =
+//                    transformPage()
+//                    repo.getRecommendProjects(page.value ?: 1)
             },
             {
                 L.e(it.message)
@@ -35,20 +35,20 @@ class HomeViewModel internal constructor(private val repo: GiteeRepo) : BaseView
             }
         )
 
-    fun getHotArticles(page: Int): Job =
+    fun getHotArticles(): Job =
         launch(
             {
-                hotArticles.value = repo.requestHotProjects(page)
+//                hotArticles.value = repo.getHotProjects(page.value ?: 1)
             },
             {
                 INSTANCE.toastShort(it.message)
             }
         )
 
-    fun getRecentlyArticles(page: Int): Job =
+    fun getRecentlyArticles(): Job =
         launch(
             {
-                recentlyArticles.value = repo.requestRecentlyProjects(page)
+//                recentlyArticles.value = repo.getRecentlyProjects(page.value ?: 1)
             },
             {
                 INSTANCE.toastShort(it.message)

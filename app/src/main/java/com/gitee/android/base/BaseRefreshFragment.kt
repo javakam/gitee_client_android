@@ -144,10 +144,9 @@ abstract class BaseRefreshFragment<E : Serializable?> : BaseLazyFragment(), IRef
 
     fun initImmersionView(): View? = null
     fun initRecyclerView(recyclerView: RecyclerView?) {}
-    fun addVData(data: List<E>?) {}
-    fun replaceVData(data: List<E>?) {}
-    fun clearVData() {}
-    fun exitTinyWindowAndRelease() {}
+    fun addData(data: List<E>?) {}
+    fun replaceData(data: List<E>?) {}
+    fun clearData() {}
     abstract fun refresh()
     abstract fun more()
     fun retry() {
@@ -161,9 +160,8 @@ abstract class BaseRefreshFragment<E : Serializable?> : BaseLazyFragment(), IRef
     override fun onRefresh(refreshLayout: RefreshLayout) {
         isPullDown = true
         if (config.usedVLayout) {
-            clearVData()
+            clearData()
         }
-        exitTinyWindowAndRelease()
         retry()
     }
 
@@ -200,10 +198,9 @@ abstract class BaseRefreshFragment<E : Serializable?> : BaseLazyFragment(), IRef
         } else {
             if (config.usedVLayout) {
                 i("loadData: usedVLayout " + config.usedVLayout + "  " + mData?.size)
-                replaceVData(data)
+                replaceData(data)
             } else {
                 if (config.haveRecyclerView && mAdapter != null) {
-
                     //todo 2020年10月28日 16:22:30
                     // mAdapter.replaceData(data)
                 }
@@ -212,7 +209,6 @@ abstract class BaseRefreshFragment<E : Serializable?> : BaseLazyFragment(), IRef
                 mLoaderView?.setLoadState(LoadState.SUCCESS)
             }
             mRefreshLayout?.setEnableLoadMore(config.enableLoadMore)
-            //showSuccess();
             mRefreshLayout?.finishRefresh()
             if (config.enableLoadMore) {
                 mRefreshLayout?.finishLoadMore()
@@ -232,10 +228,9 @@ abstract class BaseRefreshFragment<E : Serializable?> : BaseLazyFragment(), IRef
             //mPullUpNum++;
             mPullUpNumLast = mPullUpNum
             if (config.usedVLayout) {
-                addVData(data)
+                addData(data)
             } else {
                 if (config.haveRecyclerView && mAdapter != null) {
-
                     //todo
 //                    mAdapter.addData(data)
                 }
@@ -267,4 +262,5 @@ abstract class BaseRefreshFragment<E : Serializable?> : BaseLazyFragment(), IRef
         mRefreshLayout?.finishLoadMore(false)
         //mRefreshLayout.finishLoadMore(0, false, false);
     }
+
 }

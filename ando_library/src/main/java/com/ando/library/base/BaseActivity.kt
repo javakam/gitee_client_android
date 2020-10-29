@@ -16,14 +16,13 @@ import android.view.WindowManager
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.menu.MenuView
 import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import com.ando.library.base.BaseApplication.Companion.exit
 import com.ando.library.base.BaseApplication.Companion.isGray
 import com.ando.library.views.GrayFrameLayout
-import com.ando.toolkit.ext.otherwise
 import com.ando.toolkit.ext.toastShort
-import com.ando.toolkit.ext.yes
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
@@ -38,6 +37,10 @@ import java.util.concurrent.TimeUnit
  */
 
 abstract class BaseActivity : AppCompatActivity() {
+
+    protected lateinit var mView: View  //系统DecorView的根View
+    protected var isExit = false        //是否退出App
+
     override fun onCreate(savedInstanceState: Bundle?) {
         initActivityStyle()
         super.onCreate(savedInstanceState)
@@ -81,47 +84,32 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     /**
-     * 重写 getResource 方法，防止系统字体影响
+     * 重写 getResource 方法，防止app字体大小受系统字体大小影响
      *
      * https://www.jianshu.com/p/5effff3db399
      */
-    override fun getResources(): Resources { //禁止app字体大小跟随系统字体大小调节
+    override fun getResources(): Resources {
         val resources = super.getResources()
         if (resources != null && resources.configuration.fontScale != 1.0f) {
             val configuration = resources.configuration
             configuration.fontScale = 1.0f
             resources.updateConfiguration(configuration, resources.displayMetrics)
-            // createConfigurationContext(configuration);
         }
         return resources
     }
 
-    /**
-     * 设置ToolBar和DrawerLayout
-     */
-    fun setupToolBar(toolbarId: Int, toolBarTitleId: Int, title: String?) {
+    fun setUpToolBar(toolbarId: Int, toolBarTitleId: Int, title: String?) {
         val toolbar = findViewById<View>(toolbarId) as Toolbar
-        //设置标题必须在setSupportActionBar之前才有效
-        val toolBarTitle = toolbar.findViewById<View>(toolBarTitleId) as TextView
-        toolBarTitle.gravity = Gravity.START or Gravity.CENTER_VERTICAL
-        toolBarTitle.text = title
+        val toolBarTitle = toolbar.findViewById<View>(toolBarTitleId) as? TextView
+        toolBarTitle?.gravity = Gravity.START or Gravity.CENTER_VERTICAL
+        toolBarTitle?.text = title
         setSupportActionBar(toolbar)
-        supportActionBar!!.setHomeButtonEnabled(true) //设置返回键可用
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 }
 
 abstract class BaseMvcActivity : BaseActivity(), IBaseInterface {
-    /**
-     * 系统DecorView的根View
-     */
-    protected lateinit var mView: View
-        private set
-
-    /**
-     * 是否退出App
-     */
-    private var isExit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,9 +125,7 @@ abstract class BaseMvcActivity : BaseActivity(), IBaseInterface {
         initData()
     }
 
-    /**
-     * 连续点击两次退出App
-     */
+    //连续点击两次退出App
     @SuppressLint("CheckResult")
     protected fun exitBy2Click(delay: Long, @StringRes text: Int) {
         if (!isExit) {
@@ -155,4 +141,18 @@ abstract class BaseMvcActivity : BaseActivity(), IBaseInterface {
     }
 }
 
-abstract class BaseMvvmActivity : BaseActivity()
+abstract class BaseMvvmActivity<T : ViewDataBinding> : BaseActivity() {
+
+    abstract val layoutId: Int
+    lateinit var binding: T
+    abstract fun initView(savedInstanceState: Bundle?)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, layoutId)
+        binding.lifecycleOwner = this
+
+        initView(savedInstanceState)
+    }
+
+}

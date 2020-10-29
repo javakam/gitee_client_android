@@ -1,18 +1,18 @@
-package com.gitee.android.viewmodel
+package com.ando.library.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 /**
- * Title:
+ * Title: BaseViewModel
  * <p>
  * Description:
  * </p>
- * @author ChangBao
- * @date 2020/10/27  15:12
+ * @author javakam
+ * @date 2020/10/29  9:48
  */
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel :ViewModel(){
 
     open fun launch(block: suspend () -> Unit, error: suspend (Throwable) -> Unit) =
         viewModelScope.launch {

@@ -21,6 +21,11 @@ gradlew clean build bintrayUpload -PbintrayUser=BINTRAY_USERNAME -PbintrayKey=BI
 apply plugin: 'com.github.panpf.bintray-publish'
 ```
 
+## MVVM + Hilt
+https://itnext.io/android-architecture-hilt-mvvm-kotlin-coroutines-live-data-room-and-retrofit-ft-8b746cab4a06
+
+https://github.com/sdwfqin/AndroidQuick/tree/4.x/app-kt
+
 
 ## 混淆
 

@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ando.library.base.BaseFragment
 import com.ando.library.views.RecyclerItemDecoration
 import com.gitee.android.R
-import com.gitee.android.databinding.FragmentHomeTabBinding
-import com.gitee.android.utils.InjectorUtil
+import com.gitee.android.databinding.FragmentHomeRepoListBinding
 import kotlinx.coroutines.Job
 
 /**
@@ -35,12 +34,10 @@ class HomeTabFragment : BaseFragment() {
         }
     }
 
-    private lateinit var binding: FragmentHomeTabBinding
+    private lateinit var binding: FragmentHomeRepoListBinding
 
     //ViewModelProvider(this,InjectorUtil.getWanAndroidViewModelFactory()).get(WanAndroidViewModel::class.java)
-    private val viewModel: HomeViewModel by viewModels {
-        InjectorUtil.getViewModelFactory()
-    }
+    private val viewModel: HomeViewModel by viewModels()
 
     private var jobArticleTabs: Job? = null
 
@@ -49,9 +46,9 @@ class HomeTabFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeTabBinding.inflate(inflater, container, false)
+        binding = FragmentHomeRepoListBinding.inflate(inflater, container, false)
 
-        binding.viewModel = viewModel
+        binding.vm = viewModel
         binding.resId = R.color.colorPrimary
         binding.lifecycleOwner = this
 
@@ -69,26 +66,26 @@ class HomeTabFragment : BaseFragment() {
     }
 
     private fun subscribeUi(adapter: HomeArticleListAdapter) {
-
         jobArticleTabs?.cancel()
         when (arguments?.getInt("pos", 0)) {
             0 -> {
-                jobArticleTabs = viewModel.getRecommendArticles(1)
+                jobArticleTabs = viewModel.getRecommendArticles()
                 //xml databinding
                 viewModel.recommendArticles.observe(viewLifecycleOwner, Observer { tabs ->
                     binding.hasTabs = !tabs.isNullOrEmpty()
                     adapter.submitList(tabs)
                 })
+
             }
             1 -> {
-                jobArticleTabs = viewModel.getHotArticles(1)
+                jobArticleTabs = viewModel.getHotArticles()
                 viewModel.hotArticles.observe(viewLifecycleOwner, Observer { tabs ->
                     binding.hasTabs = !tabs.isNullOrEmpty()
                     adapter.submitList(tabs)
                 })
             }
-            else ->{
-                jobArticleTabs = viewModel.getRecentlyArticles(1)
+            else -> {
+                jobArticleTabs = viewModel.getRecentlyArticles()
                 viewModel.recentlyArticles.observe(viewLifecycleOwner, Observer { tabs ->
                     binding.hasTabs = !tabs.isNullOrEmpty()
                     adapter.submitList(tabs)

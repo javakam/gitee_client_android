@@ -8,8 +8,8 @@
         <import type="android.view.View" />
 
         <variable
-            name="viewModel"
-            type="com.gitee.android.ui.home.HomeViewModel" />
+            name="vm"
+            type="com.gitee.android.ui.home.HomeViewModel"/>
 
         <variable
             name="resId"
@@ -23,7 +23,15 @@
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+
+        app:onRefreshListener="@{()->vm.refresh()}"
+        app:refreshing="@{vm.refreshing}"
+        app:moreLoading="@{vm.moreLoading}"
+        app:hasMore="@{vm.hasMore}"
+        app:autoRefresh="@{vm.autoRefresh}"
+        app:onLoadMoreListener="@{()->vm.loadMore()}"
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@id/refreshRecycler"

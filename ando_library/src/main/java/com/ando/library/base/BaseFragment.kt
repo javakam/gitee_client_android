@@ -6,7 +6,10 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import com.ando.toolkit.ext.otherwise
 import com.ando.toolkit.ext.yes
 
@@ -96,5 +99,29 @@ abstract class BaseMvcFragment : BaseFragment(), IBaseInterface {
         super.onActivityCreated(savedInstanceState)
         initData()
     }
+
+}
+
+abstract class BaseMvvmFragment<T : ViewDataBinding> : BaseFragment() {
+
+    protected lateinit var rootView: View
+        private set
+    abstract val layoutId: Int
+    lateinit var binding: T
+    abstract fun initView(savedInstanceState: Bundle?)
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
+        binding.lifecycleOwner = this
+        binding.executePendingBindings()
+        rootView = binding.root
+        initView(savedInstanceState)
+        return rootView
+    }
+
 
 }
