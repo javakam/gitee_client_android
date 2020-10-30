@@ -71,7 +71,7 @@ class HomeTabFragment : BaseFragment() {
             0 -> {
                 //jobArticleTabs = viewModel.getRecommendArticles()
                 //xml databinding
-                viewModel.recommendArticles?.observe(viewLifecycleOwner, Observer { rs ->
+                viewModel.recommendArticles.observe(viewLifecycleOwner, Observer { rs ->
                     binding.hasTabs = !rs?.body.isNullOrEmpty()
                     adapter.setData(rs?.body)
                 })

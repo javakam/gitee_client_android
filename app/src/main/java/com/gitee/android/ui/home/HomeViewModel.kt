@@ -7,8 +7,6 @@ import com.ando.toolkit.log.L
 import com.gitee.android.GiteeApplication.Companion.INSTANCE
 import com.gitee.android.base.BaseRefreshViewModel
 import com.gitee.android.bean.ArticleEntity
-import com.gitee.android.http.ApiResponse
-import com.gitee.android.http.ApiService
 import kotlinx.coroutines.Job
 
 /**
@@ -21,22 +19,11 @@ import kotlinx.coroutines.Job
  */
 class HomeViewModel : BaseRefreshViewModel() {
 
-    var recommendArticles: LiveData<ApiResponse<List<ArticleEntity>>?>? = null
     val hotArticles = MutableLiveData<List<ArticleEntity>?>()
     val recentlyArticles = MutableLiveData<List<ArticleEntity>?>()
 
-    fun getRecommendArticles() {
-        launch(
-            {
-                recommendArticles = repo.getRecommendProjects(page.value ?: 1)
-
-            },
-            {
-                L.e(it.message)
-                INSTANCE.toastShort(it.message)
-            }
-        )
-    }
+    var recommendArticles =
+        repo.getRecommendProjects(page.value ?: 1)
 
     fun getHotArticles(): Job =
         launch(
