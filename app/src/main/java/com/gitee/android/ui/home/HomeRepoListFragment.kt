@@ -73,7 +73,7 @@ class HomeTabFragment : BaseFragment() {
                 //xml databinding
                 viewModel.recommendArticles.observe(viewLifecycleOwner, Observer { tabs ->
                     binding.hasTabs = !tabs.isNullOrEmpty()
-                    adapter.submitList(tabs)
+                    adapter.setData(tabs)
                 })
 
             }
@@ -81,19 +81,17 @@ class HomeTabFragment : BaseFragment() {
                 jobArticleTabs = viewModel.getHotArticles()
                 viewModel.hotArticles.observe(viewLifecycleOwner, Observer { tabs ->
                     binding.hasTabs = !tabs.isNullOrEmpty()
-                    adapter.submitList(tabs)
+                    adapter.setData(tabs)
                 })
             }
             else -> {
                 jobArticleTabs = viewModel.getRecentlyArticles()
                 viewModel.recentlyArticles.observe(viewLifecycleOwner, Observer { tabs ->
                     binding.hasTabs = !tabs.isNullOrEmpty()
-                    adapter.submitList(tabs)
+                    adapter.setData(tabs)
                 })
             }
         }
-
-
         //lifecycleScope.launch { }
     }
 
