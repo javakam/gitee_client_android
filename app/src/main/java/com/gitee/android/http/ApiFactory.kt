@@ -22,21 +22,17 @@ import kotlin.coroutines.suspendCoroutine
  */
 object ApiFactory {
 
-    inline fun <reified T> create(
-        baseUrl: String,
-        saveCookie: Boolean,
-        noinline creator: (Int, String, Any?) -> Any
-    ): T {
-        val logger = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
+    /**
+     *  saveCookie: Boolean, noinline creator: (Int, String, Any?) -> Any
+     */
+    inline fun <reified T> create(baseUrl: String): T {
+        val logger = HttpLoggingInterceptor()
         val httpClient = OkHttpClient.Builder().addInterceptor(logger)
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(httpClient.build())
-
-            //todo 2020年10月29日 16:47:16  移除 Call 包装
-            .addCallAdapterFactory(LiveDataCallAdapterFactory(creator))
+//            .addCallAdapterFactory(LiveDataCallAdapterFactory(creator))
+            .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(T::class.java)

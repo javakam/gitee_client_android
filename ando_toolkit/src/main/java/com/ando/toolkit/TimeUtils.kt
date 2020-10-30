@@ -299,7 +299,7 @@ object TimeUtils {
         }
         val diff = (todayStart - millisLong).toDouble() / oneDayMillis
         val diffDay = Math.ceil(diff).toInt()
-        //L.w("TimeUtils diffDay= " + diff + "   " + diffDay);
+        //L.i("TimeUtils diffDay= " + diff + "   " + diffDay);
         if (diffDay <= 10) { // 大于 10 天显示具体时间
             //return diffDay + "天前 "+ millisToStringDate(millisLong, "yyyy年MM月dd日 HH:mm");//用于调试
             return diffDay.toString() + "天前 "

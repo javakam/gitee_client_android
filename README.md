@@ -21,6 +21,14 @@ gradlew clean build bintrayUpload -PbintrayUser=BINTRAY_USERNAME -PbintrayKey=BI
 apply plugin: 'com.github.panpf.bintray-publish'
 ```
 
+## 网络框架(Retrofit & LiveData)
+LiveData Adapter for Retrofit
+
+https://gist.github.com/AkshayChordiya/15cfe7ca1842d6b959e77c04a073a98f
+
+https://github.com/googlesamples/android-architecture-components/tree/master/GithubBrowserSample
+
+
 ## MVVM + Hilt
 https://itnext.io/android-architecture-hilt-mvvm-kotlin-coroutines-live-data-room-and-retrofit-ft-8b746cab4a06
 
@@ -123,7 +131,12 @@ Failed to find GeneratedAppGlideModule. You should include an annotationProcesso
 Failed to invoke public androidx.lifecycle.LiveData() with no args
 ```
 
+🍎 LiveData + Retrofit
+https://github.com/pivincii/livedata_retrofit
 
+https://www.ericdecanini.com/2019/11/11/3-ways-to-use-retrofit-with-livedata-in-the-mvvm-android-architecture/
 
+https://github.com/square/retrofit/issues/3075
 
+https://medium.com/@pivincii/using-retrofit-with-livedata-5c5a49544ba3
 

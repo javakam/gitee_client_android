@@ -1,7 +1,6 @@
 package com.gitee.android.http
 
 import com.gitee.android.bean.ArticleEntity
-import com.gitee.android.bean.Page
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
@@ -26,20 +25,11 @@ class GiteeRepo : IRepository {
 
     private val api = ApiService.get()
 
-    suspend fun getRecommendProjects(page: Int): Page<ArticleEntity>? =
-        withContext(Dispatchers.IO) {
-            api.getRecommendProjects(page).await().value
-        }
+    fun getRecommendProjects(page: Int) = api.getRecommendProjects(page)
 
-    suspend fun getHotProjects(page: Int): Page<ArticleEntity>? =
-        withContext(Dispatchers.IO) {
-            api.getHotProjects(page).await().value
-        }
+    fun getHotProjects(page: Int) = api.getHotProjects(page)
 
-    suspend fun getRecentlyProjects(page: Int): Page<ArticleEntity>? =
-        withContext(Dispatchers.IO) {
-            api.getRecentlyProjects(page).await().value
-        }
+    fun getRecentlyProjects(page: Int) = api.getRecentlyProjects(page)
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->

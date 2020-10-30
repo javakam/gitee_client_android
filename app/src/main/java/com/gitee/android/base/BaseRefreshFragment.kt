@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ando.library.base.BaseLazyFragment
 import com.ando.library.views.loader.LoadState
 import com.ando.library.views.loader.Loader.OnReloadListener
-import com.ando.toolkit.log.L.e
 import com.ando.toolkit.log.L.i
 import com.gitee.android.R
 import com.gitee.android.common.defaultPageConfig
@@ -178,7 +177,7 @@ abstract class BaseRefreshFragment<E : Serializable?> : BaseLazyFragment(), IRef
     }
 
     override fun onRefreshSuccess(data: List<E>?) {
-        //L.w(getClass().getSimpleName() + "  onRefreshSuccess  " + (ListUtils.isEmpty(data) ? data : data.size()));
+        //L.i(getClass().getSimpleName() + "  onRefreshSuccess  " + (ListUtils.isEmpty(data) ? data : data.size()));
         mData = data
         mPullUpNumLast = 1
         mPullUpNum = 1
@@ -241,7 +240,7 @@ abstract class BaseRefreshFragment<E : Serializable?> : BaseLazyFragment(), IRef
     }
 
     override fun onRefreshFailed(errMsg: String?) {
-        e(javaClass.simpleName + "  onRefreshFailed  " + errMsg)
+        i(javaClass.simpleName + "  onRefreshFailed  " + errMsg)
         //下拉加载更多(仿 Bilibili)
         //mPullUpNum = mPullUpNumLast;
         mPullUpNumLast = 1
@@ -256,7 +255,7 @@ abstract class BaseRefreshFragment<E : Serializable?> : BaseLazyFragment(), IRef
     }
 
     override fun onLoadMoreFailed(errMsg: String?) {
-        e("loadMoreData: onLoadMoreFailed $errMsg")
+        i("loadMoreData: onLoadMoreFailed $errMsg")
         mPullUpNum = mPullUpNumLast
         //传入false表示加载更多失败
         mRefreshLayout?.finishLoadMore(false)

@@ -9,8 +9,7 @@ import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.FrameLayout
 import com.ando.library.R
-import com.ando.toolkit.log.L.e
-import com.ando.toolkit.log.L.w
+import com.ando.toolkit.log.L.i
 
 /**
  * Title:Loader
@@ -41,7 +40,7 @@ abstract class Loader constructor(
 
     private var mState = 0 // 默认的状态
 
-    constructor (context: Context) : this(context, null,0)
+    constructor (context: Context) : this(context, null, 0)
     constructor (context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
     interface OnReloadListener {
@@ -151,7 +150,7 @@ abstract class Loader constructor(
                 || mState == LoadState.LOADING.value()
             ) VISIBLE else GONE
         } else {
-            w(TAG, "LoadingView is null!")
+            i(TAG, "LoadingView is null!")
         }
         if (null != errorView) {
             errorView!!.visibility =
@@ -160,7 +159,7 @@ abstract class Loader constructor(
                 mStateListener!!.onState(LoadState.ERROR)
             }
         } else {
-            w(TAG, "ErrorView is null!")
+            i(TAG, "ErrorView is null!")
         }
         if (null != emptyView) {
             emptyView!!.visibility =
@@ -169,7 +168,7 @@ abstract class Loader constructor(
                 mStateListener!!.onState(LoadState.EMPTY)
             }
         } else {
-            w(TAG, "EmptyView is null!")
+            i(TAG, "EmptyView is null!")
         }
         if (null == mSucceedView) {
             mSucceedView = createSuccessView()
@@ -181,7 +180,7 @@ abstract class Loader constructor(
                 mStateListener!!.onState(LoadState.SUCCESS)
             }
         } else {
-            w(TAG, "SuccessView is null!")
+            i(TAG, "SuccessView is null!")
         }
         if (mStateListener != null) {
             if (loadState == LoadState.UNLOADED) {
@@ -232,7 +231,7 @@ abstract class Loader constructor(
             showSafePagerView()
             mRListener!!.onReload()
         } else {
-            e(javaClass.simpleName, "OnReloadListener is null.")
+            i(javaClass.simpleName, "OnReloadListener is null.")
         }
     }
 

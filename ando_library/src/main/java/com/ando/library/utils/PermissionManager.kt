@@ -22,7 +22,7 @@ import ando.file.core.FileLogger
  *
  *      val shouldShow =ActivityCompat.shouldShowRequestPermissionRationale(fragment.activity,Manifest.permission.CAMERA)
  *
- *      L.w("shouldShow  $shouldShow")
+ *      L.i("shouldShow  $shouldShow")
  * </pre>
  * <pre>
  *     shouldShowRequestPermissionRationale

@@ -381,7 +381,7 @@ object NetworkUtils {
         }
         null
     } catch (ex: Exception) {
-        L.e("IP Address Ex ", ex.toString())
+        L.i("IP Address Ex ", ex.toString())
         null
     }
 

@@ -33,7 +33,7 @@ object IoUtils {
         try {
             c.forEach { it?.close() }
         } catch (e: IOException) {
-            L.e(e.message)
+            L.i(e.message)
         }
     }
 }

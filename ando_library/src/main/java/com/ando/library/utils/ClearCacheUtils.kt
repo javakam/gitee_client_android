@@ -47,7 +47,7 @@ object ClearCacheUtils {
         //Context.getExternalFilesDir() --> SDCard/Android/data/你的应用的包名/files/ 目录，一般放一些长时间保存的数据
         //Context.getExternalCacheDir() --> SDCard/Android/data/你的应用包名/cache/目录，一般存放临时缓存数据
         val cacheSize = getFolderSize(dir)
-        //L.w("缓存大小 : " + cacheSize);
+        //L.i("缓存大小 : " + cacheSize);
         return formatFileSize(cacheSize)
     }
 

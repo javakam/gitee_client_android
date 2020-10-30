@@ -3,15 +3,6 @@ package com.gitee.android.bean
 import com.google.gson.annotations.SerializedName
 import org.greenrobot.greendao.annotation.Entity
 
-data class Page<T>(
-    var curPage: Int,
-    var data: List<T>,
-    var offset: Int,
-    var pageCount: Int,
-    var size: Int,
-    var total: Int
-)
-
 @Entity
 data class ArticleEntity(
     val created_at: String,

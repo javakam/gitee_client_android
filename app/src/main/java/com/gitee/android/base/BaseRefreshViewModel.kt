@@ -1,12 +1,9 @@
 package com.gitee.android.base
 
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.ando.library.base.BaseViewModel
-import com.gitee.android.bean.Page
-import com.gitee.android.http.ApiService
 import com.gitee.android.http.GiteeRepo
 
 /**
@@ -44,11 +41,11 @@ open class BaseRefreshViewModel : BaseViewModel() {
     /**
      * 处理分页数据
      */
-    fun <T> transformPage(source: LiveData<Page<T>>): Page<T>? {
+    fun <T> transformPage(source: LiveData<List<T>>): List<T>? {
         return Transformations.map(source) {
             refreshing.value = false
             moreLoading.value = false
-            hasMore.value = (it?.data?.isNullOrEmpty() == false)
+            hasMore.value = (it?.isNullOrEmpty() == false)
             it
         }.value
     }

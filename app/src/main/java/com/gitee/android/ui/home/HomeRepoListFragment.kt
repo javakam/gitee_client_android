@@ -69,13 +69,12 @@ class HomeTabFragment : BaseFragment() {
         jobArticleTabs?.cancel()
         when (arguments?.getInt("pos", 0)) {
             0 -> {
-                jobArticleTabs = viewModel.getRecommendArticles()
+                //jobArticleTabs = viewModel.getRecommendArticles()
                 //xml databinding
-                viewModel.recommendArticles.observe(viewLifecycleOwner, Observer { tabs ->
-                    binding.hasTabs = !tabs.isNullOrEmpty()
-                    adapter.setData(tabs)
+                viewModel.recommendArticles?.observe(viewLifecycleOwner, Observer { rs ->
+                    binding.hasTabs = !rs?.body.isNullOrEmpty()
+                    adapter.setData(rs?.body)
                 })
-
             }
             1 -> {
                 jobArticleTabs = viewModel.getHotArticles()
