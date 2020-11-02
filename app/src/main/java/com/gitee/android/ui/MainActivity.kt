@@ -25,7 +25,6 @@ class MainActivity : BaseMvvmActivity<ActivityMainBinding>() {
     override val layoutId: Int = R.layout.activity_main
 
     override fun initView(savedInstanceState: Bundle?) {
-
         val fragment =
             supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         navController = fragment.navController
@@ -37,12 +36,9 @@ class MainActivity : BaseMvvmActivity<ActivityMainBinding>() {
         navController.setGraph(R.navigation.nav_main_graph)
 
         binding.apply {
-            //NavGraphBuilder.build(this@MainActivity, navController, fragment.id)
             bottomNavView.setupWithNavController(navController)
             //bottomNavView.selectedItemId = R.id.nav_home
         }
-
-
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
