@@ -3,6 +3,7 @@ package com.gitee.android.ui.home
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
 import com.ando.library.base.BaseMvcLazyFragment
+import com.ando.toolkit.log.L
 import com.gitee.android.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -38,6 +39,18 @@ class HomeFragment : BaseMvcLazyFragment() {
         TabLayoutMediator(mTabLayout, mViewPager2) { tab, position ->
             tab.text = tabTiles[position]
         }.attach()
+
+        L.i("HomeFragment .... init")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        L.i("HomeFragment .... resume")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        L.i("HomeFragment .... destroy view")
     }
 
     override fun initLazyData() {

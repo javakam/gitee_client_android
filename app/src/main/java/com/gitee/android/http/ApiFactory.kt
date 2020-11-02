@@ -26,12 +26,11 @@ object ApiFactory {
      *  saveCookie: Boolean, noinline creator: (Int, String, Any?) -> Any
      */
     inline fun <reified T> create(baseUrl: String): T {
-        val logger = HttpLoggingInterceptor()
+        val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }
         val httpClient = OkHttpClient.Builder().addInterceptor(logger)
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(httpClient.build())
-//            .addCallAdapterFactory(LiveDataCallAdapterFactory(creator))
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

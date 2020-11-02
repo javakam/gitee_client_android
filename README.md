@@ -35,6 +35,36 @@ https://itnext.io/android-architecture-hilt-mvvm-kotlin-coroutines-live-data-roo
 https://github.com/sdwfqin/AndroidQuick/tree/4.x/app-kt
 
 
+## BottomNavigationView show/hide 而不是 replace
+https://stackoverflow.com/questions/54087740/how-to-hide-bottomnavigationview-on-android-navigation-lib
+
+> You could do something like this in your activity's onCreate.
+When ever an item in the nav bar is selected it will show or hide the nav based on the fragment id's.
+
+```kotlin
+private fun setupNav() {
+    val navController = findNavController(R.id.nav_host_fragment)
+    findViewById<BottomNavigationView>(R.id.bottomNav)
+        .setupWithNavController(navController)
+
+    navController.addOnDestinationChangedListener { _, destination, _ ->
+        when (destination.id) {
+            R.id.mainFragment -> showBottomNav()
+            R.id.mineFragment -> showBottomNav()
+            else -> hideBottomNav()
+        }
+    }
+}
+
+private fun showBottomNav() {
+    bottomNav.visibility = View.VISIBLE
+}
+
+private fun hideBottomNav() {
+    bottomNav.visibility = View.GONE
+}
+```
+
 ## 混淆
 
 

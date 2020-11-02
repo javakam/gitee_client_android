@@ -19,29 +19,19 @@ import kotlinx.coroutines.Job
  */
 class HomeViewModel : BaseRefreshViewModel() {
 
-    val hotArticles = MutableLiveData<List<ArticleEntity>?>()
-    val recentlyArticles = MutableLiveData<List<ArticleEntity>?>()
-
     var recommendArticles =
         repo.getRecommendProjects(page.value ?: 1)
+    val hotArticles = repo.getHotProjects(page.value ?: 1)
+    val recentlyArticles = repo.getRecentlyProjects(page.value ?: 1)
 
-    fun getHotArticles(): Job =
-        launch(
-            {
-//                hotArticles.value = repo.getHotProjects(page.value ?: 1)
-            },
-            {
-                INSTANCE.toastShort(it.message)
-            }
-        )
-
-    fun getRecentlyArticles(): Job =
-        launch(
-            {
-//                recentlyArticles.value = repo.getRecentlyProjects(page.value ?: 1)
-            },
-            {
-                INSTANCE.toastShort(it.message)
-            }
-        )
+//    val recentlyArticles = MutableLiveData<List<ArticleEntity>?>()
+//    fun getRecentlyArticles(): Job =
+//        launch(
+//            {
+//              recentlyArticles.value = repo.getRecentlyProjects(page.value ?: 1)
+//            },
+//            {
+//                INSTANCE.toastShort(it.message)
+//            }
+//        )
 }

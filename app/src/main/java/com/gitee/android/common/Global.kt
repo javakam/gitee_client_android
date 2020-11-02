@@ -7,15 +7,39 @@ import com.ando.library.base.BaseFragment
 import com.gitee.android.R
 import com.gitee.android.base.PageConfig
 
-
-val defaultPageConfig= PageConfig(
-        enableRefresh = true,
-        enableLoadMore = true,
-        enableLazyLoading = true,
-        haveRecyclerView = true,
-        haveLoader = true,
-        usedVLayout = false
+val defaultPageConfig = PageConfig(
+    enableRefresh = true,
+    enableLoadMore = true,
+    enableLazyLoading = true,
+    haveRecyclerView = true,
+    haveLoader = true,
+    usedVLayout = false
 )
+
+fun switchFragmentById(
+    manager: FragmentManager,
+    ids: List<Int>,
+    hitId: Int
+) {
+    val transaction = manager.beginTransaction()
+    for (i in ids) {
+        if (i != hitId) {
+            manager.findFragmentById(i)?.apply {
+                if (isAdded) {
+                    transaction.hide(this)
+                }
+            }
+        }
+    }
+    manager.findFragmentById(hitId)?.apply {
+        if (isAdded) {
+            transaction.show(this)
+        } else {
+            transaction.add(R.id.nav_host, this)
+        }
+    }
+    transaction.commitAllowingStateLoss()
+}
 
 /**
  * 2. 底部Fragment

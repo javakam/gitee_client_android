@@ -24,9 +24,9 @@ interface ApiService {
     fun getRecommendProjects(@Query("page") page: Int = 1): LiveData<ApiResponse<List<ArticleEntity>>?>
 
     @GET("v3/projects/popular/")
-    fun getHotProjects(@Query("page") page: Int = 1): LiveData<List<ArticleEntity>?>
+    fun getHotProjects(@Query("page") page: Int = 1):  LiveData<ApiResponse<List<ArticleEntity>>?>
 
     @GET("v3/projects/latest/")
-    fun getRecentlyProjects(@Query("page") page: Int = 1): LiveData<List<ArticleEntity>?>
+    fun getRecentlyProjects(@Query("page") page: Int = 1):  LiveData<ApiResponse<List<ArticleEntity>>?>
 
 }
