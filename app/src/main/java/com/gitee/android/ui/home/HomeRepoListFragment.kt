@@ -73,8 +73,8 @@ class HomeTabFragment : BaseFragment() {
                 //xml databinding
                 viewModel.recommendArticles.observe(viewLifecycleOwner)
                 { rs ->
-                    binding.hasTabs = !rs?.body.isNullOrEmpty()
-                    adapter.setData(rs?.body)
+                    binding.hasTabs = (rs?.isNullOrEmpty() == false)
+                    adapter.setData(rs)
                 }
             }
             1 -> {
