@@ -22,15 +22,17 @@ open class BaseRefreshViewModel : BaseViewModel() {
     val repo = GiteeRepo.get()
 
     val loaderState = MutableLiveData<LoadState>()
-    val page = MutableLiveData<Int>()
     val refreshing = MutableLiveData<Boolean>()
     val moreLoading = MutableLiveData<Boolean>()
     val hasMore = MutableLiveData<Boolean>()
     val autoRefresh = MutableLiveData<Boolean>()
+    val page = MutableLiveData<Int>()
 
     init {
         loaderState.value = LoadState.LOADING
     }
+
+    fun isFirstPage(): Boolean = (page.value == 1)
 
     fun autoRefresh() {
         autoRefresh.value = true
@@ -46,11 +48,11 @@ open class BaseRefreshViewModel : BaseViewModel() {
         moreLoading.value = true
     }
 
-    fun loaderReload() {
-        refresh()
+    fun <T> switchPage(block: (page: Int) -> LiveData<ApiResponse<List<T>>?>): LiveData<ApiResponse<List<T>>?> {
+        return Transformations.switchMap(page) { block(it) }
     }
 
-    fun <T> mapListPage(source: LiveData<ApiResponse<List<T>>?>): LiveData<List<T>> {
+    fun <T> mapListPage(source: LiveData<ApiResponse<List<T>>?>): LiveData<List<T>?> {
         return Transformations.map(source) {
             changeLoaderState(it)
 
@@ -72,7 +74,6 @@ open class BaseRefreshViewModel : BaseViewModel() {
                     loaderState.value = LoadState.SUCCESS
                 }
             }
-
         }
     }
 

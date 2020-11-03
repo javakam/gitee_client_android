@@ -24,15 +24,22 @@ fun isGone(view: View, isGone: Boolean) {
     view.visibility = if (isGone) View.GONE else View.VISIBLE
 }
 
-//状态视图切换
-@BindingAdapter(value = ["loader_state","loader_reloadListener","loader_stateListener"], requireAll = false)
+//状态视图
+@BindingAdapter(value = ["loader_state"], requireAll = false)
 fun bindCustomLoaderView(
     layout: CustomLoaderView,
-    state: LoadState,
+    state: LoadState
+) {
+    layout.setLoadState(state)
+}
+
+//状态视图
+@BindingAdapter(value = ["loader_reloadListener","loader_stateListener"], requireAll = false)
+fun bindCustomLoaderView(
+    layout: CustomLoaderView,
     reloadListener: Loader.OnReloadListener?,
     stateListener: Loader.OnStateListener?
 ) {
-    layout.setLoadState(state)
     layout.setOnReloadListener(reloadListener)
     layout.setOnStateListener(stateListener)
 }

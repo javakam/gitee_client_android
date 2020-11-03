@@ -1,6 +1,5 @@
 package com.gitee.android.ui.home
 
-import androidx.lifecycle.Transformations
 import com.gitee.android.base.BaseRefreshViewModel
 
 /**
@@ -13,14 +12,11 @@ import com.gitee.android.base.BaseRefreshViewModel
  */
 class HomeViewModel : BaseRefreshViewModel() {
 
-    // repo.getRecommendProjects(page.value ?: 1)
-    private val _recommendArticles = Transformations.switchMap(page){
-        repo.getRecommendProjects(it)
-    }
-    val recommendArticles =mapListPage(_recommendArticles)
+    val recommendArticles = mapListPage(switchPage { repo.getRecommendProjects(it) })
 
-    val hotArticles = repo.getHotProjects(page.value ?: 1)
-    val recentlyArticles = repo.getRecentlyProjects(page.value ?: 1)
+    val hotArticles = mapListPage(switchPage{ repo.getHotProjects(it) })
+
+    val recentlyArticles = mapListPage(switchPage{ repo.getRecentlyProjects(it) })
 
 //    val recentlyArticles = MutableLiveData<List<ArticleEntity>?>()
 //    fun getRecentlyArticles(): Job =

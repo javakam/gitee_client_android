@@ -74,22 +74,22 @@ class HomeTabFragment : BaseFragment() {
                 viewModel.recommendArticles.observe(viewLifecycleOwner)
                 { rs ->
                     binding.hasTabs = (rs?.isNullOrEmpty() == false)
-                    adapter.setData(rs, viewModel.page.value == 1)
+                    adapter.setData(rs, viewModel.isFirstPage())
                 }
             }
             1 -> {
                 viewModel.hotArticles.observe(viewLifecycleOwner)
                 { rs ->
-                    binding.hasTabs = !rs?.body.isNullOrEmpty()
-                    adapter.setData(rs?.body)
+                    binding.hasTabs = (rs?.isNullOrEmpty() == false)
+                    adapter.setData(rs, viewModel.isFirstPage())
                 }
             }
             else -> {
                 //jobArticleTabs = viewModel.getRecentlyArticles()
                 viewModel.recentlyArticles.observe(viewLifecycleOwner)
                 { rs ->
-                    binding.hasTabs = !rs?.body.isNullOrEmpty()
-                    adapter.setData(rs?.body)
+                    binding.hasTabs = (rs?.isNullOrEmpty() == false)
+                    adapter.setData(rs, viewModel.isFirstPage())
                 }
             }
         }
