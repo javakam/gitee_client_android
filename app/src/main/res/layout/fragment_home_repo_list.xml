@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.gitee.android.ui.home.HomeViewModel"/>
+            type="com.gitee.android.ui.home.HomeViewModel" />
 
         <variable
             name="resId"
@@ -24,23 +24,29 @@
         android:id="@id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        app:onRefreshListener="@{()->vm.refresh()}"
-        app:refreshing="@{vm.refreshing}"
-        app:moreLoading="@{vm.moreLoading}"
-        app:hasMore="@{vm.hasMore}"
         app:autoRefresh="@{vm.autoRefresh}"
+        app:hasMore="@{vm.hasMore}"
+        app:moreLoading="@{vm.moreLoading}"
         app:onLoadMoreListener="@{()->vm.loadMore()}"
-        >
+        app:onRefreshListener="@{()->vm.refresh()}"
+        app:refreshing="@{vm.refreshing}">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@id/refreshRecycler"
+        <com.gitee.android.view.CustomLoaderView
+            android:id="@id/stateLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            app:isGone="@{!hasTabs}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_list_home_article" />
+            app:loader_reloadListener="@{()->vm.loaderReload()}"
+            app:loader_state="@{vm.loaderState}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@id/refreshRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                app:isGone="@{!hasTabs}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_list_home_article" />
+        </com.gitee.android.view.CustomLoaderView>
 
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 

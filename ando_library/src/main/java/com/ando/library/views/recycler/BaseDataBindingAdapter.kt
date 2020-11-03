@@ -39,15 +39,23 @@ abstract class BaseDataBindingAdapter<T, V : ViewDataBinding> :
     fun getData(): List<T> = mData
 
     fun addData(list: List<T>?) {
-       list?.let {
-           mData.addAll(list)
-           notifyDataSetChanged()
-       }
+        list?.let {
+            mData.addAll(list)
+            notifyDataSetChanged()
+        }
     }
 
     fun setData(list: List<T>?) {
         list?.let {
             if (mData.isNotEmpty()) mData.clear()
+            mData.addAll(list)
+            notifyDataSetChanged()
+        }
+    }
+
+    fun setData(list: List<T>?, isFirstPage: Boolean) {
+        list?.let {
+            if (isFirstPage) mData.clear()
             mData.addAll(list)
             notifyDataSetChanged()
         }

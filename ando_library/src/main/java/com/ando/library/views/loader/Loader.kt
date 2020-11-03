@@ -146,26 +146,26 @@ abstract class Loader constructor(
 
     private fun showPagerView() {
         if (null != loadingView) {
-            loadingView!!.visibility = if (mState == LoadState.UNLOADED.value()
+            loadingView?.visibility = if (mState == LoadState.UNLOADED.value()
                 || mState == LoadState.LOADING.value()
             ) VISIBLE else GONE
         } else {
             i(TAG, "LoadingView is null!")
         }
         if (null != errorView) {
-            errorView!!.visibility =
+            errorView?.visibility =
                 if (mState == LoadState.ERROR.value()) VISIBLE else GONE
             if (mStateListener != null) {
-                mStateListener!!.onState(LoadState.ERROR)
+                mStateListener?.onState(LoadState.ERROR)
             }
         } else {
             i(TAG, "ErrorView is null!")
         }
         if (null != emptyView) {
-            emptyView!!.visibility =
+            emptyView?.visibility =
                 if (mState == LoadState.EMPTY.value()) VISIBLE else GONE
             if (mStateListener != null) {
-                mStateListener!!.onState(LoadState.EMPTY)
+                mStateListener?.onState(LoadState.EMPTY)
             }
         } else {
             i(TAG, "EmptyView is null!")
@@ -174,10 +174,10 @@ abstract class Loader constructor(
             mSucceedView = createSuccessView()
         }
         if (null != mSucceedView) {
-            mSucceedView!!.visibility =
+            mSucceedView?.visibility =
                 if (mState == LoadState.SUCCESS.value()) VISIBLE else GONE
             if (mStateListener != null) {
-                mStateListener!!.onState(LoadState.SUCCESS)
+                mStateListener?.onState(LoadState.SUCCESS)
             }
         } else {
             i(TAG, "SuccessView is null!")
@@ -186,7 +186,7 @@ abstract class Loader constructor(
             if (loadState == LoadState.UNLOADED) {
                 loadState = LoadState.LOADING
             }
-            mStateListener!!.onState(loadState)
+            mStateListener?.onState(loadState)
         }
     }
 
@@ -229,7 +229,7 @@ abstract class Loader constructor(
         if (mRListener != null) {
             mState = LoadState.UNLOADED.value()
             showSafePagerView()
-            mRListener!!.onReload()
+            mRListener?.onReload()
         } else {
             i(javaClass.simpleName, "OnReloadListener is null.")
         }
@@ -262,7 +262,7 @@ abstract class Loader constructor(
             //getHandler().post(new TaskRunnable());
             post { mHandler?.sendEmptyMessage(1) }
         } else {
-            mState = loadState!!.value()
+            mState = loadState?.value() ?: LoadState.UNLOADED.value()
             showSafePagerView()
         }
         return this

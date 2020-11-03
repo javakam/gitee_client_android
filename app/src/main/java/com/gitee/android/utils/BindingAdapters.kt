@@ -6,7 +6,10 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.ando.library.utils.GlideUtils
+import com.ando.library.views.loader.LoadState
+import com.ando.library.views.loader.Loader
 import com.ando.toolkit.ext.hideSoftInput
+import com.gitee.android.view.CustomLoaderView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -19,6 +22,19 @@ fun ImageView.loadPic(url: String?, placeholder: Int) {
 @BindingAdapter("isGone")
 fun isGone(view: View, isGone: Boolean) {
     view.visibility = if (isGone) View.GONE else View.VISIBLE
+}
+
+//状态视图切换
+@BindingAdapter(value = ["loader_state","loader_reloadListener","loader_stateListener"], requireAll = false)
+fun bindCustomLoaderView(
+    layout: CustomLoaderView,
+    state: LoadState,
+    reloadListener: Loader.OnReloadListener?,
+    stateListener: Loader.OnStateListener?
+) {
+    layout.setLoadState(state)
+    layout.setOnReloadListener(reloadListener)
+    layout.setOnStateListener(stateListener)
 }
 
 //状态绑定，控制停止刷新

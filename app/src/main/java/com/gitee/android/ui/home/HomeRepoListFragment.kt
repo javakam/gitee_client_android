@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ando.library.base.BaseFragment
 import com.ando.library.views.RecyclerItemDecoration
@@ -67,6 +66,7 @@ class HomeTabFragment : BaseFragment() {
 
     private fun subscribeUi(adapter: HomeArticleListAdapter) {
         jobArticleTabs?.cancel()
+        viewModel.refresh()
         when (arguments?.getInt("pos", 0)) {
             0 -> {
                 //jobArticleTabs = viewModel.getRecommendArticles()
@@ -74,7 +74,7 @@ class HomeTabFragment : BaseFragment() {
                 viewModel.recommendArticles.observe(viewLifecycleOwner)
                 { rs ->
                     binding.hasTabs = (rs?.isNullOrEmpty() == false)
-                    adapter.setData(rs)
+                    adapter.setData(rs, viewModel.page.value == 1)
                 }
             }
             1 -> {
