@@ -188,13 +188,13 @@ fun Context.share(text: String, subject: String = ""): Boolean {
 /**
  * browse web
  */
-fun Fragment.browse(url: String, newTask: Boolean = false) = activity?.browse(url, newTask)
+fun Fragment.browser(url: String, newTask: Boolean = false) = activity?.browser(url, newTask)
 
 /**
  * @param url
  * @param newTask
  */
-fun Context.browse(url: String, newTask: Boolean = false): Boolean {
+fun Context.browser(url: String, newTask: Boolean = false): Boolean {
     return try {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)

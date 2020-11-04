@@ -2,6 +2,17 @@ package com.gitee.android.bean
 
 import com.google.gson.annotations.SerializedName
 import org.greenrobot.greendao.annotation.Entity
+import java.io.Serializable
+
+@Entity
+data class LoginEntity(
+    val access_token: String,
+    val created_at: Int,
+    val expires_in: Int,
+    val refresh_token: String,
+    val scope: String,
+    val token_type: String
+) : Serializable
 
 @Entity
 data class ArticleEntity(

@@ -1,14 +1,8 @@
 package com.gitee.android.utils
 
 import android.app.Activity
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
-import android.widget.Toast
 import androidx.core.app.ShareCompat
-import com.ando.toolkit.ToolKit
-import com.gitee.android.GiteeApplication
 
 /**
  * Title: CommonUtils

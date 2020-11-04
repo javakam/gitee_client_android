@@ -48,7 +48,6 @@ class HomeTabFragment : BaseFragment() {
         binding = FragmentHomeRepoListBinding.inflate(inflater, container, false)
 
         binding.vm = viewModel
-        binding.resId = R.color.colorPrimary
         binding.lifecycleOwner = this
 
         val adapter = HomeArticleListAdapter()

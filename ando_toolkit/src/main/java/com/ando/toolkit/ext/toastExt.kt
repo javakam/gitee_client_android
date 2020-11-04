@@ -1,13 +1,12 @@
 package com.ando.toolkit.ext
 
 import android.content.Context
-import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.ando.toolkit.StringUtils
-import com.ando.toolkit.ToolKit.getContext
+import com.ando.toolkit.AppUtils.getContext
 
 /**
  * Title: ToastExt

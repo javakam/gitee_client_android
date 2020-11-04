@@ -3,11 +3,9 @@ package com.gitee.android.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.ando.library.base.BaseViewModel
 import com.ando.library.views.loader.LoadState
 import com.gitee.android.http.ApiResponse
-import com.gitee.android.http.GiteeRepo
-import com.gitee.android.view.CustomLoaderView
+import com.gitee.android.http.GiteeRepoRemote
 
 /**
  * Title: BaseRefreshViewModel
@@ -19,18 +17,14 @@ import com.gitee.android.view.CustomLoaderView
  */
 open class BaseRefreshViewModel : BaseViewModel() {
 
-    val repo = GiteeRepo.get()
+    val repo = GiteeRepoRemote.get()
 
-    val loaderState = MutableLiveData<LoadState>()
     val refreshing = MutableLiveData<Boolean>()
     val moreLoading = MutableLiveData<Boolean>()
     val hasMore = MutableLiveData<Boolean>()
     val autoRefresh = MutableLiveData<Boolean>()
-    val page = MutableLiveData<Int>()
 
-    init {
-        loaderState.value = LoadState.LOADING
-    }
+    private val page = MutableLiveData<Int>()
 
     fun isFirstPage(): Boolean = (page.value == 1)
 
@@ -48,6 +42,10 @@ open class BaseRefreshViewModel : BaseViewModel() {
         moreLoading.value = true
     }
 
+    override fun reload() {
+        refresh()
+    }
+
     fun <T> switchPage(block: (page: Int) -> LiveData<ApiResponse<List<T>>?>): LiveData<ApiResponse<List<T>>?> {
         return Transformations.switchMap(page) { block(it) }
     }
@@ -60,20 +58,6 @@ open class BaseRefreshViewModel : BaseViewModel() {
             moreLoading.value = false
             hasMore.value = (it?.body?.isNullOrEmpty() == false)
             it?.body
-        }
-    }
-
-    private fun <T> changeLoaderState(it: ApiResponse<List<T>>?) {
-        it?.apply {
-            if (!isSuccessful) {
-                loaderState.value = LoadState.ERROR
-            } else {
-                if (body?.isNullOrEmpty() == true) {
-                    loaderState.value = LoadState.EMPTY
-                } else {
-                    loaderState.value = LoadState.SUCCESS
-                }
-            }
         }
     }
 

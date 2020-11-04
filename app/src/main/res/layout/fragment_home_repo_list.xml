@@ -12,10 +12,6 @@
             type="com.gitee.android.ui.home.HomeViewModel" />
 
         <variable
-            name="resId"
-            type="Integer" />
-
-        <variable
             name="hasTabs"
             type="Boolean" />
     </data>
@@ -35,7 +31,7 @@
             android:id="@id/stateLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:loader_reloadListener="@{()->vm.refresh()}"
+            app:loader_reloadListener="@{()->vm.reload()}"
             app:loader_state="@{vm.loaderState}">
 
             <androidx.recyclerview.widget.RecyclerView

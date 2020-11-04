@@ -1,8 +1,12 @@
 package com.gitee.android.http
 
-import com.gitee.android.bean.ArticleEntity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import com.ando.toolkit.ACache
+import com.gitee.android.bean.LoginEntity
+import com.gitee.android.common.CLIENT_ID
+import com.gitee.android.common.CLIENT_SECRET
+import com.gitee.android.common.CacheManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,15 +25,41 @@ import kotlin.coroutines.suspendCoroutine
 
 interface IRepository
 
-class GiteeRepo : IRepository {
+class GiteeRepoRLocal : IRepository
+
+class GiteeRepoRemote : IRepository {
 
     private val api = ApiService.get()
+    private val apiV3 = ApiService.getV3()
 
-    fun getRecommendProjects(page: Int) = api.getRecommendProjects(page)
+    fun login(account: String, password: String): LiveData<ApiResponse<LoginEntity>?>? {
+        return api.login(
+            mutableMapOf(
+                "grant_type" to "password",
+                "username" to account,
+                "password" to password,
+                "client_id" to CLIENT_ID,
+                "client_secret" to CLIENT_SECRET,
+                //"scope" to "projects user_info issues notes"
+            )
+        )
+    }
 
-    fun getHotProjects(page: Int) = api.getHotProjects(page)
+    fun loginByToken(): LiveData<ApiResponse<LoginEntity>?>?{
+        val refreshToken: String = CacheManager.getLoginData()?.refresh_token ?: ""
+        return api.refreshToken(
+            mutableMapOf(
+                "grant_type" to "refresh_token",
+                "refresh_token" to refreshToken
+            )
+        )
+    }
 
-    fun getRecentlyProjects(page: Int) = api.getRecentlyProjects(page)
+    fun getRecommendProjects(page: Int) = apiV3.getRecommendProjects(page)
+
+    fun getHotProjects(page: Int) = apiV3.getHotProjects(page)
+
+    fun getRecentlyProjects(page: Int) = apiV3.getRecentlyProjects(page)
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
@@ -48,13 +78,13 @@ class GiteeRepo : IRepository {
     }
 
     companion object {
-        private var usbUtils: GiteeRepo? = null
+        private var usbUtils: GiteeRepoRemote? = null
 
-        fun get(): GiteeRepo {
+        fun get(): GiteeRepoRemote {
             if (usbUtils == null) {
-                synchronized(GiteeRepo::class.java) {
+                synchronized(GiteeRepoRemote::class.java) {
                     if (usbUtils == null) {
-                        usbUtils = GiteeRepo()
+                        usbUtils = GiteeRepoRemote()
                     }
                 }
             }

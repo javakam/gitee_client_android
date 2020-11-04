@@ -16,7 +16,7 @@ import android.text.format.Formatter
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.annotation.RequiresPermission
-import com.ando.toolkit.ToolKit.getContext
+import com.ando.toolkit.AppUtils.getContext
 import com.ando.toolkit.ShellUtils.execCmd
 import com.ando.toolkit.log.L
 import java.io.IOException

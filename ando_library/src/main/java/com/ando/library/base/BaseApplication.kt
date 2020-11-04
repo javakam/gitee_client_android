@@ -11,7 +11,7 @@ import com.ando.toolkit.ActivityCollector.finishAll
 import com.ando.toolkit.ActivityCollector.getAll
 import com.ando.toolkit.ActivityCollector.remove
 import com.ando.toolkit.ActivityCollector.setCurActivity
-import com.ando.toolkit.ToolKit
+import com.ando.toolkit.AppUtils
 import java.lang.ref.WeakReference
 
 /**
@@ -28,7 +28,7 @@ open class BaseApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        ToolKit.init(this, BuildConfig.DEBUG)
+        AppUtils.init(this, BuildConfig.DEBUG)
 
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(

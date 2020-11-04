@@ -7,8 +7,11 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.ando.library.base.BaseMvvmActivity
+import com.ando.toolkit.log.L
 import com.gitee.android.R
+import com.gitee.android.common.CacheManager
 import com.gitee.android.databinding.ActivityMainBinding
+import com.gitee.android.http.GiteeRepoRemote
 import com.gitee.android.utils.FixFragmentNavigator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,6 +23,8 @@ class MainActivity : BaseMvvmActivity<ActivityMainBinding>() {
     override fun initActivityStyle() {
         supportRequestWindowFeature(Window.FEATURE_ACTION_BAR)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        prepareLogin()
+       // prepareLogin("javakam", "lovekam12")
     }
 
     override val layoutId: Int = R.layout.activity_main
@@ -40,6 +45,40 @@ class MainActivity : BaseMvvmActivity<ActivityMainBinding>() {
             //bottomNavView.selectedItemId = R.id.nav_home
         }
     }
+
+    fun prepareLogin() {
+        val data = GiteeRepoRemote.get().loginByToken()
+        data?.observe(this) { r ->
+
+            L.i("testLogin!  ${r?.toString()}")
+
+            if (r?.isSuccessful == true) {
+                L.i("登录成功!  $r")
+                r.body?.apply { CacheManager.saveLoginData(this) }
+            } else {
+                //Login Page
+
+            }
+
+        }
+
+    }
+
+    fun prepareLogin(account: String, password: String) {
+        val data = GiteeRepoRemote.get().login(account, password)
+        data?.observe(this) { r ->
+
+            L.i("testLogin!  ${r?.toString()}")
+
+            if (r?.isSuccessful == true) {
+                L.i("登录成功!  $r")
+                r.body?.apply { CacheManager.saveLoginData(this) }
+            }
+
+        }
+
+    }
+
 
     override fun onSupportNavigateUp() = navController.navigateUp()
 }

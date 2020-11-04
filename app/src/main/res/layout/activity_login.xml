@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="45dp"
+                    android:src="@mipmap/icon_login_logo" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_20">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/et_account"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@mipmap/icon_login_account"
+                        android:drawablePadding="10dip"
+                        android:ems="10"
+                        android:hint="@string/login_account_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:singleLine="true"
+                        tools:ignore="RtlHardcoded" />
+
+                    <EditText
+                        android:id="@+id/et_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dip"
+                        android:drawableLeft="@mipmap/icon_login_pass"
+                        android:drawablePadding="10dip"
+                        android:ems="10"
+                        android:hint="@string/login_password_hint"
+                        android:inputType="textPassword"
+                        android:singleLine="true" />
+
+                    <Button
+                        android:id="@+id/bt_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_40"
+                        android:background="@drawable/btn_style_login"
+                        android:enabled="false"
+                        android:padding="10dip"
+                        android:text="@string/login_title"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_15" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dip"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:text="tips:"
+                            android:textColor="@color/font_gray_999999"
+                            android:textSize="@dimen/font_12" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dip"
+                            android:text="请使用Git@OSC的push账号名和密码登录"
+                            android:textColor="@color/font_gray_999999"
+                            android:textSize="@dimen/font_13"
+                            tools:ignore="HardcodedText,RtlHardcoded" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dip"
+                            android:autoLink="web"
+                            android:gravity="left"
+                            android:text="注册请前往https://gitee.com/"
+                            android:textColor="@color/font_gray_999999"
+                            android:textSize="@dimen/font_13"
+                            tools:ignore="HardcodedText,RtlHardcoded" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+    </LinearLayout>
+
+</layout>

@@ -14,7 +14,7 @@ import android.view.animation.AnimationUtils
 import androidx.annotation.*
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
-import com.ando.toolkit.ToolKit.getContext
+import com.ando.toolkit.AppUtils.getContext
 import kotlin.math.max
 
 /**

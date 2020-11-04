@@ -41,49 +41,49 @@ object L {
         v(msg, logGlobalTag)
     }
 
-    fun v(msg: String?, tag: String = "") {
-        log(Log.VERBOSE, tag, msg)
+    fun v(tag: String?, msg: String?) {
+        log(Log.VERBOSE, tag = tag, msg = msg)
     }
 
     fun d(msg: String?) {
         d(msg, logGlobalTag)
     }
 
-    fun d(msg: String?, tag: String = "") {
-        log(Log.DEBUG, tag, msg)
+    fun d(tag: String?, msg: String?) {
+        log(Log.DEBUG, tag = tag, msg = msg)
     }
 
     fun i(msg: String?) {
         i(msg, logGlobalTag)
     }
 
-    fun i(msg: String?, tag: String = "") {
-        log(Log.INFO, tag, msg)
+    fun i(tag: String?, msg: String?) {
+        log(Log.INFO, tag = tag, msg = msg)
     }
 
     fun w(msg: String?) {
         w(msg, logGlobalTag)
     }
 
-    fun w(msg: String?, tag: String = "") {
-        log(Log.WARN, tag, msg)
+    fun w(tag: String?, msg: String?) {
+        log(Log.WARN,  tag = tag, msg = msg)
     }
 
     fun e(msg: String?) {
         e(msg, logGlobalTag)
     }
 
-    fun e(msg: String?, tag: String = "") {
-        log(Log.ERROR, tag, msg)
+    fun e(tag: String?, msg: String?) {
+        log(Log.ERROR,  tag = tag, msg = msg)
     }
 
     fun json(msg: String?) {
         json(msg, logGlobalTag)
     }
 
-    fun json(msg: String?, tag: String = "") {
+    fun json(tag: String?, msg: String?) {
         val json = formatJson(msg)
-        log(Log.ERROR, tag, json)
+        log(Log.ERROR,  tag = tag, msg = msg)
     }
 
     /**
@@ -109,13 +109,13 @@ object L {
      * @param tag
      * @param msg
      */
-    private fun log(priority: Int, tag: String, msg: String?) {
+    private fun log(priority: Int, tag: String?, msg: String?) {
         if (!logEnabled) return
 
         val elements = Thread.currentThread().stackTrace
         val index = findIndex(elements)
         val element = elements[index]
-        val tagHandled = handleTag(element, tag)
+        val tagHandled = handleTag(element, tag ?: "")
         var message = msg ?: ""
         if (msg?.contains("\n") == true) {
             message = msg.replace("\n".toRegex(), "\n$VERTICAL_DOUBLE_LINE ")

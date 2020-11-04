@@ -17,7 +17,7 @@ import android.util.Log
 import androidx.annotation.*
 import androidx.annotation.IntRange
 import androidx.core.content.ContextCompat
-import com.ando.toolkit.ToolKit.getContext
+import com.ando.toolkit.AppUtils.getContext
 import java.io.IOException
 import java.lang.ref.WeakReference
 

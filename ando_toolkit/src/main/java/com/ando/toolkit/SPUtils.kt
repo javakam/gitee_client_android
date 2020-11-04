@@ -3,7 +3,7 @@ package com.ando.toolkit
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.ArrayMap
-import com.ando.toolkit.ToolKit.getContext
+import com.ando.toolkit.AppUtils.getContext
 
 /**
  * Title:SPUtils
@@ -237,6 +237,7 @@ class SPUtils private constructor(spName: String) {
     }
 
     companion object {
+        private const val DEFAULT_NAME="ShareData"
         private val sSPMap = ArrayMap<String, SPUtils>()
 
         /**
@@ -244,7 +245,7 @@ class SPUtils private constructor(spName: String) {
          *
          * @return [SPUtils]
          */
-        fun getInstance(): SPUtils? = getInstance("")
+        fun get(): SPUtils? = get(DEFAULT_NAME)
 
         /**
          * 获取SP实例
@@ -252,10 +253,10 @@ class SPUtils private constructor(spName: String) {
          * @param spName sp名
          * @return [SPUtils]
          */
-        fun getInstance(spName: String): SPUtils {
+        fun get(spName: String?): SPUtils {
             var name = spName
-            if (isSpace(name)) {
-                name = "spUtils"
+            if (name.isNullOrBlank()) {
+                name = DEFAULT_NAME
             }
             var sp = sSPMap[name]
             if (sp == null) {
@@ -265,20 +266,6 @@ class SPUtils private constructor(spName: String) {
             return sp
         }
 
-        private fun isSpace(s: String?): Boolean {
-            if (s == null) {
-                return true
-            }
-            var i = 0
-            val len = s.length
-            while (i < len) {
-                if (!Character.isWhitespace(s[i])) {
-                    return false
-                }
-                ++i
-            }
-            return true
-        }
     }
 
     init {

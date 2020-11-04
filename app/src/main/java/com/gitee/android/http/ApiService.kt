@@ -2,9 +2,10 @@ package com.gitee.android.http
 
 import androidx.lifecycle.LiveData
 import com.gitee.android.bean.ArticleEntity
+import com.gitee.android.bean.LoginEntity
 import com.gitee.android.common.BASE_URL
-import retrofit2.http.GET
-import retrofit2.http.Query
+import com.gitee.android.common.BASE_URL_V3
+import retrofit2.http.*
 
 /**
  * Title: ApiService
@@ -18,15 +19,24 @@ interface ApiService {
 
     companion object {
         fun get(): ApiService = ApiFactory.create(BASE_URL)
+        fun getV3(): ApiService = ApiFactory.create(BASE_URL_V3)
     }
 
-    @GET("v3/projects/featured/")
+    @FormUrlEncoded
+    @POST("oauth/token")
+    fun login(@FieldMap fields: Map<String, String>): LiveData<ApiResponse<LoginEntity>?>?
+
+    @FormUrlEncoded
+    @POST("oauth/token")
+    fun refreshToken(@FieldMap fields: Map<String, String>): LiveData<ApiResponse<LoginEntity>?>?
+
+    @GET("projects/featured/")
     fun getRecommendProjects(@Query("page") page: Int = 1): LiveData<ApiResponse<List<ArticleEntity>>?>
 
-    @GET("v3/projects/popular/")
-    fun getHotProjects(@Query("page") page: Int = 1):  LiveData<ApiResponse<List<ArticleEntity>>?>
+    @GET("projects/popular/")
+    fun getHotProjects(@Query("page") page: Int = 1): LiveData<ApiResponse<List<ArticleEntity>>?>
 
-    @GET("v3/projects/latest/")
-    fun getRecentlyProjects(@Query("page") page: Int = 1):  LiveData<ApiResponse<List<ArticleEntity>>?>
+    @GET("projects/latest/")
+    fun getRecentlyProjects(@Query("page") page: Int = 1): LiveData<ApiResponse<List<ArticleEntity>>?>
 
 }
