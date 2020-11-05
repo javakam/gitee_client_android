@@ -1,66 +1,48 @@
 package com.gitee.android.ui.login
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.ando.toolkit.ext.ToastUtils
-import com.ando.toolkit.ext.postNext
 import com.gitee.android.base.BaseViewModel
 import com.gitee.android.bean.LoginEntity
-import com.gitee.android.common.CacheManager
+import com.gitee.android.bean.UserInfoEntity
 import com.gitee.android.http.ApiResponse
 import com.gitee.android.http.GiteeRepoRemote
 
-class LoginViewModel : BaseViewModel() {
-
-    private val repo = GiteeRepoRemote.get()
-
-    //todo  2020年11月4日 17:07:14
-    val result = MutableLiveData<LoginEntity?>()
+class LoginViewModel @ViewModelInject constructor(private val repo: GiteeRepoRemote) :
+    BaseViewModel() {
 
     /**
      * 检查登录
      */
-    fun checkLogin(username: String?, password: String?) {
+    fun checkLogin(username: String?, password: String?): Boolean {
         if (!isUserNameValid(username)) {
             ToastUtils.shortToast("请输入账号")
-            return
+            return false
         }
         if (password?.isBlank() == true) {
             ToastUtils.shortToast("请输入密码")
-            return
+            return false
         }
-        if (isPasswordValid(password ?: return)) {
+        if (!isPasswordValid(password ?: return false)) {
             ToastUtils.shortToast("密码长度至少6位")
-            return
+            return false
         }
-        login(username!!, password)
+        return true
     }
 
-    fun login(username: String, password: String) {
-        val result: LiveData<ApiResponse<LoginEntity>?>? =
-            repo.login(account = username, password = password)
-        val a =   result?.apply {
-            Transformations.map(this) {
-                if (it?.isSuccessful == true) {
-                    val data = it.body
-                    CacheManager.saveLoginData(data ?: return@map isLogin.postValue(false) )
-                    isLogin.postValue(true)
-                    data
-                } else {
-                    isLogin.postValue(false)
-                    null
-                }
-            }
-        }
+    fun login(account: String, password: String): LiveData<ApiResponse<LoginEntity>?>? {
+        return repo.login(account = account, password = password)
     }
 
-    // A placeholder username validation check
+    fun getUserInfo(access_token: String): LiveData<ApiResponse<UserInfoEntity?>?>? {
+        return repo.getUserInfo(access_token = access_token)
+    }
+
     private fun isUserNameValid(username: String?): Boolean {
         return (username?.isBlank() == false)
     }
 
-    // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 5
     }

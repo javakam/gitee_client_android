@@ -4,6 +4,7 @@ import com.ando.toolkit.AppUtils
 import com.ando.toolkit.log.L
 import com.gitee.android.common.BASE_URL
 import com.gitee.android.http.ApiService
+import com.gitee.android.http.GiteeRepoRemote
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,11 +14,16 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-//
-//@Module
-//@InstallIn(ApplicationComponent::class)
-//object AppModule {
-//
+
+@Module
+@InstallIn(ApplicationComponent::class)
+object AppModule {
+
+    @Singleton
+    @Provides
+    fun provideGiteeRepoRemote(): GiteeRepoRemote = GiteeRepoRemote.get()
+
+
 //    @Provides
 //    fun provideWeatherService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 //
@@ -53,4 +59,4 @@ import javax.inject.Singleton
 //        }
 //        return builder.build()
 //    }
-//}
+}

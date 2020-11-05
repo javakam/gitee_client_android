@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ando.library.base.BaseFragment
 import com.ando.library.views.RecyclerItemDecoration
-import com.gitee.android.R
 import com.gitee.android.databinding.FragmentHomeRepoListBinding
 import kotlinx.coroutines.Job
 
@@ -20,11 +19,11 @@ import kotlinx.coroutines.Job
  * @author ChangBao
  * @date 2020/10/27  14:12
  */
-class HomeTabFragment : BaseFragment() {
+class HomeRepoListFragment : BaseFragment() {
     /// R.layout.fragment_home_tab
     companion object {
-        fun create(arg: String, position: Int): HomeTabFragment {
-            val fragment = HomeTabFragment()
+        fun create(arg: String, position: Int): HomeRepoListFragment {
+            val fragment = HomeRepoListFragment()
             val bundle = Bundle()
             bundle.putString("show", arg)
             bundle.putInt("pos", position)
@@ -50,7 +49,7 @@ class HomeTabFragment : BaseFragment() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
-        val adapter = HomeArticleListAdapter()
+        val adapter = HomeRepoListAdapter()
         binding.refreshRecycler.adapter = adapter
         binding.refreshRecycler.addItemDecoration(
             RecyclerItemDecoration(
@@ -63,7 +62,7 @@ class HomeTabFragment : BaseFragment() {
         return binding.root
     }
 
-    private fun subscribeUi(adapter: HomeArticleListAdapter) {
+    private fun subscribeUi(adapter: HomeRepoListAdapter) {
         jobArticleTabs?.cancel()
         viewModel.refresh()
         when (arguments?.getInt("pos", 0)) {

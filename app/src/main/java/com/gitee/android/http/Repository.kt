@@ -45,7 +45,7 @@ class GiteeRepoRemote : IRepository {
         )
     }
 
-    fun loginByToken(): LiveData<ApiResponse<LoginEntity>?>?{
+    fun loginByToken(): LiveData<ApiResponse<LoginEntity>?>? {
         val refreshToken: String = CacheManager.getLoginData()?.refresh_token ?: ""
         return api.refreshToken(
             mutableMapOf(
@@ -54,6 +54,8 @@ class GiteeRepoRemote : IRepository {
             )
         )
     }
+
+    fun getUserInfo(access_token: String) = api.getUserInfo(access_token = access_token)
 
     fun getRecommendProjects(page: Int) = apiV3.getRecommendProjects(page)
 

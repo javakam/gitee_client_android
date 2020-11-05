@@ -8,6 +8,7 @@
     <color name="color_main_blue">#2196F3</color>
     <color name="color_nav_normal">#b3afd9</color>
     <color name="color_nav_bg">#FAFAFA</color>
+    <color name="color_mine_blue">#802196F3</color>
 
     <color name="font_black">#000000</color>
     <color name="font_black_light">#808080</color>

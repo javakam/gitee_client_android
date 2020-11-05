@@ -14,6 +14,37 @@ data class LoginEntity(
     val token_type: String
 ) : Serializable
 
+data class UserInfoEntity(
+    val avatar_url: String,
+    val bio: String,
+    val blog: String,
+    val created_at: String,
+    val email: String,
+    val events_url: String,
+    val followers: Int,
+    val followers_url: String,
+    val following: Int,
+    val following_url: String,
+    val gists_url: String,
+    val html_url: String,
+    val id: Int,
+    val login: String,
+    val name: String,
+    val organizations_url: String,
+    val public_gists: Int,
+    val public_repos: Int,
+    val received_events_url: String,
+    val repos_url: String,
+    val stared: Int,
+    val starred_url: String,
+    val subscriptions_url: String,
+    val type: String,
+    val updated_at: String,
+    val url: String,
+    val watched: Int,
+    val weibo: Any
+): Serializable
+
 @Entity
 data class ArticleEntity(
     val created_at: String,

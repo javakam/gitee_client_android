@@ -17,7 +17,7 @@ import com.gitee.android.databinding.ItemListHomeArticleBinding
  * @author ChangBao
  * @date 2020/8/14  16:25
  */
-class HomeArticleListAdapter : BaseDataBindingAdapter<ArticleEntity, ItemListHomeArticleBinding>() {
+class HomeRepoListAdapter : BaseDataBindingAdapter<ArticleEntity, ItemListHomeArticleBinding>() {
 
     override val layoutId: Int = R.layout.item_list_home_article
 

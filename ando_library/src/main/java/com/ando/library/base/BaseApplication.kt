@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
+import android.os.Process.killProcess
+import android.os.Process.myPid
 import androidx.multidex.MultiDexApplication
 import com.ando.library.BuildConfig
 import com.ando.toolkit.ActivityCollector.add
@@ -82,7 +84,7 @@ open class BaseApplication : MultiDexApplication() {
 
         fun exit() {
             finishAll()
-            //Process.killProcess(Process.myPid())
+            killProcess(myPid())
             System.exit(0)
         }
 

@@ -30,9 +30,9 @@ class HomeFragment : BaseMvcLazyFragment() {
 
         val adapter = HomeTabsAdapter(this)
         adapter.addFragments(
-            HomeTabFragment.create("推荐项目 1", 0),
-            HomeTabFragment.create("热门项目 2", 1),
-            HomeTabFragment.create("最近更新 3", 2)
+            HomeRepoListFragment.create("推荐项目 1", 0),
+            HomeRepoListFragment.create("热门项目 2", 1),
+            HomeRepoListFragment.create("最近更新 3", 2)
         )
         mViewPager2.adapter = adapter
         mViewPager2.isUserInputEnabled = true
@@ -59,4 +59,3 @@ class HomeFragment : BaseMvcLazyFragment() {
     override fun getLayoutId(): Int = R.layout.fragment_home
 
 }
-

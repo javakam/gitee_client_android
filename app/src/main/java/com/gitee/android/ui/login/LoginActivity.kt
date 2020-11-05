@@ -1,32 +1,34 @@
 package com.gitee.android.ui.login
 
-import android.app.Activity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import android.content.pm.ActivityInfo
 import android.os.Bundle
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.View
-import android.view.inputmethod.EditorInfo
+import android.view.Window
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.activity.viewModels
 import com.ando.library.base.BaseMvvmActivity
 import com.ando.toolkit.ext.afterTextChanged
 import com.ando.toolkit.ext.hideSoftInput
+import com.ando.toolkit.ext.toastShort
+import com.ando.toolkit.ext.yes
 
 import com.gitee.android.R
+import com.gitee.android.common.AppRouter
+import com.gitee.android.common.CacheManager
 import com.gitee.android.databinding.ActivityLoginBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : BaseMvvmActivity<ActivityLoginBinding>() {
 
     private val loginViewModel: LoginViewModel by viewModels()
 
     override val layoutId: Int = R.layout.activity_login
+
+    override fun initActivityStyle() {
+        supportRequestWindowFeature(Window.FEATURE_ACTION_BAR)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+    }
 
     override fun initView(savedInstanceState: Bundle?) {
 
@@ -34,33 +36,51 @@ class LoginActivity : BaseMvvmActivity<ActivityLoginBinding>() {
         val password = findViewById<EditText>(R.id.et_password)
         val login = findViewById<Button>(R.id.bt_login)
 
+        setTitle(R.string.login_title)
+
         username.afterTextChanged {
-
+            if (!password.text.toString().isBlank() && !it.isBlank()) {
+                login.isEnabled = true
+            }
         }
-
-        password.apply {
-            afterTextChanged {
-
+        password.afterTextChanged {
+            if (!username.text.toString().isBlank() && !it.isBlank()) {
+                login.isEnabled = true
             }
-
-            setOnEditorActionListener { _, actionId, _ ->
-                when (actionId) {
-                    EditorInfo.IME_ACTION_DONE ->
-                        loginViewModel.login(
-                            username.text.toString(),
-                            password.text.toString()
-                        )
-                }
-                false
-            }
-
         }
 
         login.setOnClickListener {
             hideSoftInput(this)
-            loginViewModel.checkLogin(username.text.toString(), password.text.toString())
+            val account = username.text.toString()
+            val pwd = password.text.toString()
+
+            loginViewModel.checkLogin(account, pwd).yes {
+                loginViewModel.login(account, pwd)?.observe(this) {
+                    it?.apply {
+                        if (isSuccessful) {
+                            CacheManager.saveLoginData(body)
+                            getUserInfo(body?.access_token)
+                            toastShort("登录成功")
+                            AppRouter.toMain(this@LoginActivity)
+                        } else {
+                            toastShort("登录失败")
+                        }
+                    }
+                }
+            }
         }
-
     }
-}
 
+    private fun getUserInfo(access_token: String?) {
+        if (!access_token.isNullOrBlank()) {
+            loginViewModel.getUserInfo(access_token)?.observe(this) {
+                it?.apply {
+                    if (isSuccessful) {
+                        CacheManager.saveUserInfo(body)
+                    }
+                }
+            }
+        }
+    }
+
+}

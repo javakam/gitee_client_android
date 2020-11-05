@@ -34,6 +34,11 @@ https://itnext.io/android-architecture-hilt-mvvm-kotlin-coroutines-live-data-roo
 
 https://github.com/sdwfqin/AndroidQuick/tree/4.x/app-kt
 
+## androidx Fragment 懒加载
+https://juejin.im/post/6844904050698223624
+
+## Glide-KTX
+https://github.com/champChayangkoon/Glide-KTX
 
 ## BottomNavigationView show/hide 而不是 replace
 https://stackoverflow.com/questions/54087740/how-to-hide-bottomnavigationview-on-android-navigation-lib

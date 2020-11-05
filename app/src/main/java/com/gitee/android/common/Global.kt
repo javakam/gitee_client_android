@@ -7,6 +7,8 @@ import com.ando.library.base.BaseFragment
 import com.gitee.android.R
 import com.gitee.android.base.PageConfig
 
+var isLogin = false
+
 val defaultPageConfig = PageConfig(
     enableRefresh = true,
     enableLoadMore = true,
