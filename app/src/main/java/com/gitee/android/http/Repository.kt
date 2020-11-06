@@ -3,6 +3,7 @@ package com.gitee.android.http
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.ando.toolkit.ACache
+import com.ando.toolkit.StringUtils
 import com.gitee.android.bean.LoginEntity
 import com.gitee.android.common.CLIENT_ID
 import com.gitee.android.common.CLIENT_SECRET
@@ -56,6 +57,9 @@ class GiteeRepoRemote : IRepository {
     }
 
     fun getUserInfo(access_token: String) = api.getUserInfo(access_token = access_token)
+
+    fun getRepositories(name: String, access_token: String, page: Int) =
+        api.getRepositories(name, access_token, page)
 
     fun getRecommendProjects(page: Int) = apiV3.getRecommendProjects(page)
 

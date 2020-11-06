@@ -40,6 +40,12 @@ https://juejin.im/post/6844904050698223624
 ## Glide-KTX
 https://github.com/champChayangkoon/Glide-KTX
 
+## GreenDao Gradle
+```
+gradlew.bat greendao --warning-mode all --stacktrace
+```
+
+
 ## BottomNavigationView show/hide 而不是 replace
 https://stackoverflow.com/questions/54087740/how-to-hide-bottomnavigationview-on-android-navigation-lib
 

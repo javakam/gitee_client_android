@@ -3,6 +3,7 @@ package com.gitee.android.http
 import androidx.lifecycle.LiveData
 import com.gitee.android.bean.ArticleEntity
 import com.gitee.android.bean.LoginEntity
+import com.gitee.android.bean.RepoEntity
 import com.gitee.android.bean.UserInfoEntity
 import com.gitee.android.common.BASE_URL
 import com.gitee.android.common.BASE_URL_V3
@@ -34,13 +35,22 @@ interface ApiService {
     @GET("api/v5/user")
     fun getUserInfo(@Query("access_token") access_token: String): LiveData<ApiResponse<UserInfoEntity?>?>?
 
+    //https://gitee.com/api/v5/users/javakam/repos
+    //?access_token=6a482b3d429b7646622468f566bf5d01&type=all&sort=full_name&page=1&per_page=20
+    @GET("api/v5/users/{name}/repos?type=all&sort=full_name&per_page=20")
+    fun getRepositories(
+        @Path("name") name:String,
+        @Query("access_token") access_token: String,
+        @Query("page") page: Int = 1
+    ): LiveData<ApiResponse<List<RepoEntity>?>?>
+
     @GET("projects/featured/")
-    fun getRecommendProjects(@Query("page") page: Int = 1): LiveData<ApiResponse<List<ArticleEntity>>?>
+    fun getRecommendProjects(@Query("page") page: Int = 1): LiveData<ApiResponse<List<ArticleEntity>?>?>
 
     @GET("projects/popular/")
-    fun getHotProjects(@Query("page") page: Int = 1): LiveData<ApiResponse<List<ArticleEntity>>?>
+    fun getHotProjects(@Query("page") page: Int = 1): LiveData<ApiResponse<List<ArticleEntity>?>?>
 
     @GET("projects/latest/")
-    fun getRecentlyProjects(@Query("page") page: Int = 1): LiveData<ApiResponse<List<ArticleEntity>>?>
+    fun getRecentlyProjects(@Query("page") page: Int = 1): LiveData<ApiResponse<List<ArticleEntity>?>?>
 
 }

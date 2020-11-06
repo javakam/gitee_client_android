@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'dagger.hilt.android.plugin'
 
 def config = rootProject.ext.android         //配置
@@ -144,12 +143,6 @@ android {
 
 }
 
-greendao {
-    schemaVersion 1
-    daoPackage 'com.gitee.android.database.gen'
-    targetGenDir 'src/main/java'
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -184,7 +177,7 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     // GreenDao
-    implementation 'org.greenrobot:greendao:3.3.0'
+    // implementation 'org.greenrobot:greendao:3.3.0'
 
     // SmartRefreshLayout
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.1'

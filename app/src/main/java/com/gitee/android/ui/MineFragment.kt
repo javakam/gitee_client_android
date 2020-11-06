@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.graphics.drawable.toBitmap
 import com.ando.library.base.BaseMvvmFragment
-import com.ando.library.utils.GlideOptionsProvider
+import com.ando.library.utils.glide.GlideOptionsProvider
 import com.ando.library.utils.glide.intoCustomTarget
 import com.bumptech.glide.Glide
 import com.gitee.android.R
@@ -13,7 +13,6 @@ import com.gitee.android.common.CacheManager
 import com.gitee.android.databinding.FragmentMineBinding
 import com.gitee.android.utils.BlurBitmapUtil
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.E
 
 /**
  * Title: MineFragment
@@ -28,12 +27,8 @@ class MineFragment : BaseMvvmFragment<FragmentMineBinding>() {
 
     override val layoutId: Int = R.layout.fragment_mine
 
-    override fun initView(savedInstanceState: Bundle?) {
-    }
-
     @SuppressLint("SetTextI18n")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initView(root: View, savedInstanceState: Bundle?) {
         CacheManager.getUserInfo()?.apply {
             binding.avatar = avatar_url
             binding.tvUsername.text = name

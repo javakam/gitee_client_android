@@ -15,6 +15,7 @@ import com.ando.toolkit.ext.yes
 import com.gitee.android.R
 import com.gitee.android.common.AppRouter
 import com.gitee.android.common.CacheManager
+import com.gitee.android.common.isLogin
 import com.gitee.android.databinding.ActivityLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -61,6 +62,7 @@ class LoginActivity : BaseMvvmActivity<ActivityLoginBinding>() {
                             CacheManager.saveLoginData(body)
                             getUserInfo(body?.access_token)
                             toastShort("登录成功")
+                            isLogin = true
                             AppRouter.toMain(this@LoginActivity)
                         } else {
                             toastShort("登录失败")

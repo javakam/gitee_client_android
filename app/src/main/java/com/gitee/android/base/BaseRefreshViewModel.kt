@@ -23,8 +23,7 @@ open class BaseRefreshViewModel : BaseViewModel() {
     val moreLoading = MutableLiveData<Boolean>()
     val hasMore = MutableLiveData<Boolean>()
     val autoRefresh = MutableLiveData<Boolean>()
-
-    private val page = MutableLiveData<Int>()
+    val page = MutableLiveData<Int>()
 
     fun isFirstPage(): Boolean = (page.value == 1)
 
@@ -46,11 +45,11 @@ open class BaseRefreshViewModel : BaseViewModel() {
         refresh()
     }
 
-    fun <T> switchPage(block: (page: Int) -> LiveData<ApiResponse<List<T>>?>): LiveData<ApiResponse<List<T>>?> {
+    fun <T> switchPage(block: (page: Int) -> LiveData<ApiResponse<List<T>?>?>): LiveData<ApiResponse<List<T>?>?> {
         return Transformations.switchMap(page) { block(it) }
     }
 
-    fun <T> mapListPage(source: LiveData<ApiResponse<List<T>>?>): LiveData<List<T>?> {
+    fun <T> mapListPage(source: LiveData<ApiResponse<List<T>?>?>): LiveData<List<T>?> {
         return Transformations.map(source) {
             changeLoaderState(it)
 

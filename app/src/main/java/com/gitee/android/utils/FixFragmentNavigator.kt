@@ -113,7 +113,7 @@ class FixFragmentNavigator(context: Context, manager: FragmentManager, container
         ft.setReorderingAllowed(true)
         //ft.commit()
         ft.commitAllowingStateLoss()
-        mManager.executePendingTransactions()
+
         // The commit succeeded, update our view of the world
         return if (isAdded) {
             mBackStack.add(destId)

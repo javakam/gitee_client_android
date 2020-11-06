@@ -5,9 +5,9 @@ import com.gitee.android.bean.LoginEntity
 import com.gitee.android.bean.UserInfoEntity
 
 /**
- * Title:
+ * Title:CacheManager
  * <p>
- * Description:
+ * Description: 1.用户登录信息 ; 2. 用户详细信息
  * </p>
  * @author javakam
  * @date 2020/11/4  10:51
@@ -29,17 +29,23 @@ object CacheManager {
         return aCache?.getAsObject(KEY_LOGIN) as? LoginEntity?
     }
 
+    fun getAccessToken(): String? = getLoginData()?.access_token
+
     fun haveLoginTrace(): Boolean = (aCache?.getAsObject(KEY_LOGIN) != null)
 
-    fun saveUserInfo(userInfo: UserInfoEntity?){
+    ////////////////////////////////////
+
+    fun saveUserInfo(userInfo: UserInfoEntity?) {
         userInfo?.also {
             aCache?.remove(KEY_USER)
-            aCache?.put(KEY_USER,it)
+            aCache?.put(KEY_USER, it)
         }
     }
 
     fun getUserInfo(): UserInfoEntity? {
         return aCache?.getAsObject(KEY_USER) as? UserInfoEntity?
     }
+
+    fun getUserName(): String? = getUserInfo()?.name
 
 }

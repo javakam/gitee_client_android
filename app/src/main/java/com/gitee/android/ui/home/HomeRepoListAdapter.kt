@@ -23,7 +23,7 @@ class HomeRepoListAdapter : BaseDataBindingAdapter<ArticleEntity, ItemListHomeAr
 
     override fun initView(binding: ItemListHomeArticleBinding, entity: ArticleEntity) {
         binding.setClickListener { v ->
-            binding.viewModel?.tabId?.let { tabId ->
+            binding.vm?.tabId?.let { tabId ->
                 //toArticleListFragment(view, tabId)
                 v.toastShort("Click $tabId")
             }
@@ -34,7 +34,7 @@ class HomeRepoListAdapter : BaseDataBindingAdapter<ArticleEntity, ItemListHomeAr
             true
         }
         with(binding) {
-            viewModel = ItemArticleItemViewModel(entity)
+            vm = ItemArticleItemViewModel(entity)
             executePendingBindings()
         }
     }

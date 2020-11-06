@@ -5,7 +5,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.ando.library.utils.GlideUtils
+import com.ando.library.utils.glide.GlideUtils
 import com.ando.library.views.loader.LoadState
 import com.ando.library.views.loader.Loader
 import com.ando.toolkit.ext.hideSoftInput

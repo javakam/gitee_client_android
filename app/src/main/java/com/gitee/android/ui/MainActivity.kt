@@ -8,6 +8,7 @@ import com.ando.library.base.BaseMvvmActivity
 import com.gitee.android.R
 import com.gitee.android.common.AppRouter
 import com.gitee.android.common.CacheManager
+import com.gitee.android.common.isLogin
 import com.gitee.android.databinding.ActivityMainBinding
 import com.gitee.android.http.GiteeRepoRemote
 import com.gitee.android.utils.FixFragmentNavigator
@@ -46,6 +47,7 @@ class MainActivity : BaseMvvmActivity<ActivityMainBinding>() {
                 r.body?.apply {
                     CacheManager.saveLoginData(this)
                     getUserInfo(this.access_token)
+                    isLogin = true
                 }
             } else {
                 AppRouter.toLogin(this)// Login Page

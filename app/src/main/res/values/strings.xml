@@ -2,7 +2,7 @@
     <string name="app_name">码云</string>
 
     <string name="nav_home">首页</string>
-    <string name="nav_dynamic">动态</string>
+    <string name="nav_repo">仓库</string>
     <string name="nav_mine">我的</string>
 
     <string name="login_title">登录</string>

@@ -20,10 +20,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_dynamic"
-        android:name="com.gitee.android.ui.DynamicFragment"
-        android:label="Dynamic"
-        tools:layout="@layout/fragment_dynamic">
+        android:id="@+id/nav_repo"
+        android:name="com.gitee.android.ui.repo.RepoFragment"
+        android:label="Repo"
+        tools:layout="@layout/fragment_repo">
 
 
     </fragment>

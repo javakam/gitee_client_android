@@ -52,7 +52,7 @@ dependencies {
     api 'androidx.appcompat:appcompat:1.2.0'
     api "androidx.fragment:fragment-ktx:1.2.5"
     api "androidx.multidex:multidex:2.0.1"
-    api 'androidx.constraintlayout:constraintlayout:2.0.2'
+    api 'androidx.constraintlayout:constraintlayout:2.0.4'
     api "androidx.recyclerview:recyclerview:1.1.0"
     api "com.google.android.material:material:$version.material"
 
@@ -80,7 +80,7 @@ dependencies {
 
     // eventbus
     api "org.greenrobot:eventbus:$version.eventbus"
-    annotationProcessor "org.greenrobot:eventbus-annotation-processor:$version.eventbus"
+    kapt "org.greenrobot:eventbus-annotation-processor:$version.eventbus"
 
     // ImageView round & circle
     api 'com.makeramen:roundedimageview:2.3.0'

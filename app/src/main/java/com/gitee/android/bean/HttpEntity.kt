@@ -1,10 +1,8 @@
 package com.gitee.android.bean
 
 import com.google.gson.annotations.SerializedName
-import org.greenrobot.greendao.annotation.Entity
 import java.io.Serializable
 
-@Entity
 data class LoginEntity(
     val access_token: String,
     val created_at: Int,
@@ -12,6 +10,8 @@ data class LoginEntity(
     val refresh_token: String,
     val scope: String,
     val token_type: String
+//    @Expose(serialize = false) //关闭 Gson 序列化此字段
+//    val extra: String? = null
 ) : Serializable
 
 data class UserInfoEntity(
@@ -27,7 +27,7 @@ data class UserInfoEntity(
     val following_url: String,
     val gists_url: String,
     val html_url: String,
-    val id: Int,
+    val id: String,
     val login: String,
     val name: String,
     val organizations_url: String,
@@ -43,9 +43,119 @@ data class UserInfoEntity(
     val url: String,
     val watched: Int,
     val weibo: Any
-): Serializable
+) : Serializable
 
-@Entity
+data class RepoEntity(
+    val assignees: List<Assignee>,
+    val assignees_number: Int,
+    val blobs_url: String,
+    val branches_url: String,
+    val can_comment: Boolean,
+    val collaborators_url: String,
+    val comments_url: String,
+    val commits_url: String,
+    val contributors_url: String,
+    val created_at: String,
+    val default_branch: String,
+    val description: String,
+    val fork: Boolean,
+    val forks_count: Int,
+    val forks_url: String,
+    val full_name: String,
+    val has_issues: Boolean,
+    val has_page: Boolean,
+    val has_wiki: Boolean,
+    val homepage: String,
+    val hooks_url: String,
+    val html_url: String,
+    val human_name: String,
+    val id: Int,
+    val internal: Boolean,
+    val issue_comment: Boolean,
+    val issue_comment_url: String,
+    val issues_url: String,
+    val keys_url: String,
+    val labels_url: String,
+    val language: String,
+    val license: Any,
+    val members: List<String>,
+    val milestones_url: String,
+    val name: String,
+    val namespace: Namespace,
+    val notifications_url: String,
+    val open_issues_count: Int,
+    val outsourced: Boolean,
+    val owner: Owner,
+    val paas: Any,
+    val parent: Any,
+    val path: String,
+    val permission: Permission,
+    val private: Boolean,
+    val project_creator: String,
+    val public: Boolean,
+    val pull_requests_enabled: Boolean,
+    val pulls_url: String,
+    val pushed_at: String,
+    val recommend: Boolean,
+    val relation: String,
+    val releases_url: String,
+    val ssh_url: String,
+    val stared: Boolean,
+    val stargazers_count: Int,
+    val stargazers_url: String,
+    val tags_url: String,
+    val testers: List<Tester>,
+    val testers_number: Int,
+    val updated_at: String,
+    val url: String,
+    val watched: Boolean,
+    val watchers_count: Int
+)
+
+data class Assignee(
+    val avatar_url: String,
+    val events_url: String,
+    val followers_url: String,
+    val following_url: String,
+    val gists_url: String,
+    val html_url: String,
+    val id: Int,
+    val login: String,
+    val name: String,
+    val organizations_url: String,
+    val received_events_url: String,
+    val repos_url: String,
+    val starred_url: String,
+    val subscriptions_url: String,
+    val type: String,
+    val url: String
+)
+
+data class Permission(
+    val admin: Boolean,
+    val pull: Boolean,
+    val push: Boolean
+)
+
+data class Tester(
+    val avatar_url: String,
+    val events_url: String,
+    val followers_url: String,
+    val following_url: String,
+    val gists_url: String,
+    val html_url: String,
+    val id: Int,
+    val login: String,
+    val name: String,
+    val organizations_url: String,
+    val received_events_url: String,
+    val repos_url: String,
+    val starred_url: String,
+    val subscriptions_url: String,
+    val type: String,
+    val url: String
+)
+
 data class ArticleEntity(
     val created_at: String,
     val default_branch: String,
@@ -92,21 +202,38 @@ data class Namespace(
     val outsourced: Boolean,
     val owner_id: Int,
     val path: String,
-    val `public`: Boolean,
+    val public: Boolean,
     val updated_at: String,
-    val url: String
+    val url: String,
+    val html_url: String,
+    val type: String
 )
 
 data class Owner(
+    val avatar_url: String,
+    val events_url: String,
+    val followers_url: String,
+    val following_url: String,
+    val gists_url: String,
+    val html_url: String,
+    val id: Int,
+    val login: String,
+    val name: String,
+    val organizations_url: String,
+    val received_events_url: String,
+    val repos_url: String,
+    val starred_url: String,
+    val subscriptions_url: String,
+    val type: String,
+    val url: String,
     val created_at: String,
     val email: String,
-    val id: Int,
-    val name: String,
     val new_portrait: String,
     val portrait_url: String,
     val state: String,
     val username: String
 )
+
 
 //import androidx.room.*
 //import com.google.gson.annotations.SerializedName

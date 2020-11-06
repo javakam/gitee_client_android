@@ -13,7 +13,7 @@
 
         <variable
             name="vm"
-            type="com.gitee.android.ui.home.ItemArticleItemViewModel" />
+            type="com.gitee.android.ui.repo.ItemRepoViewModel" />
 
     </data>
 
@@ -32,8 +32,9 @@
             android:id="@+id/civ_article_avatar"
             loadPic="@{vm.tabAvatar}"
             placeholder="@{com.gitee.android.R.mipmap.ic_head_default}"
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_40"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -46,22 +47,23 @@
             android:layout_marginStart="@dimen/dp_15"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="@{vm.tabName}"
+            android:text="@{vm.tabFullName}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:textColor="@color/font_black"
             android:textSize="@dimen/font_16"
-            app:layout_constraintBottom_toBottomOf="@id/civ_article_avatar"
+            app:layout_constraintBottom_toTopOf="@id/tv_tab_desc"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintLeft_toRightOf="@id/civ_article_avatar"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/civ_article_avatar" />
+            app:layout_constraintRight_toLeftOf="@id/tv_tab_language"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="javakam/gitee_client_flutter" />
 
         <TextView
             android:id="@+id/tv_tab_desc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/dp_3"
+            android:layout_marginTop="@dimen/dp_8"
             android:ellipsize="end"
             android:maxLines="5"
             android:text="@{Html.fromHtml(vm.tabDesc,Html.FROM_HTML_MODE_LEGACY)}"
@@ -70,9 +72,26 @@
             android:textSize="@dimen/font_14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintLeft_toLeftOf="@id/civ_article_avatar"
+            app:layout_constraintLeft_toLeftOf="@id/tv_tab_name"
+            app:layout_constraintRight_toLeftOf="@id/tv_tab_language"
+            app:layout_constraintTop_toBottomOf="@id/tv_tab_name"
+            tools:text="码云客户端" />
+
+        <TextView
+            android:id="@+id/tv_tab_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/dp_5"
+            android:text="@{vm.tabLanguage}"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="@dimen/font_14"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/civ_article_avatar" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Dart" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

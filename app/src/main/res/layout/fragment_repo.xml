@@ -7,11 +7,8 @@
 
         <variable
             name="vm"
-            type="com.gitee.android.ui.home.HomeViewModel" />
+            type="com.gitee.android.ui.repo.RepoViewModel" />
 
-        <variable
-            name="hasTabs"
-            type="Boolean" />
     </data>
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -37,11 +34,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                app:isGone="@{!hasTabs}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_list_home_article" />
         </com.gitee.android.view.CustomLoaderView>
 
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-
 </layout>
