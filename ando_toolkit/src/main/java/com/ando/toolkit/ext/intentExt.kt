@@ -1,5 +1,6 @@
 package com.ando.toolkit.ext
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Service
 import android.content.ActivityNotFoundException
@@ -147,6 +148,7 @@ fun Fragment.email(email: String, subject: String = "", text: String = "") =
  * @param subject
  * @param text
  */
+@SuppressLint("QueryPermissionsNeeded")
 fun Context.email(email: String, subject: String = "", text: String = ""): Boolean {
     val intent = Intent(Intent.ACTION_SENDTO)
     intent.data = Uri.parse("mailto:")
@@ -171,13 +173,13 @@ fun Fragment.share(text: String, subject: String = "") = activity?.share(text, s
  * @param text
  * @param subject
  */
-fun Context.share(text: String, subject: String = ""): Boolean {
+fun Context.share(text: String, subject: String = "", title: String? = null): Boolean {
     return try {
         val intent = Intent(android.content.Intent.ACTION_SEND)
         intent.type = "text/plain"
         intent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject)
         intent.putExtra(android.content.Intent.EXTRA_TEXT, text)
-        startActivity(Intent.createChooser(intent, null))
+        startActivity(Intent.createChooser(intent, title))
         true
     } catch (e: ActivityNotFoundException) {
         e.printStackTrace()

@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.EditText
+import android.widget.TextView
 
 /**
  * Title:
@@ -44,3 +45,23 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
     })
 }
+
+var View.leftPadding: Int
+    inline get() = paddingLeft
+    set(value) = setPadding(value, paddingTop, paddingRight, paddingBottom)
+
+var View.topPadding: Int
+    inline get() = paddingTop
+    set(value) = setPadding(paddingLeft, value, paddingRight, paddingBottom)
+
+var View.rightPadding: Int
+    inline get() = paddingRight
+    set(value) = setPadding(paddingLeft, paddingTop, value, paddingBottom)
+
+var View.bottomPadding: Int
+    inline get() = paddingBottom
+    set(value) = setPadding(paddingLeft, paddingTop, paddingRight, value)
+
+inline var TextView.isSelectable: Boolean
+    get() = isTextSelectable
+    set(value) = setTextIsSelectable(value)
