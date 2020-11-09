@@ -13,6 +13,10 @@ import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import dagger.hilt.android.HiltAndroidApp
+import io.realm.Realm
+import io.realm.RealmConfiguration
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * Title: GiteeApplication
@@ -45,10 +49,30 @@ class GiteeApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        INSTANCE=this
+        INSTANCE = this
 
         val isDebug = BuildConfig.DEBUG
-        AppUtils.init(this,isDebug)
+
+        GlobalScope.launch {
+
+            Realm.init(INSTANCE)
+            // The RealmConfiguration is created using the builder pattern.
+            // The Realm file will be located in Context.getFilesDir() with name "myrealm.realm"
+            // Get the absolute path of a Realm by using Realm.getPath.
+            val config = RealmConfiguration.Builder()
+                .name("gitee.realm")
+                //.readOnly()
+                .schemaVersion(1)
+//                .encryptionKey(getMyKey())
+//                .modules(MySchemaModule())
+//                .migration(MyMigration())
+                .build()
+            // Use the config
+            sRealm = Realm.getInstance(config)
+
+            Realm.setDefaultConfiguration(config)
+        }
+        AppUtils.init(this, isDebug)
         FileOperator.init(this, isDebug)
         CrashHandler.init(this, "${FileDirectory.getCacheDir().absolutePath}/Crash/")
         L.init("123", isDebug)
@@ -57,6 +81,7 @@ class GiteeApplication : Application() {
     companion object {
         @SuppressLint("StaticFieldLeak")
         lateinit var INSTANCE: Application
+        lateinit var sRealm: Realm
     }
 
 }

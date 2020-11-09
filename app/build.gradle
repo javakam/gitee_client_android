@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'realm-android'
 
 def config = rootProject.ext.android         //配置
 def version = rootProject.ext.version        //
@@ -141,6 +142,12 @@ android {
         exclude 'META-INF/LGPL2.1'
     }
 
+}
+
+// This is added automatically if Kotlin is registered in the project, but Kotlin extension functions
+// for Realm can be excluded if needed.
+realm {
+    kotlinExtensionsEnabled = true
 }
 
 dependencies {
