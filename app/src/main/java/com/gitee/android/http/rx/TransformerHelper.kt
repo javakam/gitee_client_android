@@ -15,17 +15,14 @@ import io.reactivex.schedulers.Schedulers
  */
 object TransformerHelper {
 
-    private val TRANSFORMER: FlowableTransformer<Any, Any> =
-        FlowableTransformer<Any, Any> { upstream: Flowable<Any> ->
-            upstream.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-        }
-
     /**
      * io线程-主线程
      */
     fun <T> io2main(): FlowableTransformer<T, T> {
-        return TRANSFORMER as FlowableTransformer<T, T>
+        return FlowableTransformer<T, T> { upstream: Flowable<T> ->
+            upstream.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+        }
     }
 
     /**
