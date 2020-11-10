@@ -80,23 +80,6 @@ object ActivityUtils {
     }
 
     /**
-     * 隐藏软件输入法
-     *
-     * @param activity Activity
-     */
-    fun hideSoftInput(activity: Activity) {
-        activity.window
-            .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-    }
-
-    /**
-     * 使UI适配输入法
-     */
-    fun adjustSoftInput(activity: Activity) {
-        activity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-    }
-
-    /**
      * 快捷方式是否存在
      */
     fun ifAddShortCut(context: Context, appName: String): Boolean {

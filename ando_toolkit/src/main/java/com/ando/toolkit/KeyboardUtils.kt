@@ -179,16 +179,13 @@ class KeyboardUtils : OnGlobalLayoutListener {
     /**
      * 禁用物理返回键
      *
-     *
-     * 使用方法：
-     *
-     * 需重写 onKeyDown
+     * 使用方法：需重写 onKeyDown
+     *      @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+     *          return KeyboardUtils.onDisableBackKeyDown(keyCode)
+     *            && super.onKeyDown(keyCode, event) ;
+     *      }
      *
      * @param keyCode
-     * @return
-     * @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
-     * return KeyboardUtils.onDisableBackKeyDown(keyCode) && super.onKeyDown(keyCode, event) ;
-     * }
      */
     fun onDisableBackKeyDown(keyCode: Int): Boolean =
         when (keyCode) {

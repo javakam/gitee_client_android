@@ -62,7 +62,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_40"
-                        android:background="@drawable/btn_style_login"
+                        android:background="@drawable/sel_login_button"
                         android:enabled="false"
                         android:padding="10dip"
                         android:text="@string/login_title"

@@ -14,7 +14,7 @@ import com.ando.toolkit.AppUtils
  * @date 2020/10/29  10:07
  */
 
-fun String.clipBoard() {
+fun String.copyToClipBoard() {
     val cm: ClipboardManager? =
         AppUtils.getContext().getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager?
     if (cm != null) {

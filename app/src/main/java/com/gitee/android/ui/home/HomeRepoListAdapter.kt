@@ -3,7 +3,7 @@ package com.gitee.android.ui.home
 import androidx.recyclerview.widget.DiffUtil
 import com.ando.library.views.recycler.BaseDataBindingAdapter
 import com.ando.toolkit.StringUtils
-import com.ando.toolkit.ext.clipBoard
+import com.ando.toolkit.ext.copyToClipBoard
 import com.ando.toolkit.ext.toastShort
 import com.gitee.android.R
 import com.gitee.android.bean.ArticleEntity
@@ -29,7 +29,7 @@ class HomeRepoListAdapter : BaseDataBindingAdapter<ArticleEntity, ItemListHomeAr
             }
         }
         binding.constTabName.setOnLongClickListener {
-            binding.tvTabName.text.toString().clipBoard()
+            binding.tvTabName.text.toString().copyToClipBoard()
             it.toastShort("已复制")
             true
         }
