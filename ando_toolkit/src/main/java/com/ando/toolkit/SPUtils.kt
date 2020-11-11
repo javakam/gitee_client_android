@@ -22,7 +22,7 @@ class SPUtils private constructor(spName: String) {
      * @param key   键
      * @param value 值
      */
-    fun put(key: String, value: String) {
+    fun put(key: String, value: String?) {
         sp.edit().putString(key, value).apply()
     }
 
@@ -32,7 +32,7 @@ class SPUtils private constructor(spName: String) {
      * @param key 键
      * @return 存在返回对应值，不存在返回默认值`""`
      */
-    fun getString(key: String): String? {
+    fun getString(key: String?): String? {
         return getString(key, "")
     }
 
@@ -43,7 +43,7 @@ class SPUtils private constructor(spName: String) {
      * @param defaultValue 默认值
      * @return 存在返回对应值，不存在返回默认值`defaultValue`
      */
-    fun getString(key: String, defaultValue: String): String? {
+    fun getString(key: String?, defaultValue: String): String? {
         return sp.getString(key, defaultValue)
     }
 
@@ -53,8 +53,8 @@ class SPUtils private constructor(spName: String) {
      * @param key   键
      * @param value 值
      */
-    fun put(key: String, value: Int) {
-        sp.edit().putInt(key, value).apply()
+    fun put(key: String?, value: Int?) {
+        sp.edit().putInt(key, value ?: return).apply()
     }
 
     /**
@@ -63,7 +63,7 @@ class SPUtils private constructor(spName: String) {
      * @param key 键
      * @return 存在返回对应值，不存在返回默认值-1
      */
-    fun getInt(key: String): Int {
+    fun getInt(key: String?): Int? {
         return getInt(key, -1)
     }
 
@@ -74,7 +74,7 @@ class SPUtils private constructor(spName: String) {
      * @param defaultValue 默认值
      * @return 存在返回对应值，不存在返回默认值`defaultValue`
      */
-    fun getInt(key: String, defaultValue: Int): Int {
+    fun getInt(key: String?, defaultValue: Int): Int? {
         return sp.getInt(key, defaultValue)
     }
 
@@ -84,8 +84,8 @@ class SPUtils private constructor(spName: String) {
      * @param key   键
      * @param value 值
      */
-    fun put(key: String, value: Long) {
-        sp.edit().putLong(key, value).apply()
+    fun put(key: String?, value: Long?) {
+        sp.edit().putLong(key, value ?: return).apply()
     }
 
     /**
@@ -94,7 +94,7 @@ class SPUtils private constructor(spName: String) {
      * @param key 键
      * @return 存在返回对应值，不存在返回默认值-1
      */
-    fun getLong(key: String): Long {
+    fun getLong(key: String?): Long? {
         return getLong(key, -1L)
     }
 
@@ -105,7 +105,7 @@ class SPUtils private constructor(spName: String) {
      * @param defaultValue 默认值
      * @return 存在返回对应值，不存在返回默认值`defaultValue`
      */
-    fun getLong(key: String, defaultValue: Long): Long {
+    fun getLong(key: String?, defaultValue: Long): Long? {
         return sp.getLong(key, defaultValue)
     }
 
@@ -115,8 +115,8 @@ class SPUtils private constructor(spName: String) {
      * @param key   键
      * @param value 值
      */
-    fun put(key: String, value: Float) {
-        sp.edit().putFloat(key, value).apply()
+    fun put(key: String?, value: Float?) {
+        sp.edit().putFloat(key, value ?: return).apply()
     }
 
     /**
@@ -125,7 +125,7 @@ class SPUtils private constructor(spName: String) {
      * @param key 键
      * @return 存在返回对应值，不存在返回默认值-1
      */
-    fun getFloat(key: String): Float {
+    fun getFloat(key: String?): Float? {
         return getFloat(key, -1f)
     }
 
@@ -136,7 +136,7 @@ class SPUtils private constructor(spName: String) {
      * @param defaultValue 默认值
      * @return 存在返回对应值，不存在返回默认值`defaultValue`
      */
-    fun getFloat(key: String, defaultValue: Float): Float {
+    fun getFloat(key: String?, defaultValue: Float): Float? {
         return sp.getFloat(key, defaultValue)
     }
 
@@ -146,7 +146,7 @@ class SPUtils private constructor(spName: String) {
      * @param key   键
      * @param value 值
      */
-    fun put(key: String, value: Boolean) {
+    fun put(key: String?, value: Boolean) {
         sp.edit().putBoolean(key, value).apply()
     }
 
@@ -156,7 +156,7 @@ class SPUtils private constructor(spName: String) {
      * @param key 键
      * @return 存在返回对应值，不存在返回默认值`false`
      */
-    fun getBoolean(key: String): Boolean {
+    fun getBoolean(key: String?): Boolean {
         return getBoolean(key, false)
     }
 
@@ -167,7 +167,7 @@ class SPUtils private constructor(spName: String) {
      * @param defaultValue 默认值
      * @return 存在返回对应值，不存在返回默认值`defaultValue`
      */
-    fun getBoolean(key: String, defaultValue: Boolean): Boolean {
+    fun getBoolean(key: String?, defaultValue: Boolean): Boolean {
         return sp.getBoolean(key, defaultValue)
     }
 
@@ -177,7 +177,7 @@ class SPUtils private constructor(spName: String) {
      * @param key    键
      * @param values 值
      */
-    fun put(key: String, values: Set<String?>) {
+    fun put(key: String?, values: Set<String?>) {
         sp.edit().putStringSet(key, values).apply()
     }
 
@@ -187,7 +187,7 @@ class SPUtils private constructor(spName: String) {
      * @param key 键
      * @return 存在返回对应值，不存在返回默认值`Collections.<String>emptySet()`
      */
-    fun getStringSet(key: String): Set<String>? {
+    fun getStringSet(key: String?): Set<String>? {
         return getStringSet(key, emptySet<String>())
     }
 
@@ -198,7 +198,7 @@ class SPUtils private constructor(spName: String) {
      * @param defaultValue 默认值
      * @return 存在返回对应值，不存在返回默认值`defaultValue`
      */
-    fun getStringSet(key: String, defaultValue: Set<String?>): Set<String>? {
+    fun getStringSet(key: String?, defaultValue: Set<String?>): Set<String>? {
         return sp.getStringSet(key, defaultValue)
     }
 
@@ -237,7 +237,7 @@ class SPUtils private constructor(spName: String) {
     }
 
     companion object {
-        private const val DEFAULT_NAME="ShareData"
+        private const val DEFAULT_NAME = "ShareData"
         private val sSPMap = ArrayMap<String, SPUtils>()
 
         /**
@@ -245,7 +245,7 @@ class SPUtils private constructor(spName: String) {
          *
          * @return [SPUtils]
          */
-        fun get(): SPUtils? = get(DEFAULT_NAME)
+        fun get(): SPUtils = get(DEFAULT_NAME)
 
         /**
          * 获取SP实例
@@ -265,7 +265,6 @@ class SPUtils private constructor(spName: String) {
             }
             return sp
         }
-
     }
 
     init {

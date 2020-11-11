@@ -1,6 +1,6 @@
 package com.ando.toolkit
 
-import android.content.Context
+import com.ando.toolkit.AppUtils.getContext
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -18,18 +18,17 @@ import java.io.InputStreamReader
  */
 object AssetsUtils {
 
-    fun getJson(context: Context, fileName: String): String {
-        //将json数据变成字符串
-        val stringBuilder = StringBuilder()
+    /**
+     * 将json数据变成字符串
+     */
+    fun readAssetsString(fileName: String): String {
+        val sb = StringBuilder()
         var bf: BufferedReader? = null
         try {
-            //获取assets资源管理器
-            val assetManager = context.assets
-            //通过管理器打开文件并读取
-            bf = BufferedReader(InputStreamReader(assetManager.open(fileName)))
+            bf = BufferedReader(InputStreamReader( getContext().assets.open(fileName)))
             var line: String?
             while (bf.readLine().also { line = it } != null) {
-                stringBuilder.append(line)
+                sb.append(line)
             }
         } catch (e: IOException) {
             e.printStackTrace()
@@ -40,7 +39,7 @@ object AssetsUtils {
                 e.printStackTrace()
             }
         }
-        return stringBuilder.toString()
+        return sb.toString()
     }
 
     //    public static <T extends Object> T getBeanByClass(@NonNull Context context, @NonNull String fileName, @NonNull Class<T> clz) {
