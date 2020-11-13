@@ -9,7 +9,8 @@ import kotlin.math.abs
  * 1.既适用于单个`View`事件防抖, 也适用于`Adapter`中`ItemView`事件防抖
  * 2.如果事件为跳转到新的`Activity`, 该`Activity`启动模型应为`android:launchMode="singleTop"`
  */
-abstract class NoShakeClickListener(interval: Long = 500L) : @JvmOverloads View.OnClickListener {
+abstract class NoShakeClickListener @JvmOverloads constructor(interval: Long = 500L) :
+    View.OnClickListener {
 
     private var mTimeInterval = 500L
     private var mLastClickTime: Long = 0   //最近一次点击的时间
