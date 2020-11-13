@@ -37,7 +37,7 @@ object ToastUtils {
     private var toast: Toast? = null
 
     fun shortToast(@StringRes resId: Int) {
-        shortToast(StringUtils.noNull(getContext().resources.getString(resId)))
+        shortToast(getContext().resources.getString(resId))
     }
 
     fun shortToast(text: String?) {
