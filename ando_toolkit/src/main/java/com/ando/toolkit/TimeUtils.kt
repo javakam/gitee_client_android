@@ -271,12 +271,12 @@ object TimeUtils {
     private const val oneDayMillis = 24 * oneHourMillis // 一天的毫秒数
     private const val oneYearMillis = 365 * oneDayMillis // 一年的毫秒数
 
-    fun millisToLifeStringPHPZQRB(millis: String?): String {
+    fun millisToLifeStringPHP2(millis: String?): String {
         val millisLong = if (millis.isNullOrBlank()) 0 else millis.toLong()
-        return if (millisLong <= 0) "" else millisToLifeStringPHPZQRB(millisLong)
+        return if (millisLong <= 0) "" else millisToLifeStringPHP2(millisLong)
     }
 
-    fun millisToLifeStringPHPZQRB(millisLong: Long): String {
+    fun millisToLifeStringPHP2(millisLong: Long): String {
         var millisLong = millisLong
         if (millisLong <= 0) {
             return ""
