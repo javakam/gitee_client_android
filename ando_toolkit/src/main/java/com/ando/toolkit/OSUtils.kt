@@ -1,6 +1,5 @@
 package com.ando.toolkit
 
-import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.AppOpsManager
 import android.content.Context
@@ -10,12 +9,128 @@ import android.os.Build
 import android.os.Environment
 import android.text.TextUtils
 import com.ando.toolkit.AppUtils.getContext
-import com.ando.toolkit.config.ScreenType
-import java.io.File
-import java.io.FileInputStream
+import java.io.*
 import java.lang.reflect.Method
 import java.util.*
 import java.util.regex.Pattern
+
+object OSUtils {
+
+    private const val ROM_MIUI = "MIUI"
+    private const val ROM_EMUI = "EMUI"
+    private const val ROM_FLYME = "FLYME"
+    private const val ROM_OPPO = "OPPO"
+    private const val ROM_SMARTISAN = "SMARTISAN"
+    private const val ROM_VIVO = "VIVO"
+    private const val ROM_QIKU = "QIKU"
+    private const val KEY_VERSION_MIUI = "ro.miui.ui.version.name"
+    private const val KEY_VERSION_EMUI = "ro.build.version.emui"
+    private const val KEY_VERSION_OPPO = "ro.build.version.opporom"
+    private const val KEY_VERSION_SMARTISAN = "ro.smartisan.version"
+    private const val KEY_VERSION_VIVO = "ro.vivo.os.version"
+    private var sName: String? = null
+    private var sVersion: String? = null
+
+    val isEmui: Boolean get() = check(ROM_EMUI)
+    val isMiui: Boolean get() = check(ROM_MIUI)
+    val isVivo: Boolean get() = check(ROM_VIVO)
+    val isOppo: Boolean get() = check(ROM_OPPO)
+    val isFlyme: Boolean get() = check(ROM_FLYME)
+    val isSmartisan: Boolean get() = check(ROM_SMARTISAN)
+    fun is360(): Boolean = check(ROM_QIKU) || check("360")
+
+    val name: String?
+        get() {
+            if (sName == null) {
+                check("")
+            }
+            return sName
+        }
+
+    val version: String?
+        get() {
+            if (sVersion == null) {
+                check("")
+            }
+            return sVersion
+        }
+
+    private fun check(rom: String): Boolean {
+        if (sName != null) {
+            return sName == rom
+        }
+        if (!TextUtils.isEmpty(getProp(KEY_VERSION_MIUI).also { sVersion = it })) {
+            sName = ROM_MIUI
+        } else if (!TextUtils.isEmpty(getProp(KEY_VERSION_EMUI).also { sVersion = it })) {
+            sName = ROM_EMUI
+        } else if (!TextUtils.isEmpty(getProp(KEY_VERSION_OPPO).also { sVersion = it })) {
+            sName = ROM_OPPO
+        } else if (!TextUtils.isEmpty(getProp(KEY_VERSION_VIVO).also { sVersion = it })) {
+            sName = ROM_VIVO
+        } else if (!TextUtils.isEmpty(getProp(KEY_VERSION_SMARTISAN).also { sVersion = it })) {
+            sName = ROM_SMARTISAN
+        } else {
+            sVersion = Build.DISPLAY
+            if (sVersion?.toUpperCase(Locale.getDefault())?.contains(ROM_FLYME) == true) {
+                sName = ROM_FLYME
+            } else {
+                sVersion = Build.UNKNOWN
+                sName = Build.MANUFACTURER.toUpperCase(Locale.getDefault())
+            }
+        }
+        return sName == rom
+    }
+
+    private fun getProp(name: String): String? {
+        val line: String
+        var input: BufferedReader? = null
+        try {
+            val p = Runtime.getRuntime().exec("getprop $name")
+            input = BufferedReader(InputStreamReader(p.inputStream), 1024)
+            line = input.readLine()
+            input.close()
+        } catch (ex: IOException) {
+            return null
+        } finally {
+            if (input != null) {
+                try {
+                    input.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+        return line
+    }
+
+}
+
+///////////////////////////////////////////////////////////////////
+
+/**
+ * 屏幕类型
+ */
+enum class ScreenType {
+    /**
+     * 未知
+     */
+    UNKNOWN,
+
+    /**
+     * 手机
+     */
+    PHONE,
+
+    /**
+     * 小平板（7寸左右）
+     */
+    SMALL_TABLET,
+
+    /**
+     * 大平板（10寸左右）
+     */
+    BIG_TABLET
+}
 
 /**
  * 设备类型工具类
@@ -23,8 +138,7 @@ import java.util.regex.Pattern
  * @author changbao
  * @date 2019/3/22 10:56
  */
-@SuppressLint("PrivateApi")
-object OSUtils {
+object OSUtils2 {
 
     private val PATTERN_FLYME_VERSION = Pattern.compile("(\\d+\\.){2}\\d")
 
@@ -42,41 +156,46 @@ object OSUtils {
     const val ROM_360 = "360"
     const val ROM_ZTEC2016 = "zte c2016"
     const val ROM_ZUKZ1 = "zuk z1"
+
+    //
     private const val KEY_VERSION_MIUI = "ro.miui.ui.version.name"
     private const val KEY_VERSION_FLYME = "ro.build.display.id"
     private const val KEY_VERSION_EMUI = "ro.build.version.emui"
     private const val KEY_VERSION_OPPO = "ro.build.version.opporom"
     private const val KEY_VERSION_SMARTISAN = "ro.smartisan.version"
     private const val KEY_VERSION_VIVO = "ro.vivo.os.version"
+
+    //
     private const val ESSENTIAL = "essential"
-    private val BOARD_MEIZU = arrayOf("m9", "M9", "mx", "MX")
-    private var sMiuiVersionName: String? = null
-    private var sFlymeVersionName: String? = null
-    private var sEmuiVersionName: String? = null
-    private var sOppoVersionName: String? = null
-    private var sSmartisanVersionName: String? = null
-    private var sVivoVersionName: String? = null
-    private var sScreenType = 0
+    private val BOARD_MEIZU by lazy { arrayOf("m9", "M9", "mx", "MX") }
+
+    //
+    private lateinit var sMiuiVersionName: String
+    private lateinit var sFlymeVersionName: String
+    private lateinit var sEmuiVersionName: String
+    private lateinit var sOppoVersionName: String
+    private lateinit var sSmartisanVersionName: String
+    private lateinit var sVivoVersionName: String
+
+    //
+    private var sScreenType = ScreenType.UNKNOWN
     private var sIsTabletChecked = false
     private const val sIsTabletValue = false
-    private val BRAND = Build.BRAND.toLowerCase(Locale.ROOT)
+    private val BRAND: String by lazy { Build.BRAND.toLowerCase(Locale.getDefault()) }
 
     /**
      * 检验设备屏幕的尺寸
+     * @return ScreenType
      */
-    private fun checkScreenSize(context: Context): Int {
+    private fun checkScreenSize(context: Context): ScreenType {
         val screenSize =
             context.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK
         return if (screenSize >= Configuration.SCREENLAYOUT_SIZE_LARGE) {
             //证明是平板
             if (screenSize >= Configuration.SCREENLAYOUT_SIZE_XLARGE) {
                 ScreenType.BIG_TABLET
-            } else {
-                ScreenType.SMALL_TABLET
-            }
-        } else {
-            ScreenType.PHONE
-        }
+            } else ScreenType.SMALL_TABLET
+        } else ScreenType.PHONE
     }
 
     /**
@@ -84,7 +203,7 @@ object OSUtils {
      *
      * @return true:平板,false:手机
      */
-    val screenType: Int
+    val screenType: ScreenType
         get() {
             if (sIsTabletChecked) {
                 return sScreenType
@@ -104,7 +223,7 @@ object OSUtils {
      * 判断是否是MIUI系统
      */
     val isMIUI: Boolean
-        get() = !TextUtils.isEmpty(sMiuiVersionName)
+        get() = sMiuiVersionName.isNotBlank()
     val isMIUIV5: Boolean
         get() = "v5".equals(sMiuiVersionName, ignoreCase = true)
     val isMIUIV6: Boolean
@@ -127,7 +246,7 @@ object OSUtils {
         get() {
             //查不到默认高于5.2.4
             var isHigher = true
-            if (sFlymeVersionName != null && "" != sFlymeVersionName) {
+            if ("" != sFlymeVersionName) {
                 val matcher = PATTERN_FLYME_VERSION.matcher(sFlymeVersionName)
                 if (matcher.find()) {
                     val versionString = matcher.group()
@@ -162,14 +281,12 @@ object OSUtils {
      * 判断是否是 flyme 系统
      */
     val isFlyme: Boolean
-        get() = !TextUtils.isEmpty(sFlymeVersionName) && sFlymeVersionName!!.contains(ROM_FLYME)
+        get() = !TextUtils.isEmpty(sFlymeVersionName) && sFlymeVersionName.contains(ROM_FLYME)
 
     //两种方式有待验证...
     //Log.e("123",!TextUtils.isEmpty(sSmartisanVersionName) && sSmartisanVersionName.contains(ROM_SMARTISAN));
     val isSmartisan: Boolean
-        get() =//两种方式有待验证...
-            //Log.e("123",!TextUtils.isEmpty(sSmartisanVersionName) && sSmartisanVersionName.contains(ROM_SMARTISAN));
-            BRAND.contains(ROM_SMARTISAN)
+        get() = BRAND.contains(ROM_SMARTISAN)
 
     fun is360(): Boolean {
         return BRAND.contains(ROM_QIKU) || BRAND.contains(ROM_360)
@@ -183,7 +300,7 @@ object OSUtils {
      * https://dev.mi.com/doc/?p=254
      */
     val isXiaomi: Boolean
-        get() = "xiaomi" == Build.MANUFACTURER.toLowerCase()
+        get() = "xiaomi" == Build.MANUFACTURER.toLowerCase(Locale.getDefault())
     val isVivo: Boolean
         get() = BRAND.contains(ROM_VIVO) || BRAND.contains(ROM_BBK)
     val isOppo: Boolean
@@ -200,13 +317,13 @@ object OSUtils {
     val isZUKZ1: Boolean
         get() {
             val board = Build.MODEL
-            return board != null && board.toLowerCase().contains(ROM_ZUKZ1)
+            return board != null && board.toLowerCase(Locale.getDefault()).contains(ROM_ZUKZ1)
         }
 
     val isZTKC2016: Boolean
         get() {
             val board = Build.MODEL
-            return board != null && board.toLowerCase().contains(ROM_ZTEC2016)
+            return board != null && board.toLowerCase(Locale.getDefault()).contains(ROM_ZTEC2016)
         }
 
     private fun isPhone(boards: Array<String>): Boolean {
@@ -262,7 +379,7 @@ object OSUtils {
         return false
     }
 
-    private fun getLowerCaseName(p: Properties, get: Method, key: String): String? {
+    private fun getLowerCaseName(p: Properties, get: Method, key: String): String {
         var name = p.getProperty(key)
         if (name == null) {
             try {
@@ -273,22 +390,21 @@ object OSUtils {
         if (name != null) {
             name = name.toLowerCase(Locale.getDefault())
         }
-        return name
+        return name ?: ""
     }
 
     init {
         val properties = Properties()
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            // android 8.0，读取 /system/uild.prop 会报 permission denied
-            var fileInputStream: FileInputStream? = null
+            // android 8.0，读取 /system/build.prop 会报 permission denied
+            var fis: FileInputStream? = null
             try {
-                fileInputStream =
-                    FileInputStream(File(Environment.getRootDirectory(), "build.prop"))
-                properties.load(fileInputStream)
+                fis = FileInputStream(File(Environment.getRootDirectory(), "build.prop"))
+                properties.load(fis)
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
-                fileInputStream?.close()
+                fis?.close()
             }
         }
         val clzSystemProperties: Class<*>?

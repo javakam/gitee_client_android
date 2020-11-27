@@ -203,7 +203,13 @@ fun Context.browser(url: String, newTask: Boolean = false): Boolean {
         if (newTask) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        startActivity(intent)
+        //startActivity(intent)
+        //https://developer.android.com/about/versions/11/privacy/package-visibility
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(Intent.createChooser(intent, "请选择浏览器"))
+        } else {
+            toastShort("没有可用浏览器")
+        }
         true
     } catch (e: ActivityNotFoundException) {
         e.printStackTrace()

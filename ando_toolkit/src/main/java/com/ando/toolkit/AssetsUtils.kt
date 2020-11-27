@@ -19,13 +19,13 @@ import java.io.InputStreamReader
 object AssetsUtils {
 
     /**
-     * 将json数据变成字符串
+     * 读取 json 文件并转为 String
      */
-    fun readAssetsString(fileName: String): String {
+    fun readAssetsData(fileName: String): String {
         val sb = StringBuilder()
         var bf: BufferedReader? = null
         try {
-            bf = BufferedReader(InputStreamReader( getContext().assets.open(fileName)))
+            bf = BufferedReader(InputStreamReader(getContext().assets.open(fileName)))
             var line: String?
             while (bf.readLine().also { line = it } != null) {
                 sb.append(line)

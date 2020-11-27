@@ -139,6 +139,18 @@ fun View.realDpi(): Int {
 }
 
 object DimensionUtils {
+
+    /**
+     * Return the navigation bar's height.
+     *
+     * @return the navigation bar's height
+     */
+    fun getNavBarHeight(): Int {
+        val res = Resources.getSystem()
+        val resourceId = res.getIdentifier("navigation_bar_height", "dimen", "android")
+        return if (resourceId != 0) res.getDimensionPixelSize(resourceId) else 0
+    }
+
     /**
      * 获取状态栏高度高度  the height of status bar
      */
