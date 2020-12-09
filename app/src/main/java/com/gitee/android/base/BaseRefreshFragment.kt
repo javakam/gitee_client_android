@@ -11,7 +11,7 @@ import com.ando.library.views.loader.Loader.OnReloadListener
 import com.ando.toolkit.log.L.i
 import com.gitee.android.R
 import com.gitee.android.common.defaultPageConfig
-import com.gitee.android.view.CustomLoaderView
+import com.gitee.android.view.LoaderView
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import java.io.Serializable
 
@@ -31,7 +31,7 @@ abstract class BaseRefreshFragment<E : Serializable?> : BaseLazyFragment(), IRef
 
     //Common View
     protected var rootView: View? = null
-    protected var mLoaderView: CustomLoaderView? = null
+    protected var mLoaderView: LoaderView? = null
     protected var mRefreshLayout: RefreshLayout? = null
     protected var mRecycler: RecyclerView? = null
 
@@ -39,7 +39,8 @@ abstract class BaseRefreshFragment<E : Serializable?> : BaseLazyFragment(), IRef
     protected var mAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder?>? = null
 
     //
-    protected var mData: List<E> ? = ArrayList<E>()
+    protected var mData: List<E>? = ArrayList<E>()
+
     //配置文件
     private var mPageConfig: PageConfig? = null
 
@@ -95,14 +96,14 @@ abstract class BaseRefreshFragment<E : Serializable?> : BaseLazyFragment(), IRef
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if (!hidden) {
-            initImmersionBar(initImmersionView())
+            initImmersionBar()
         }
     }
 
     /**
      * 沉浸式状态栏
      */
-    protected fun initImmersionBar(view: View?) {
+    protected fun initImmersionBar() {
 //        ImmersionBar.with(this)
 //                .titleBar(view)
 //                .keyboardEnable(false)
@@ -140,8 +141,6 @@ abstract class BaseRefreshFragment<E : Serializable?> : BaseLazyFragment(), IRef
         }
     }
 
-
-    fun initImmersionView(): View? = null
     fun initRecyclerView(recyclerView: RecyclerView?) {}
     fun addData(data: List<E>?) {}
     fun replaceData(data: List<E>?) {}

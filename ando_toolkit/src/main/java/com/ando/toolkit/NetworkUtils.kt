@@ -50,7 +50,6 @@ object NetworkUtils {
      *
      * @return `true`: connected<br></br>`false`: disconnected
      */
-    @get:RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
     val isConnected: Boolean
         get() {
             val info = activeNetworkInfo
@@ -64,9 +63,8 @@ object NetworkUtils {
      *
      * @return `true`: yes<br></br>`false`: no
      */
-    @get:RequiresPermission(Manifest.permission.INTERNET)
     val isAvailable: Boolean
-        get() = isAvailableByDns || isAvailableByPing(null)
+        get() = isAvailableByDns || isAvailableByPing("")
 
     /**
      * Return whether network is available using ping.
@@ -77,7 +75,6 @@ object NetworkUtils {
      *
      * @return `true`: yes<br></br>`false`: no
      */
-    @get:RequiresPermission(Manifest.permission.INTERNET)
     val isAvailableByPing: Boolean
         get() = isAvailableByPing("")
 
@@ -89,11 +86,10 @@ object NetworkUtils {
      * @param ip The ip address.
      * @return `true`: yes<br></br>`false`: no
      */
-    @RequiresPermission(Manifest.permission.INTERNET)
-    fun isAvailableByPing(ip: String?): Boolean {
-        val realIp = if (TextUtils.isEmpty(ip)) "223.5.5.5" else ip!!
-        val result = execCmd(String.format("ping -c 1 %s", realIp), false)!!
-        return result.result == 0
+    fun isAvailableByPing(ip: String): Boolean {
+        val realIp = if (TextUtils.isEmpty(ip)) "223.5.5.5" else ip
+        val result = execCmd(String.format("ping -c 1 %s", realIp), false)
+        return result?.result == 0
     }
 
     /**
@@ -103,7 +99,6 @@ object NetworkUtils {
      *
      * @return `true`: yes<br></br>`false`: no
      */
-    @get:RequiresPermission(Manifest.permission.INTERNET)
     val isAvailableByDns: Boolean
         get() = isAvailableByDns("")
 
@@ -115,7 +110,6 @@ object NetworkUtils {
      * @param domain The name of domain.
      * @return `true`: yes<br></br>`false`: no
      */
-    @RequiresPermission(Manifest.permission.INTERNET)
     fun isAvailableByDns(domain: String?): Boolean {
         val realDomain = if (TextUtils.isEmpty(domain)) "www.baidu.com" else domain!!
         val inetAddress: InetAddress?
@@ -134,20 +128,17 @@ object NetworkUtils {
      * @return `true`: enabled<br></br>`false`: disabled
      */
     @get:SuppressLint("MissingPermission")
-    val mobileDataEnabled: Boolean
+    val isMobileEnabled: Boolean
         get() {
             try {
                 val tm =
                     getContext().getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-                        ?: return false
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     return tm.isDataEnabled
                 }
                 @SuppressLint("PrivateApi") val getMobileDataEnabledMethod =
                     tm.javaClass.getDeclaredMethod("getDataEnabled")
-                if (getMobileDataEnabledMethod != null) {
-                    return getMobileDataEnabledMethod.invoke(tm) as Boolean
-                }
+                return getMobileDataEnabledMethod.invoke(tm) as Boolean
             } catch (e: Exception) {
                 Log.e("NetworkUtils", "getMobileDataEnabled: ", e)
             }
@@ -161,8 +152,7 @@ object NetworkUtils {
      *
      * @return `true`: yes<br></br>`false`: no
      */
-    @get:RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
-    val isMobileData: Boolean
+    val isMobile: Boolean
         get() {
             val info = activeNetworkInfo
             return (null != info && info.isAvailable
@@ -176,7 +166,6 @@ object NetworkUtils {
      *
      * @return `true`: yes<br></br>`false`: no
      */
-    @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
     fun is4G(): Boolean {
         val info = activeNetworkInfo
         return (info != null && info.isAvailable
@@ -191,7 +180,6 @@ object NetworkUtils {
      * @return `true`: yes<br></br>`false`: no
      */
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
     fun is5G(): Boolean {
         val info = activeNetworkInfo
         return (info != null && info.isAvailable
@@ -216,13 +204,11 @@ object NetworkUtils {
         get() {
             @SuppressLint("WifiManagerLeak") val manager =
                 getContext().getSystemService(Context.WIFI_SERVICE) as WifiManager
-                    ?: return false
             return manager.isWifiEnabled
         }
         set(enabled) {
             @SuppressLint("WifiManagerLeak") val manager =
                 getContext().getSystemService(Context.WIFI_SERVICE) as WifiManager
-                    ?: return
             if (enabled == manager.isWifiEnabled) {
                 return
             }
@@ -236,12 +222,11 @@ object NetworkUtils {
      *
      * @return `true`: connected<br></br>`false`: disconnected
      */
-    @get:RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
     val isWifiConnected: Boolean
+        @SuppressLint("MissingPermission")
         get() {
             val cm =
                 getContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                    ?: return false
             val ni = cm.activeNetworkInfo
             return ni != null && ni.type == ConnectivityManager.TYPE_WIFI
         }
@@ -254,7 +239,6 @@ object NetworkUtils {
      *
      * @return `true`: available<br></br>`false`: unavailable
      */
-    @get:RequiresPermission(allOf = [Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.INTERNET])
     val isWifiAvailable: Boolean
         get() = wifiEnabled && isAvailable
 
@@ -267,7 +251,6 @@ object NetworkUtils {
         get() {
             val tm =
                 getContext().getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-                    ?: return ""
             return tm.networkOperatorName
         }
 
@@ -287,36 +270,67 @@ object NetworkUtils {
      *  * [NetworkUtils.NetworkType.NETWORK_NO]
      *
      */
-    @get:RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
+    @Suppress("DEPRECATION")
     val networkType: NetworkType
+        @SuppressLint("MissingPermission")
         get() {
             if (isEthernet) {
-                return NetworkType.NETWORK_ETHERNET
+                return NetworkType.NETWORK_ETHERNET // 以太网网络
             }
-            val info = activeNetworkInfo
-            return if (info != null && info.isAvailable) {
-                if (info.type == ConnectivityManager.TYPE_WIFI) {
-                    NetworkType.NETWORK_WIFI
-                } else if (info.type == ConnectivityManager.TYPE_MOBILE) {
-                    when (info.subtype) {
-                        TelephonyManager.NETWORK_TYPE_GSM, TelephonyManager.NETWORK_TYPE_GPRS, TelephonyManager.NETWORK_TYPE_CDMA, TelephonyManager.NETWORK_TYPE_EDGE, TelephonyManager.NETWORK_TYPE_1xRTT, TelephonyManager.NETWORK_TYPE_IDEN -> NetworkType.NETWORK_2G
-                        TelephonyManager.NETWORK_TYPE_TD_SCDMA, TelephonyManager.NETWORK_TYPE_EVDO_A, TelephonyManager.NETWORK_TYPE_UMTS, TelephonyManager.NETWORK_TYPE_EVDO_0, TelephonyManager.NETWORK_TYPE_HSDPA, TelephonyManager.NETWORK_TYPE_HSUPA, TelephonyManager.NETWORK_TYPE_HSPA, TelephonyManager.NETWORK_TYPE_EVDO_B, TelephonyManager.NETWORK_TYPE_EHRPD, TelephonyManager.NETWORK_TYPE_HSPAP -> NetworkType.NETWORK_3G
-                        TelephonyManager.NETWORK_TYPE_IWLAN, TelephonyManager.NETWORK_TYPE_LTE -> NetworkType.NETWORK_4G
-                        TelephonyManager.NETWORK_TYPE_NR -> NetworkType.NETWORK_5G
-                        else -> {
-                            val subtypeName = info.subtypeName
-                            if ("TD-SCDMA".equals(subtypeName, ignoreCase = true)
-                                || "WCDMA".equals(subtypeName, ignoreCase = true)
-                                || "CDMA2000".equals(subtypeName, ignoreCase = true)
-                            ) {
+            val cm =
+                getContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val info = cm.activeNetworkInfo ?: return NetworkType.NETWORK_NO // 没有任何网络
+            if (!info.isConnected) {
+                return NetworkType.NETWORK_NO // 网络断开或关闭
+            }
+            return if (info.isAvailable) {
+                when (info.type) {
+                    ConnectivityManager.TYPE_WIFI -> {
+                        NetworkType.NETWORK_WIFI
+                    }
+                    ConnectivityManager.TYPE_MOBILE -> {
+                        when (info.subtype) {
+                            TelephonyManager.NETWORK_TYPE_GSM,
+                            TelephonyManager.NETWORK_TYPE_GPRS,
+                            TelephonyManager.NETWORK_TYPE_CDMA,
+                            TelephonyManager.NETWORK_TYPE_EDGE,
+                            TelephonyManager.NETWORK_TYPE_1xRTT,
+                            TelephonyManager.NETWORK_TYPE_IDEN -> {
+                                NetworkType.NETWORK_2G
+                            }
+                            TelephonyManager.NETWORK_TYPE_TD_SCDMA,
+                            TelephonyManager.NETWORK_TYPE_EVDO_A,
+                            TelephonyManager.NETWORK_TYPE_UMTS,
+                            TelephonyManager.NETWORK_TYPE_EVDO_0,
+                            TelephonyManager.NETWORK_TYPE_HSDPA,
+                            TelephonyManager.NETWORK_TYPE_HSUPA,
+                            TelephonyManager.NETWORK_TYPE_HSPA,
+                            TelephonyManager.NETWORK_TYPE_EVDO_B,
+                            TelephonyManager.NETWORK_TYPE_EHRPD,
+                            TelephonyManager.NETWORK_TYPE_HSPAP -> {
                                 NetworkType.NETWORK_3G
-                            } else {
-                                NetworkType.NETWORK_UNKNOWN
+                            }
+                            TelephonyManager.NETWORK_TYPE_IWLAN,
+                            TelephonyManager.NETWORK_TYPE_LTE -> {
+                                NetworkType.NETWORK_4G
+                            }
+                            TelephonyManager.NETWORK_TYPE_NR -> NetworkType.NETWORK_5G
+                            else -> {
+                                val subtypeName = info.subtypeName
+                                if ("TD-SCDMA".equals(subtypeName, ignoreCase = true)
+                                    || "WCDMA".equals(subtypeName, ignoreCase = true)
+                                    || "CDMA2000".equals(subtypeName, ignoreCase = true)
+                                ) {
+                                    NetworkType.NETWORK_3G
+                                } else {
+                                    NetworkType.NETWORK_UNKNOWN
+                                }
                             }
                         }
                     }
-                } else {
-                    NetworkType.NETWORK_UNKNOWN
+                    else -> {
+                        NetworkType.NETWORK_UNKNOWN
+                    }
                 }
             } else NetworkType.NETWORK_NO
         }
@@ -329,19 +343,18 @@ object NetworkUtils {
      *
      * @return `true`: yes<br></br>`false`: no
      */
-    @get:RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
     private val isEthernet: Boolean
+        @SuppressLint("MissingPermission")
         get() {
             val cm =
                 getContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                    ?: return false
             val info = cm.getNetworkInfo(ConnectivityManager.TYPE_ETHERNET) ?: return false
             val state = info.state ?: return false
             return state == NetworkInfo.State.CONNECTED || state == NetworkInfo.State.CONNECTING
         }
 
-    @get:RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
     private val activeNetworkInfo: NetworkInfo?
+        @SuppressLint("MissingPermission")
         get() {
             val cm =
                 getContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -359,7 +372,6 @@ object NetworkUtils {
      * @param useIPv4 true ipV4 ; false ipV6
      * @return ip address ; null no network
      */
-    @RequiresPermission(Manifest.permission.INTERNET)
     fun getIPAddress(useIPv4: Boolean): String? = try {
         val en = NetworkInterface.getNetworkInterfaces()
         while (en.hasMoreElements()) {
@@ -394,7 +406,6 @@ object NetworkUtils {
      * @param useIPv4 true to use ipv4, false otherwise.
      * @return the ip address , null 无网络连接
      */
-    @RequiresPermission(Manifest.permission.INTERNET)
     fun getIPAddress2(useIPv4: Boolean): String? {
         try {
             val nis = NetworkInterface.getNetworkInterfaces()
@@ -474,7 +485,6 @@ object NetworkUtils {
      * @param domain The name of domain.
      * @return the domain address
      */
-    @RequiresPermission(Manifest.permission.INTERNET)
     fun getDomainAddress(domain: String?): String {
         val inetAddress: InetAddress
         return try {
@@ -491,7 +501,6 @@ object NetworkUtils {
      *
      * @return the ip address by wifi
      */
-    @get:RequiresPermission(Manifest.permission.ACCESS_WIFI_STATE)
     val ipAddressByWifi: String
         get() {
             @SuppressLint("WifiManagerLeak") val wm =
@@ -504,7 +513,6 @@ object NetworkUtils {
      *
      * @return the gate way by wifi
      */
-    @get:RequiresPermission(Manifest.permission.ACCESS_WIFI_STATE)
     val gatewayByWifi: String
         get() {
             @SuppressLint("WifiManagerLeak") val wm =
@@ -517,7 +525,6 @@ object NetworkUtils {
      *
      * @return the net mask by wifi
      */
-    @get:RequiresPermission(Manifest.permission.ACCESS_WIFI_STATE)
     val netMaskByWifi: String
         get() {
             @SuppressLint("WifiManagerLeak") val wm =
@@ -530,7 +537,6 @@ object NetworkUtils {
      *
      * @return the server address by wifi
      */
-    @get:RequiresPermission(Manifest.permission.ACCESS_WIFI_STATE)
     val serverAddressByWifi: String
         get() {
             @SuppressLint("WifiManagerLeak") val wm =

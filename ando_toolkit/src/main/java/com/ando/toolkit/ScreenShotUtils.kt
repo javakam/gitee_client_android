@@ -77,7 +77,7 @@ object ScreenShotUtils {
             // Use 1/8th of the available memory for this memory cache.
             val cacheSize = maxMemory / 8
             val bitmapCache = LruCache<String, Bitmap>(cacheSize)
-            var holder: RecyclerView.ViewHolder? = null
+            var holder: RecyclerView.ViewHolder?
             for (i in 0 until size) {
                 holder = adapter.createViewHolder(view, adapter.getItemViewType(i))
                 adapter.onBindViewHolder(holder, i)
@@ -106,7 +106,7 @@ object ScreenShotUtils {
                 val lColor = lBackground.color
                 bigCanvas.drawColor(lColor)
             }
-            var bitmap: Bitmap? = null
+            var bitmap: Bitmap?
             for (i in 0 until size) {
                 bitmap = bitmapCache[i.toString()]
                 bigCanvas.drawBitmap(bitmap, 0f, iHeight.toFloat(), paint)

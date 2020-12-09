@@ -38,7 +38,7 @@ fun switchFragmentById(
         if (isAdded) {
             transaction.show(this)
         } else {
-            transaction.add(R.id.nav_host, this)
+            transaction.add(R.id.main_container, this)
         }
     }
     transaction.commitAllowingStateLoss()

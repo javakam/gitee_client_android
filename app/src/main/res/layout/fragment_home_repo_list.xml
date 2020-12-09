@@ -25,7 +25,7 @@
         app:onRefreshListener="@{()->vm.refresh()}"
         app:refreshing="@{vm.refreshing}">
 
-        <com.gitee.android.view.CustomLoaderView
+        <com.gitee.android.view.LoaderView
             android:id="@id/stateLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -40,7 +40,7 @@
                 app:isGone="@{!hasTabs}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_list_home_article" />
-        </com.gitee.android.view.CustomLoaderView>
+        </com.gitee.android.view.LoaderView>
 
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 

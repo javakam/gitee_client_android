@@ -24,31 +24,37 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RepoFragment : BaseMvvmFragment<FragmentRepoBinding>() {
 
+    private val adapter: RepoListAdapter by lazy { RepoListAdapter() }
+
     private val repoViewModel: RepoViewModel by viewModels()
 
     override val layoutId: Int = R.layout.fragment_repo
 
     override fun initView(root: View, savedInstanceState: Bundle?) {
-        if (isLogin) {
-            val adapter = RepoListAdapter()
-            binding.refreshRecycler.adapter = adapter
-            binding.refreshRecycler.addItemDecoration(
-                RecyclerItemDecoration(
-                    baseActivity,
-                    LinearLayoutManager.HORIZONTAL
-                )
+
+        binding.refreshRecycler.adapter = adapter
+        binding.refreshRecycler.addItemDecoration(
+            RecyclerItemDecoration(
+                baseActivity,
+                LinearLayoutManager.HORIZONTAL
             )
+        )
 
-            repoViewModel.refresh()
-            repoViewModel.getRepos(
-                name = CacheManager.getUserName() ?: "",
-                access_token = CacheManager.getAccessToken() ?: ""
-            ).observe(viewLifecycleOwner)
-            { rs ->
-                adapter.setData(rs, repoViewModel.isFirstPage())
-            }
+        binding.vm = repoViewModel
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        repoViewModel.refresh()
+        repoViewModel.getRepos(
+            name = CacheManager.getUserName() ?: "",
+            access_token = CacheManager.getAccessToken() ?: ""
+        ).observe(viewLifecycleOwner)
+        { rs ->
+            adapter.setData(rs, repoViewModel.isFirstPage())
         }
-
 
     }
 

@@ -16,15 +16,13 @@ import com.gitee.android.R
  * @author javakam
  * @date 2019/11/18 14:53
  */
-class CustomLoaderView : Loader {
+class LoaderView @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,defStyleRes: Int = 0
+) : Loader(context, attrs, defStyleAttr,defStyleRes ) {
 
-    constructor(context: Context) : this(context, null, 0)
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(
-        context,
-        attrs,
-        defStyle
-    )
+    init {
+        setBackgroundResource(android.R.color.transparent)
+    }
 
     override fun createLoadingView(): View? {
         return inflate(context, R.layout.layout_loader, null)

@@ -21,12 +21,13 @@ import com.ando.toolkit.log.L.i
  * @author ChangBao
  * @date 2019/11/15 15:03
  */
-abstract class Loader constructor(
+abstract class Loader @JvmOverloads constructor(
     private val mContext: Context,
     attrs: AttributeSet? = null,
-    defStyle: Int = 0
+    defStyle: Int = 0,
+    defStyleRes: Int = 0
 ) : FrameLayout(
-    mContext, attrs, defStyle
+    mContext, attrs, defStyle, defStyleRes
 ) {
     var loadState: LoadState? = null
     private var loadingView: View? = null
@@ -39,9 +40,6 @@ abstract class Loader constructor(
     private var mMaxCount = 5
 
     private var mState = 0 // 默认的状态
-
-    constructor (context: Context) : this(context, null, 0)
-    constructor (context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
     interface OnReloadListener {
         /**
@@ -252,7 +250,7 @@ abstract class Loader constructor(
     /**
      * 设置加载结果
      */
-    fun setLoadState(loadState: LoadState?): Loader {
+    fun setLoadState(loadState: LoadState): Loader {
         this.loadState = loadState
         if (mState == LoadState.ERROR.value() || mState == LoadState.EMPTY.value() || mState == LoadState.LOADING.value()) {
             mState = LoadState.UNLOADED.value()
@@ -262,7 +260,7 @@ abstract class Loader constructor(
             //getHandler().post(new TaskRunnable());
             post { mHandler?.sendEmptyMessage(1) }
         } else {
-            mState = loadState?.value() ?: LoadState.UNLOADED.value()
+            mState = loadState.value()
             showSafePagerView()
         }
         return this

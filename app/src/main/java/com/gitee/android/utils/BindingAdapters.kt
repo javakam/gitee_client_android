@@ -9,7 +9,7 @@ import com.ando.library.utils.glide.GlideUtils
 import com.ando.library.views.loader.LoadState
 import com.ando.library.views.loader.Loader
 import com.ando.toolkit.ext.hideSoftInput
-import com.gitee.android.view.CustomLoaderView
+import com.gitee.android.view.LoaderView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -27,21 +27,21 @@ fun isGone(view: View, isGone: Boolean) {
 //状态视图
 @BindingAdapter(value = ["loader_state"], requireAll = false)
 fun bindCustomLoaderView(
-    layout: CustomLoaderView,
-    state: LoadState
+    layout: LoaderView?,
+    state: LoadState?
 ) {
-    layout.setLoadState(state)
+    layout?.setLoadState(state ?: LoadState.UNLOADED)
 }
 
 //状态视图
-@BindingAdapter(value = ["loader_reloadListener","loader_stateListener"], requireAll = false)
+@BindingAdapter(value = ["loader_reloadListener", "loader_stateListener"], requireAll = false)
 fun bindCustomLoaderView(
-    layout: CustomLoaderView,
+    layout: LoaderView?,
     reloadListener: Loader.OnReloadListener?,
     stateListener: Loader.OnStateListener?
 ) {
-    layout.setOnReloadListener(reloadListener)
-    layout.setOnStateListener(stateListener)
+    layout?.setOnReloadListener(reloadListener)
+    layout?.setOnStateListener(stateListener)
 }
 
 //状态绑定，控制停止刷新
