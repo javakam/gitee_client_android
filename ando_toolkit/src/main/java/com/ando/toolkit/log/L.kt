@@ -10,7 +10,7 @@ import org.json.JSONObject
  * <p>
  * Description:扩展函数 - 日志打印
  * </p>
- * @author changbao
+ * @author javakam
  * @date 2020/9/30  10:41
  */
 object L {

@@ -10,7 +10,7 @@ import com.ando.toolkit.AppUtils.getContext
  *
  * Description:
  *
- * @author changbao
+ * @author javakam
  * @date 2019/3/17 14:44
  */
 class SPUtils private constructor(spName: String) {

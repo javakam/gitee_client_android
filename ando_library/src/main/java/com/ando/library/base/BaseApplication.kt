@@ -23,7 +23,7 @@ import java.lang.ref.WeakReference
  * Description:
  *
  *
- * @author changbao
+ * @author javakam
  * @date 2019/8/6  9:13
  */
 open class BaseApplication : MultiDexApplication() {

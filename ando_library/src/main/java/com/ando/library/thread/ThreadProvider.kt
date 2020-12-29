@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicInteger
  *
 </pre> *
  *
- * @author changbao
+ * @author javakam
  * @date 2019/11/27  12:57
  */
 object ThreadProvider {

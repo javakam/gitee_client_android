@@ -39,7 +39,7 @@ import java.lang.ref.WeakReference
  *      .setFontSize(14)
  *      .create()
  *
- * @author changbao
+ * @author javakam
  * @date 2019/1/14 下午10:03
  */
 class SpanUtils {

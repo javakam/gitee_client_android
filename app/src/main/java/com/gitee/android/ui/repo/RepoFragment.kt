@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * <p>
  * Description: 仓库
  * </p>
- * @author ChangBao
+ * @author javakam
  * @date 2020/10/16  15:20
  */
 @AndroidEntryPoint

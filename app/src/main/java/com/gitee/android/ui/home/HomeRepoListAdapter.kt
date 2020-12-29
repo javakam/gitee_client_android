@@ -14,7 +14,7 @@ import com.gitee.android.databinding.ItemListHomeArticleBinding
  * <p>
  * Description:
  * </p>
- * @author ChangBao
+ * @author javakam
  * @date 2020/8/14  16:25
  */
 class HomeRepoListAdapter : BaseDataBindingAdapter<ArticleEntity, ItemListHomeArticleBinding>() {

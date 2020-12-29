@@ -3,7 +3,7 @@ package com.ando.library.eventbus
 /**
  * EventBus 传输介质
  *
- * @author changbao
+ * @author javakam
  * @date 2019-05-25 14:18:11
  */
 class EventBusMedium {

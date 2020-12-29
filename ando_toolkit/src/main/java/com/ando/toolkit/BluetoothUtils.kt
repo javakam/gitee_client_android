@@ -15,7 +15,7 @@ import java.util.*
  *
  * Description: 蓝牙连接工具
  *
- * @author changbao
+ * @author javakam
  * @date 2019/11/15 13:38
  */
 @SuppressLint("MissingPermission")

@@ -15,7 +15,7 @@ import androidx.viewpager.widget.ViewPager
  * 1. 首先在Action_Down事件ViewGroup不能够拦截掉事件，也就是ViewPager不处理滑动事件
  * 2. 如果子View没有消费本次事件，那么事件通过冒泡方式传递到ViewPager的时候也不消费该事件；
  *
- * @author changbao
+ * @author javakam
  * @date 2018/10/25  11:24
  */
 class NoScrollViewPager constructor(context: Context, attrs: AttributeSet? = null) :

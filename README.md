@@ -21,6 +21,19 @@ gradlew clean build bintrayUpload -PbintrayUser=BINTRAY_USERNAME -PbintrayKey=BI
 apply plugin: 'com.github.panpf.bintray-publish'
 ```
 
+## 文件File & WebView
+```gradle
+api 'androidx.documentfile:documentfile:1.0.1'
+//api 'com.ando.file:FileOperator:0.9.3-beta1'
+api 'ando.file:core:1.2.0'         //核心库必选
+api 'ando.file:android-q:1.2.0'    //AndroidQ & Android 11 兼容库
+api 'ando.file:compressor:1.2.0'   //图片压缩,核心算法采用 Luban
+api 'ando.file:selector:1.2.0'     //文件选择器
+
+api 'ando.webview:webview:1.0.0'
+api 'com.ando.string:StringExpandUtils:1.0.0'
+```
+
 ## 网络框架(Retrofit & LiveData)
 LiveData Adapter for Retrofit
 

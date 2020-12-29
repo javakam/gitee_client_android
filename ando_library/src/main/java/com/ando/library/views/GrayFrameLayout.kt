@@ -15,7 +15,7 @@ import android.widget.FrameLayout
  * <pre>
  * WebView 部分情况下会显示异常 , 关闭硬件加速即可 :  mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
  * </pre>
- * @author changbao
+ * @author javakam
  * @date 2020-09-28 10:51:53
  */
 class GrayFrameLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {

@@ -30,7 +30,7 @@ import androidx.recyclerview.widget.RecyclerView.ItemDecoration
  * mContext, LinearLayoutManager.HORIZONTAL, 10, getResources().getColor(R.color.divide_gray_color)));
 </pre> *
  *
- * @author changbao
+ * @author javakam
  * @date 2019/11/22  9:35
  */
 class RecyclerItemDecoration(context: Context, orientation: Int) : ItemDecoration() {

@@ -8,7 +8,7 @@ import android.view.Window
  *
  * Description:Window窗体工具类
  *
- * @author changbao
+ * @author javakam
  * @date 2018/9/23 18:54
  */
 object WindowUtils {

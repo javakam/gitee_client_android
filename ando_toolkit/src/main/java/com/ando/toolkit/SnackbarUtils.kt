@@ -29,7 +29,7 @@ import kotlin.math.max
 /**
  * Snackbar工具类
  *
- * @author changbao
+ * @author javakam
  * @date 2018/12/18 下午5:58
  */
 class SnackbarUtils {

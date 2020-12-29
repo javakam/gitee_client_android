@@ -7,7 +7,7 @@ import com.gitee.android.base.BaseRefreshViewModel
  * <p>
  * Description:
  * </p>
- * @author ChangBao
+ * @author javakam
  * @date 2020/10/27  14:59
  */
 class HomeViewModel : BaseRefreshViewModel() {

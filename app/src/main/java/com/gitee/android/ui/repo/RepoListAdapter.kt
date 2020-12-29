@@ -13,7 +13,7 @@ import com.gitee.android.databinding.ItemListRepoBinding
  * <p>
  * Description:
  * </p>
- * @author ChangBao
+ * @author javakam
  * @date 2020/8/14  16:25
  */
 class RepoListAdapter : BaseDataBindingAdapter<RepoEntity, ItemListRepoBinding>() {

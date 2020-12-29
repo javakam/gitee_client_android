@@ -1,11 +1,11 @@
 package com.ando.toolkit.ext
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import com.ando.toolkit.StringUtils
 import com.ando.toolkit.AppUtils.getContext
 
 /**
@@ -13,7 +13,7 @@ import com.ando.toolkit.AppUtils.getContext
  *
  * Description:
  *
- * @author changbao
+ * @author javakam
  * @date 2019/1/19
  */
 
@@ -43,6 +43,7 @@ object ToastUtils {
     fun shortToast(text: String?) {
         if (text.isNullOrBlank())  return
         if (toast == null) {
+            @SuppressLint("ShowToast")
             toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT)
         } else {
             toast?.setText(text)
@@ -57,6 +58,7 @@ object ToastUtils {
     fun longToast(text: String?) {
         if (text.isNullOrBlank())  return
         if (toast == null) {
+            @SuppressLint("ShowToast")
             toast = Toast.makeText(getContext(), text, Toast.LENGTH_LONG)
         } else {
             toast?.setText(text)

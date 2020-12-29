@@ -11,7 +11,7 @@ import com.gitee.android.R
 /**
  * 欢迎界面
  *
- * @author ChangBao
+ * @author javakam
  */
 class WelcomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

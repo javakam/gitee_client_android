@@ -14,7 +14,7 @@ import java.io.File
  *
  * Description:清除缓存工具类
  *
- * @author changbao
+ * @author javakam
  * @date 2018/11/2  15:03
  */
 object ClearCacheUtils {

@@ -14,7 +14,7 @@ import retrofit2.http.*
  * <p>
  * Description:
  * </p>
- * @author changbao
+ * @author javakam
  * @date 2020/8/13  16:05
  */
 interface ApiService {

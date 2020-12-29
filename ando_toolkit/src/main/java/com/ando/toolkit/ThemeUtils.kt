@@ -20,7 +20,7 @@ import kotlin.math.roundToInt
 /**
  * 主题工具
  *
- * @author changbao
+ * @author javakam
  * @date 2018/11/14 下午1:46
  */
 object ThemeUtils {

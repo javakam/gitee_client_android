@@ -20,7 +20,7 @@ import kotlin.math.max
 /**
  * 获取res中的资源
  *
- * @author changbao
+ * @author javakam
  * @date 2018/12/18 上午12:14
  */
 object ResUtils {

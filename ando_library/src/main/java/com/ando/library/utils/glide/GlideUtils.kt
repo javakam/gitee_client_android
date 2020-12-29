@@ -27,7 +27,7 @@ import com.bumptech.glide.request.RequestOptions
  * 目前只加了这几个常用功能，其他请参考glide-transformations
  * https://github.com/wasabeef/glide-transformations
  *
- * @author changbao
+ * @author javakam
  * @date 2018/10/19  14:46
  */
 object GlideUtils {

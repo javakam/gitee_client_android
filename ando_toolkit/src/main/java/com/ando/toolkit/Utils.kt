@@ -16,7 +16,7 @@ import kotlin.math.sqrt
 /**
  * 工具类（不建议外部调用)
  *
- * @author changbao
+ * @author javakam
  * @date 2018/11/26 下午5:07
  */
 object Utils {

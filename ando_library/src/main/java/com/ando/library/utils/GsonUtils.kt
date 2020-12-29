@@ -14,7 +14,7 @@ import java.util.*
  *
  * Description: com.google.gson.Gson
  *
- * @author changbao
+ * @author javakam
  * @date 2019/12/17 10:13
  */
 object GsonUtils {

@@ -135,7 +135,7 @@ enum class ScreenType {
 /**
  * 设备类型工具类
  *
- * @author changbao
+ * @author javakam
  * @date 2019/3/22 10:56
  */
 object OSUtils2 {

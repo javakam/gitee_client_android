@@ -11,7 +11,7 @@ import kotlin.experimental.and
  *
  * Description:
  *
- * @author changbao
+ * @author javakam
  * @date 2019/11/13  9:23
  */
 object MD5Utils {

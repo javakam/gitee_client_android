@@ -8,7 +8,7 @@ import android.content.Context
  *
  * Description:
  *
- * @author changbao
+ * @author javakam
  * @date 2019/3/17 14:45
  */
 object AppUtils {

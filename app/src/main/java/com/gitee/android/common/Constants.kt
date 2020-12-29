@@ -7,7 +7,7 @@ import com.gitee.android.R
  * <p>
  * Description: Constants used throughout the app.
  * </p>
- * @author changbao
+ * @author javakam
  * @date 2020/8/18  10:10
  */
 const val ACCESS_TOKEN = "access_token"

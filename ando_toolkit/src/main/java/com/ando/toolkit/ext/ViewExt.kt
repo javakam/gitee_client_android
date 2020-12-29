@@ -13,7 +13,7 @@ import android.widget.TextView
  * <p>
  * Description: 为view添加OnGlobalLayoutListener监听并在测量完成后自动取消监听同时执行[globalAction]函数
  * </p>
- * @author changbao
+ * @author javakam
  * @date 2020/9/30  15:16
  */
 inline fun <T : View> T.afterMeasured(crossinline globalAction: T.() -> Unit) {
