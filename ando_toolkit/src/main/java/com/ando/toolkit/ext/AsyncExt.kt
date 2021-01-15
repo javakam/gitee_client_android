@@ -9,6 +9,7 @@ import java.lang.ref.WeakReference
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
+import java.util.concurrent.TimeUnit
 
 /**
  * Title: AsyncExt
@@ -120,12 +121,25 @@ fun <T> T.doAsync(
             val result = exceptionHandler?.invoke(thr)
             if (result != null) {
                 result
-            } else {
-                Unit
-            }
+            } else Unit
         }
     }
 }
+
+fun <T> T.doAsyncDelay(
+    task: AnkoAsyncContext<T>.() -> Unit,
+    delay: Long
+): Future<Unit> {
+    val context = AnkoAsyncContext(WeakReference(this))
+    return BackgroundExecutor.submitDelay({
+        return@submitDelay try {
+            context.task()
+        } catch (thr: Throwable) {
+            crashLogger.invoke(thr)
+        }
+    }, delay)
+}
+
 
 fun <T> T.doAsync(
     exceptionHandler: ((Throwable) -> Unit)? = crashLogger,
@@ -178,6 +192,9 @@ internal object BackgroundExecutor {
         Executors.newScheduledThreadPool(2 * Runtime.getRuntime().availableProcessors())
 
     fun <T> submit(task: () -> T): Future<T> = executor.submit(task)
+
+    fun <T> submitDelay(task: () -> T, delay: Long): Future<T> =
+        Executors.newSingleThreadScheduledExecutor().schedule(task, delay, TimeUnit.MILLISECONDS)
 }
 
 private object ContextHelper {
