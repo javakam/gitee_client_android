@@ -1,6 +1,5 @@
 package com.ando.library.utils.glide
 
-import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.View
 import com.bumptech.glide.Glide
@@ -12,12 +11,6 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.CustomViewTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
 
 /**
  * Make new [RequestListener] with lambda for use with [Glide].

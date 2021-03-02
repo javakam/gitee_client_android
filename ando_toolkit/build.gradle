@@ -1,34 +1,43 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-android {
-    compileSdkVersion 30
-    defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 30
+def config = rootProject.ext.android
 
-        vectorDrawables.useSupportLibrary = true
+android {
+    compileSdkVersion config.compileSdkVersion
+    buildToolsVersion config.buildToolsVersion
+    defaultConfig {
+        minSdkVersion config.minSdkVersion
+        targetSdkVersion config.targetSdkVersion
+        versionCode config.versionCode
+        versionName config.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
         debug {}
-        release {}
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-
     lintOptions {
         abortOnError false
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    // More than one file was found with OS independent path 'META-INF/library_release.kotlin_module'
+    packagingOptions {
+        exclude 'META-INF/*.kotlin_module'
     }
 
 }
@@ -43,18 +52,16 @@ dependencies {
 
 }
 
-//  https://github.com/novoda/bintray-release/wiki/%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3HOME
-//  apply plugin: 'com.novoda.bintray-release'
-//  `gradlew clean build bintrayUpload -PbintrayUser=javakam -PbintrayKey=xxx -PdryRun=false`
-//  https://github.com/panpf/bintray-publish
-//  gradlew clean build bintrayUpload -PbintrayUser=BINTRAY_USERNAME -PbintrayKey=BINTRAY_KEY -PdryRun=false
+//https://github.com/novoda/bintray-release/wiki/%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3HOME
+//https://github.com/panpf/bintray-publish
+//apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'com.github.panpf.bintray-publish'
 publish {
-    repoName = 'ando_maven'
+    repoName = 'AndoLibrary'
     userOrg = 'javakam'
     groupId = 'ando.toolkit'
     artifactId = 'toolkit'
-    publishVersion = '0.0.3'
+    publishVersion = config.versionName
     desc = 'Ando ToolKit Library.'
     website = "https://github.com/javakam/${rootProject.name}"
     //dryRun = true
