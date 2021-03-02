@@ -5,12 +5,10 @@ import java.io.DataOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
 
-
 /**
- * Title: ShellUtils
+ * # ShellUtils
  * <p>
- * Description:
- * </p>
+ *
  * @author javakam
  * @date 2020/9/29  15:33
  */
@@ -30,47 +28,47 @@ object ShellUtils {
         }
     }
 
-    fun execCmd(command: String?, isRooted: Boolean): CommandResult? {
+    fun execCmd(command: String?, isRooted: Boolean): CommandResult {
         return execCmd(
-            if (command.isNullOrEmpty()) null else arrayOf<String>(command),
-            isRooted,
-            true
+                if (command.isNullOrEmpty()) null else arrayOf<String>(command),
+                isRooted,
+                true
         )
     }
 
-    fun execCmd(commands: List<String>?, isRooted: Boolean): CommandResult? {
+    fun execCmd(commands: List<String>?, isRooted: Boolean): CommandResult {
         return execCmd(
-            if (commands.isNullOrEmpty()) null else commands,
-            isRooted,
-            true
+                if (commands.isNullOrEmpty()) null else commands,
+                isRooted,
+                true
         )
     }
 
-    fun execCmd(commands: Array<String>?, isRooted: Boolean): CommandResult? {
+    fun execCmd(commands: Array<String>?, isRooted: Boolean): CommandResult {
         return execCmd(commands, isRooted, true)
     }
 
     fun execCmd(
-        command: String?,
-        isRooted: Boolean,
-        isNeedResultMsg: Boolean
-    ): CommandResult? {
+            command: String?,
+            isRooted: Boolean,
+            isNeedResultMsg: Boolean
+    ): CommandResult {
         return execCmd(
-            if (command.isNullOrEmpty()) null else arrayOf<String>(command),
-            isRooted,
-            isNeedResultMsg
+                if (command.isNullOrEmpty()) null else arrayOf<String>(command),
+                isRooted,
+                isNeedResultMsg
         )
     }
 
     fun execCmd(
-        commands: List<String>?,
-        isRooted: Boolean,
-        isNeedResultMsg: Boolean
-    ): CommandResult? {
+            commands: List<String>?,
+            isRooted: Boolean,
+            isNeedResultMsg: Boolean
+    ): CommandResult {
         return execCmd(
-            if (commands.isNullOrEmpty()) null else commands.toTypedArray(),
-            isRooted,
-            isNeedResultMsg
+                if (commands.isNullOrEmpty()) null else commands.toTypedArray(),
+                isRooted,
+                isNeedResultMsg
         )
     }
 
@@ -83,10 +81,10 @@ object ShellUtils {
      * @return the single [CommandResult] instance
      */
     fun execCmd(
-        commands: Array<String>?,
-        isRooted: Boolean,
-        isNeedResultMsg: Boolean
-    ): CommandResult? {
+            commands: Array<String>?,
+            isRooted: Boolean,
+            isNeedResultMsg: Boolean
+    ): CommandResult {
         var result = -1
         if (commands.isNullOrEmpty()) {
             return CommandResult(result, "", "")
@@ -113,10 +111,10 @@ object ShellUtils {
                 successMsg = StringBuilder()
                 errorMsg = StringBuilder()
                 successResult = BufferedReader(
-                    InputStreamReader(process.inputStream, "UTF-8")
+                        InputStreamReader(process.inputStream, "UTF-8")
                 )
                 errorResult = BufferedReader(
-                    InputStreamReader(process.errorStream, "UTF-8")
+                        InputStreamReader(process.errorStream, "UTF-8")
                 )
                 var line: String?
                 if (successResult.readLine().also { line = it } != null) {
@@ -153,10 +151,43 @@ object ShellUtils {
             process?.destroy()
         }
         return CommandResult(
-            result,
-            successMsg?.toString() ?: "",
-            errorMsg?.toString() ?: ""
+                result,
+                successMsg?.toString() ?: "",
+                errorMsg?.toString() ?: ""
         )
     }
 
+    /**
+     * 执行shell命令, 命令中不必带`adb shell`
+     *
+     * @param cmd
+     * @return Sting  命令执行在控制台输出的结果
+     */
+    fun execCmd(cmd: String): String? {
+        var process: Process? = null
+        var bufferedReader: BufferedReader? = null
+        var inputStreamReader: InputStreamReader? = null
+        return try {
+            process = Runtime.getRuntime().exec(cmd)
+            inputStreamReader = InputStreamReader(process.inputStream)
+            bufferedReader = BufferedReader(inputStreamReader)
+            var read: Int
+            val buffer = CharArray(8 * 1024)
+            val output = java.lang.StringBuilder()
+            while (bufferedReader.read(buffer).also { read = it } > 0) {
+                output.append(buffer, 0, read)
+            }
+            output.toString()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        } finally {
+            try {
+                inputStreamReader?.close()
+                bufferedReader?.close()
+                process?.destroy()
+            } catch (t: Throwable) {
+            }
+        }
+    }
 }

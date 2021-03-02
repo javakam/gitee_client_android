@@ -18,7 +18,8 @@ fun String.copyToClipBoard() {
     val cm: ClipboardManager? =
         AppUtils.getContext().getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager?
     if (cm != null) {
-        cm.setPrimaryClip(ClipData.newPlainText(null, this))//参数一：标签，可为空，参数二：要复制到剪贴板的文本
+        //参数一：标签，可为空，参数二：要复制到剪贴板的文本
+        cm.primaryClip = ClipData.newPlainText(null, this)
         if (cm.hasPrimaryClip()) {
             cm.primaryClip?.getItemAt(0)?.text
         }
