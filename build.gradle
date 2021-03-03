@@ -9,9 +9,11 @@ buildscript {
         jcenter()
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
         maven { url "https://jitpack.io" }
+        maven { url 'https://dl.bintray.com/novoda-oss/snapshots/' }
+
+        maven { url "https://dl.bintray.com/javakam/AndoLibrary" }
         maven { url "https://dl.bintray.com/javakam/AndoDialog" }
         maven { url 'https://dl.bintray.com/javakam/FileOperator' }
-        maven { url 'https://dl.bintray.com/novoda-oss/snapshots/' }
     }
 
     dependencies {
@@ -33,9 +35,11 @@ allprojects {
         jcenter()
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
         maven { url "https://jitpack.io" }
+        maven { url 'https://dl.bintray.com/novoda-oss/snapshots/' }
+
+        maven { url "https://dl.bintray.com/javakam/AndoLibrary" }
         maven { url "https://dl.bintray.com/javakam/AndoDialog" }
         maven { url 'https://dl.bintray.com/javakam/FileOperator' }
-        maven { url 'https://dl.bintray.com/novoda-oss/snapshots/' }
     }
     tasks.withType(Javadoc) {
         options {

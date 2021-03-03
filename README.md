@@ -1,11 +1,14 @@
 # Gitee Android Cient
 
 ## ando_library/ando_toolkit
-
 ```
+repositories {
+        maven { url "https://dl.bintray.com/javakam/AndoLibrary" }
+}
 
+implementation 'ando.library:library:1.0.0'
+implementation 'ando.toolkit:toolkit:1.0.0'
 ```
-
 
 > novoda 目前不支持 Gradle 6+ , 替换方案 `https://github.com/panpf/bintray-publish`
 
