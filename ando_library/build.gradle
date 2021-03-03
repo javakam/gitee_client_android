@@ -1,6 +1,10 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    //id 'com.novoda.bintray-release'
+    id 'com.github.panpf.bintray-publish'
+}
 
 def config = rootProject.ext.android
 
@@ -100,13 +104,11 @@ dependencies {
     api "ando.file:core:$version.file_operator"
     api "ando.file:selector:$version.file_operator"
     api "ando.file:compressor:$version.file_operator"
-    api "ando.file:android-q:${version.file_operator}"
+    api "ando.file:android-q:$version.file_operator"
 
 }
 
 //https://github.com/novoda/bintray-release/wiki/%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3HOME
-//apply plugin: 'com.novoda.bintray-release'
-apply plugin: 'com.github.panpf.bintray-publish'
 publish {
     repoName = 'AndoLibrary'
     userOrg = 'javakam'

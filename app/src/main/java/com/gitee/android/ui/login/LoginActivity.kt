@@ -6,11 +6,11 @@ import android.view.Window
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.viewModels
-import com.ando.library.base.BaseMvvmActivity
-import com.ando.toolkit.ext.afterTextChanged
-import com.ando.toolkit.ext.hideSoftInput
-import com.ando.toolkit.ext.toastShort
-import com.ando.toolkit.ext.yes
+import ando.library.base.BaseMvvmActivity
+import ando.toolkit.ext.afterTextChanged
+import ando.toolkit.ext.hideSoftInput
+import ando.toolkit.ext.toastShort
+import ando.toolkit.ext.yes
 
 import com.gitee.android.R
 import com.gitee.android.common.AppRouter

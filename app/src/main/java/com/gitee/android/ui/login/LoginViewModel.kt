@@ -2,7 +2,7 @@ package com.gitee.android.ui.login
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
-import com.ando.toolkit.ext.ToastUtils
+import ando.toolkit.ext.ToastUtils
 import com.gitee.android.base.BaseViewModel
 import com.gitee.android.bean.LoginEntity
 import com.gitee.android.bean.UserInfoEntity

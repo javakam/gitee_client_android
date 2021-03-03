@@ -153,7 +153,7 @@ realm {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
@@ -185,6 +185,9 @@ dependencies {
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.1'
     implementation 'com.scwang.smart:refresh-footer-classics:2.0.1'
     implementation 'com.scwang.smart:refresh-header-material:2.0.1'
+
+    // Permission
+    implementation 'com.permissionx.guolindev:permissionx:1.4.0'
 
     //
     implementation project(':ando_library')

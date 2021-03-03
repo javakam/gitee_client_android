@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.core.graphics.drawable.toBitmap
-import com.ando.library.base.BaseMvvmFragment
-import com.ando.library.utils.glide.GlideOptionsProvider
-import com.ando.library.utils.glide.intoCustomTarget
+import ando.library.base.BaseMvvmFragment
+import ando.library.utils.glide.GlideUtils
+import ando.library.utils.glide.intoCustomTarget
 import com.bumptech.glide.Glide
 import com.gitee.android.R
 import com.gitee.android.common.CacheManager
@@ -38,7 +38,7 @@ class MineFragment : BaseMvvmFragment<FragmentMineBinding>() {
 
             Glide.with(this@MineFragment)
                 .load(avatar_url)
-                .apply(GlideOptionsProvider.noAnimate(R.mipmap.ic_head_default))
+                .apply(GlideUtils.noAnimate(R.mipmap.ic_head_default))
                 .intoCustomTarget({ resource, _ ->
                     val blurBitmap =
                         BlurBitmapUtil.blurBitmap(activity, resource.toBitmap(), 0.4F)

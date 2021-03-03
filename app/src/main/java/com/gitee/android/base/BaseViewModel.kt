@@ -3,7 +3,7 @@ package com.gitee.android.base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ando.library.views.loader.LoadState
+import ando.library.views.loader.LoadState
 import com.gitee.android.http.ApiResponse
 import kotlinx.coroutines.launch
 

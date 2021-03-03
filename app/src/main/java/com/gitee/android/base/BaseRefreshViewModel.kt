@@ -3,7 +3,7 @@ package com.gitee.android.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.ando.library.views.loader.LoadState
+import ando.library.views.loader.LoadState
 import com.gitee.android.http.ApiResponse
 import com.gitee.android.http.GiteeRepoRemote
 

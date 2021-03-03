@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ando.library.base.BaseLazyFragment
-import com.ando.library.views.loader.LoadState
-import com.ando.library.views.loader.Loader.OnReloadListener
-import com.ando.toolkit.log.L.i
+import ando.library.base.BaseLazyFragment
+import ando.library.views.loader.LoadState
+import ando.library.views.loader.Loader.OnReloadListener
+import ando.toolkit.log.L.i
 import com.gitee.android.R
 import com.gitee.android.common.defaultPageConfig
 import com.gitee.android.view.LoaderView
@@ -228,13 +228,13 @@ abstract class BaseRefreshFragment<E : Serializable?> : BaseLazyFragment(), IRef
             if (config.usedVLayout) {
                 addData(data)
             } else {
-                if (config.haveRecyclerView && mAdapter != null) {
-                    //todo
-//                    mAdapter.addData(data)
-                }
+                //todo
+                /*if (config.haveRecyclerView && mAdapter != null) {
+                    mAdapter.addData(data)
+                }*/
             }
             mRefreshLayout?.finishLoadMore()
-            i("loadMoreData: mData=" + mData?.size + "  " + data?.size)
+            i("loadMoreData: mData=" + mData?.size + "  " + data.size)
         }
     }
 

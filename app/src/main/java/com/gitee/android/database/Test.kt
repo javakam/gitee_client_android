@@ -68,7 +68,7 @@ class Test {
         realm.commitTransaction()
 
         // Listeners will be notified when data changes
-        puppies.addChangeListener { results, changeSet ->
+        puppies.addChangeListener { _, changeSet ->
             // Query results are updated in real time with fine grained notifications.
             changeSet.insertions // => [0] is added.
         }
@@ -76,8 +76,8 @@ class Test {
         // Asynchronously update objects on a background thread
         realm.executeTransactionAsync(Realm.Transaction { bgRealm ->
             // Find a dog to update.
-            val dog = bgRealm.where<Dog>().equalTo("age", 1.toInt()).findFirst()!!
-            dog.age = 3 // Update its age value.
+            val dog1 = bgRealm.where<Dog>().equalTo("age", 1.toInt()).findFirst()!!
+            dog1.age = 3 // Update its age value.
         }, Realm.Transaction.OnSuccess {
             // Original queries and Realm objects are automatically updated.
             puppies.size // => 0 because there are no more puppies younger than 2 years old

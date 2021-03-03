@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ando.library.base.BaseFragment
-import com.ando.library.views.RecyclerItemDecoration
+import ando.library.base.BaseFragment
+import ando.library.views.RecyclerItemDecoration
 import com.gitee.android.databinding.FragmentHomeRepoListBinding
 import kotlinx.coroutines.Job
 

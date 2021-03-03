@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.core.view.children
-import com.ando.library.base.BaseMvvmActivity
-import com.ando.toolkit.BottomNavController
-import com.ando.toolkit.NoShakeClickListener2
+import ando.library.base.BaseMvvmActivity
+import ando.toolkit.BottomNavController
+import ando.toolkit.NoShakeClickListener2
 import com.gitee.android.R
 import com.gitee.android.common.AppRouter
 import com.gitee.android.common.CacheManager
@@ -20,7 +20,7 @@ import com.gitee.android.ui.repo.RepoFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import androidx.core.util.forEach
+
 @AndroidEntryPoint
 class MainActivity : BaseMvvmActivity<ActivityMainBinding>() {
 

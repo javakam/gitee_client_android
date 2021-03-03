@@ -1,22 +1,14 @@
 package com.gitee.android.di
 
-import com.ando.toolkit.AppUtils
-import com.ando.toolkit.log.L
-import com.gitee.android.common.BASE_URL
-import com.gitee.android.http.ApiService
 import com.gitee.android.http.GiteeRepoRemote
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent ::class)
 object AppModule {
 
     @Singleton

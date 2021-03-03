@@ -1,10 +1,10 @@
 package com.gitee.android.ui.home
 
 import androidx.recyclerview.widget.DiffUtil
-import com.ando.library.views.recycler.BaseDataBindingAdapter
-import com.ando.toolkit.StringUtils
-import com.ando.toolkit.ext.copyToClipBoard
-import com.ando.toolkit.ext.toastShort
+import ando.library.views.recycler.BaseDataBindingAdapter
+import ando.toolkit.ext.copyToClipBoard
+import ando.toolkit.ext.noNull
+import ando.toolkit.ext.toastShort
 import com.gitee.android.R
 import com.gitee.android.bean.ArticleEntity
 import com.gitee.android.databinding.ItemListHomeArticleBinding
@@ -57,5 +57,5 @@ class ItemArticleItemViewModel(tab: ArticleEntity) {
     val tabId = tab.id
     val tabName = tab.name
     val tabDesc = tab.description
-    val tabAvatar = StringUtils.noNull(tab.owner.portrait_url)
+    val tabAvatar = tab.owner.portrait_url.noNull()
 }

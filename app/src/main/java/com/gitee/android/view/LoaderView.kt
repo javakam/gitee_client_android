@@ -3,9 +3,9 @@ package com.gitee.android.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import com.ando.library.utils.noShake
-import com.ando.library.views.loader.LoadState
-import com.ando.library.views.loader.Loader
+import ando.library.utils.noShake
+import ando.library.views.loader.LoadState
+import ando.library.views.loader.Loader
 import com.gitee.android.R
 
 /**

@@ -5,10 +5,10 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.ando.library.utils.glide.GlideUtils
-import com.ando.library.views.loader.LoadState
-import com.ando.library.views.loader.Loader
-import com.ando.toolkit.ext.hideSoftInput
+import ando.library.utils.glide.GlideUtils
+import ando.library.views.loader.LoadState
+import ando.library.views.loader.Loader
+import ando.toolkit.ext.hideSoftInput
 import com.gitee.android.view.LoaderView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener

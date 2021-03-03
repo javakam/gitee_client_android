@@ -2,8 +2,8 @@ package com.gitee.android.ui.home
 
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
-import com.ando.library.base.BaseMvcLazyFragment
-import com.ando.toolkit.log.L
+import ando.library.base.BaseMvcLazyFragment
+import ando.toolkit.log.L
 import com.gitee.android.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator

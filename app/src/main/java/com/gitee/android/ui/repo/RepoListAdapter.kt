@@ -1,18 +1,16 @@
 package com.gitee.android.ui.repo
 
-import com.ando.library.views.recycler.BaseDataBindingAdapter
-import com.ando.toolkit.StringUtils
-import com.ando.toolkit.ext.copyToClipBoard
-import com.ando.toolkit.ext.toastShort
+import ando.library.views.recycler.BaseDataBindingAdapter
+import ando.toolkit.ext.copyToClipBoard
+import ando.toolkit.ext.noNull
+import ando.toolkit.ext.toastShort
 import com.gitee.android.R
 import com.gitee.android.bean.RepoEntity
 import com.gitee.android.databinding.ItemListRepoBinding
 
 /**
  * Title: RepoListAdapter
- * <p>
- * Description:
- * </p>
+ *
  * @author javakam
  * @date 2020/8/14  16:25
  */
@@ -45,5 +43,5 @@ class ItemRepoViewModel(tab: RepoEntity) {
     val tabLanguage = tab.language
     val tabFullName = tab.full_name
     val tabDesc = tab.description
-    val tabAvatar = StringUtils.noNull(tab.owner.portrait_url)
+    val tabAvatar = tab.owner.portrait_url.noNull()
 }
