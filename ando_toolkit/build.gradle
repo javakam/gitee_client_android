@@ -40,9 +40,9 @@ android {
         jvmTarget = "1.8"
     }
     // More than one file was found with OS independent path 'META-INF/library_release.kotlin_module'
-    packagingOptions {
-        exclude 'META-INF/*.kotlin_module'
-    }
+//    packagingOptions {
+//        exclude 'META-INF/*.kotlin_module'
+//    }
 
 }
 
@@ -59,7 +59,7 @@ dependencies {
 //https://github.com/novoda/bintray-release/wiki/%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3HOME
 //https://github.com/panpf/bintray-publish
 publish {
-    repoName = 'AndoLibrary'
+    repoName = 'maven'
     userOrg = 'javakam'
     groupId = 'ando.toolkit'
     artifactId = 'toolkit'
