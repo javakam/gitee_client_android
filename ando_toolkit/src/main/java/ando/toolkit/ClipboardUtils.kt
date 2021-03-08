@@ -16,7 +16,7 @@ object ClipboardUtils {
     fun copyText(text: CharSequence?) {
         val cm: ClipboardManager = AppUtils.getContext()
             .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        cm.setPrimaryClip(ClipData.newPlainText("text", text))
+        cm.primaryClip = ClipData.newPlainText("text", text)
     }
 
     /**
@@ -29,8 +29,7 @@ object ClipboardUtils {
             .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip: ClipData? = cm.primaryClip
         return if (clip != null && clip.itemCount > 0) {
-            clip.getItemAt(0)
-                .coerceToText(AppUtils.getContext())
+            clip.getItemAt(0).coerceToText(AppUtils.getContext())
         } else null
     }
 

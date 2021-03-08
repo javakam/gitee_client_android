@@ -3,10 +3,6 @@ package ando.toolkit.ext
 import android.content.Context
 
 /**
- * Title:
- * <p>
- * Description:
- * </p>
  * @author javakam
  * @date 2020/11/9  16:53
  */

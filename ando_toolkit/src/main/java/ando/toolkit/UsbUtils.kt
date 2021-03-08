@@ -10,9 +10,9 @@ import java.io.File
 import java.util.*
 
 object UsbUtils {
+
     /**
-     * Android 2.3之后的系统
-     * 获取外部存储列表
+     * 获取外部存储列表 , Android 2.3之后的系统
      */
     fun getStoragePaths(cxt: Context): Array<String> {
         val pathsList: MutableList<String> = ArrayList()

@@ -6,12 +6,11 @@ import java.io.IOException
 import java.io.InputStreamReader
 
 /**
- * Title: AssetsUtils
+ * # AssetsUtils
  *
- * Description: 读取 main -> assets 目录下的文件
- * <pre>
+ * 读取 main -> assets 目录下的文件
+ *
  * eg: AssetsUtils.getBeanByClass(Application.get(), "video.json", VideoBean.class);
- * </pre>
  *
  * @author javakam
  * @date 2019/11/7  10:12
@@ -49,4 +48,5 @@ object AssetsUtils {
     //    public static <T extends Object> List<T> getBeanByType(@NonNull Context context, @NonNull String fileName, @NonNull Type type) {
     //        return new Gson().fromJson(getJson(context, fileName), type);
     //    }
+
 }

@@ -3,7 +3,7 @@ package ando.library.views.recycler
 import android.view.ViewGroup
 
 /**
- * 通用的 RecyclerView 适配器
+ * # 通用的 RecyclerView 适配器
  *
  * @author javakam
  * @date 2017/9/10 18:30

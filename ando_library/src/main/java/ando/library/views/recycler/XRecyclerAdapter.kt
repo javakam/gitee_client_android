@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
 /**
- * 基础的RecyclerView适配器
+ * # 基础的RecyclerView适配器
  *
  * @author javakam
  * @date 2019-08-11 16:12

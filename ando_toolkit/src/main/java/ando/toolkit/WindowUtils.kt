@@ -4,9 +4,9 @@ import android.view.View
 import android.view.Window
 
 /**
- * Title:WindowUtils
+ * # WindowUtils
  *
- * Description:Window窗体工具类
+ * Window窗体工具类
  *
  * @author javakam
  * @date 2018/9/23 18:54

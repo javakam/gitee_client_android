@@ -7,7 +7,7 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.core.view.children
 import ando.library.base.BaseMvvmActivity
-import ando.toolkit.BottomNavController
+import ando.toolkit.BottomNavUtils
 import ando.toolkit.NoShakeClickListener2
 import com.gitee.android.R
 import com.gitee.android.common.AppRouter
@@ -28,7 +28,7 @@ class MainActivity : BaseMvvmActivity<ActivityMainBinding>() {
     lateinit var repo: GiteeRepoRemote
 
     private lateinit var navView: BottomNavigationView
-    private lateinit var navViewController: BottomNavController
+    private lateinit var navViewController: BottomNavUtils
 
     override val layoutId: Int = R.layout.activity_main
 
@@ -55,7 +55,7 @@ class MainActivity : BaseMvvmActivity<ActivityMainBinding>() {
         prepareLogin()
 
         navView = findViewById(R.id.bottomNavView)
-        navViewController = BottomNavController(containerId = R.id.main_container, size = 3)
+        navViewController = BottomNavUtils(containerId = R.id.main_container, size = 3)
         navViewController.attach(navView, supportFragmentManager)
         navViewController.putFragments(
             R.id.nav_home to HomeFragment(),

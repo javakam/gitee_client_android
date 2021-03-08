@@ -11,10 +11,8 @@ import androidx.core.view.isVisible
 import ando.toolkit.NoShakeClickListener
 
 /**
- * Title:
- * <p>
- * Description: 为view添加OnGlobalLayoutListener监听并在测量完成后自动取消监听同时执行[globalAction]函数
- * </p>
+ * 为view添加OnGlobalLayoutListener监听并在测量完成后自动取消监听同时执行[globalAction]函数
+ *
  * @author javakam
  * @date 2020/9/30  15:16
  */
@@ -25,6 +23,7 @@ inline fun <T : View> T.afterMeasured(crossinline globalAction: T.() -> Unit) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     viewTreeObserver.removeOnGlobalLayoutListener(this)
                 } else {
+                    @Suppress("DEPRECATION")
                     viewTreeObserver.removeGlobalOnLayoutListener(this)
                 }
                 globalAction()
@@ -107,9 +106,9 @@ fun View?.gone() {
     }
 }
 
-fun View?.noShake(block: (v: View?) -> Unit) {
+fun View?.noShake(interval: Long = 500L, block: (v: View?) -> Unit) {
     this?.apply {
-        setOnClickListener(object : NoShakeClickListener() {
+        setOnClickListener(object : NoShakeClickListener(interval) {
             override fun onSingleClick(v: View?) {
                 block.invoke(v)
             }

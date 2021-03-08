@@ -5,8 +5,7 @@ import android.util.AttributeSet
 import android.widget.ScrollView
 
 /**
- * <pre>
- * <com.ando.base.views.ObservableScrollView
+ * <ando.library.views.ObservableScrollView
  *      android:id="@+id/observableScrollView"
  *      android:layout_width="match_parent"
  *      android:layout_height="match_parent"
@@ -16,10 +15,10 @@ import android.widget.ScrollView
  *      android:overScrollMode="never"
  *      android:paddingBottom="@dimen/dp_40"
  *      android:scrollbars="vertical">
- * </com.ando.base.views.ObservableScrollView>
- * </pre>
+ * </ando.library.views.ObservableScrollView>
  */
 class ObservableScrollView : ScrollView {
+
     interface ScrollViewListener {
         fun onScrollChanged(scrollView: ObservableScrollView?, x: Int, y: Int, oldx: Int, oldy: Int)
     }

@@ -1,5 +1,6 @@
 package ando.toolkit
 
+import ando.toolkit.ext.noNull
 import android.annotation.SuppressLint
 import android.text.TextUtils
 import androidx.annotation.StringDef
@@ -7,11 +8,10 @@ import java.text.ParseException
 import java.text.ParsePosition
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.ceil
 
 /**
- * Title:TimeUtils
- *
- * Description: 时间工具类
+ * # TimeUtils 时间工具类
  *
  * @author javakam
  * @date 2019/12/11 10:09
@@ -25,6 +25,7 @@ object TimeUtils {
     const val DATE_FORMAT5 = "yyyy年MM月dd日 HH:mm"
     const val DATE_FORMAT6 = "yyyy年M月dd日"
     const val DATE_FORMAT7 = "yyyyMMddHHmmss"
+
     private fun sdf(@Format format: String): SimpleDateFormat {
         var time: String? = format
         if (time.isNullOrBlank()) time = DATE_FORMAT
@@ -51,7 +52,7 @@ object TimeUtils {
     /**
      * 获取现在时间 yyyy-MM-dd HH:mm:ss
      */
-    fun getCurrentDateTimeDate(): Date {
+    fun getCurrentDateTimeDate(): Date? {
         val formatter = sdf(DATE_FORMAT)
         return formatter.parse(formatter.format(Date()), ParsePosition(8))
     }
@@ -275,28 +276,28 @@ object TimeUtils {
     }
 
     fun millisToLifeStringPHP2(millisLong: Long): String {
-        var millisLong = millisLong
-        if (millisLong <= 0) {
+        var millis = millisLong
+        if (millis <= 0) {
             return ""
         }
-        millisLong *= 1000 //PHP时间要 * 1000
+        millis *= 1000 //PHP时间要 * 1000
         val now = System.currentTimeMillis()
         val todayStart = string2Millis(millisToStringDate(now, "yyyy-MM-dd"), "yyyy-MM-dd")
-        if (now - millisLong in 1..oneHourMillis) { // 一小时内
-            val m = millisToStringShort(now - millisLong, isWhole = false, isFormat = false)
+        if (now - millis in 1..oneHourMillis) { // 一小时内
+            val m = millisToStringShort(now - millis, isWhole = false, isFormat = false)
             return if ("" == m) "1分钟内" else m + "前"
         }
-        if (millisLong >= todayStart && millisLong <= oneDayMillis + todayStart) { // 大于今天开始开始值，小于今天开始值加一天（即今天结束值）
-            return "今天 " + millisToStringDate(millisLong, "HH:mm")
+        if (millis >= todayStart && millis <= oneDayMillis + todayStart) { // 大于今天开始开始值，小于今天开始值加一天（即今天结束值）
+            return "今天 " + millisToStringDate(millis, "HH:mm")
         }
-        if (millisLong > todayStart - oneDayMillis) { // 大于（今天开始值减一天，即昨天开始值）
+        if (millis > todayStart - oneDayMillis) { // 大于（今天开始值减一天，即昨天开始值）
             return "昨天"
         }
-        if (millisLong > todayStart - oneDayMillis * 2) {
+        if (millis > todayStart - oneDayMillis * 2) {
             return "前天"
         }
-        val diff = (todayStart - millisLong).toDouble() / oneDayMillis
-        val diffDay = Math.ceil(diff).toInt()
+        val diff = (todayStart - millis).toDouble() / oneDayMillis
+        val diffDay = ceil(diff).toInt()
         //L.i("TimeUtils diffDay= " + diff + "   " + diffDay);
         if (diffDay <= 10) { // 大于 10 天显示具体时间
             //return diffDay + "天前 "+ millisToStringDate(millisLong, "yyyy年MM月dd日 HH:mm");//用于调试
@@ -307,9 +308,9 @@ object TimeUtils {
 //            return diffDay + "天前";
 //        }
         val thisYearStart = string2Millis(millisToStringDate(now, "yyyy"), "yyyy")
-        return if (millisLong > thisYearStart) { // 大于今天小于今年
-            millisToStringDate(millisLong, "yyyy年MM月dd日")
-        } else millisToStringDate(millisLong, "yyyy年MM月dd日")
+        return if (millis > thisYearStart) { // 大于今天小于今年
+            millisToStringDate(millis, "yyyy年MM月dd日")
+        } else millisToStringDate(millis, "yyyy年MM月dd日")
     }
 
     /**
@@ -458,7 +459,8 @@ object TimeUtils {
         val format = SimpleDateFormat(pattern, Locale.getDefault())
         var millis: Long = 0
         try {
-            millis = format.parse(str).time
+            @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+            millis = format.parse(str.noNull()).time
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -496,12 +498,11 @@ object TimeUtils {
      *
      * @return返回短时间格式 yyyy-MM-dd
      */
-    fun getNowDateyyyyMMdd(): Date {
+    fun getNowDateyyyyMMdd(): Date? {
         val currentTime = Date()
-        val formatter = SimpleDateFormat(DATE_FORMAT2)
+        val formatter = SimpleDateFormat(DATE_FORMAT2, Locale.getDefault())
         val dateString = formatter.format(currentTime)
-        val pos = ParsePosition(8)
-        return formatter.parse(dateString, pos)
+        return formatter.parse(dateString, ParsePosition(8))
     }
 
     /**
@@ -509,14 +510,14 @@ object TimeUtils {
      *
      * @return返回字符串格式 yyyy-MM-dd HH:mm:ss
      */
-    fun getDateSecondStr(): String = SimpleDateFormat(DATE_FORMAT).format(Date())
+    fun getDateSecondStr(): String = SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(Date())
 
     /**
      * 获取当前时间
      *
      * @return 返回格式 yyyy-MM-dd HH:mm
      */
-    fun getDateMinuteStr(): String = SimpleDateFormat("yyyy-MM-dd HH:mm").format(Date())
+    fun getDateMinuteStr(): String = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date())
 
     /**
      * 获取当前时间 -- 今天的年月日
@@ -525,7 +526,7 @@ object TimeUtils {
      */
     fun getStringDateyyyy_MM_dd(): String {
         val currentTime = Date()
-        val formatter = SimpleDateFormat(DATE_FORMAT2)
+        val formatter = SimpleDateFormat(DATE_FORMAT2, Locale.getDefault())
         return formatter.format(currentTime)
     }
 

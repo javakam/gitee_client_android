@@ -1,4 +1,4 @@
-package ando.library.views
+package ando.library.views.recycler
 
 import android.content.Context
 import android.graphics.Canvas
@@ -12,23 +12,25 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
 /**
- * Title: RecyclerViewDividerItemDecoration
+ * # RecyclerItemDecoration
  *
- *
- * Description:
- * <pre>
- * 使用方法:
- * //添加默认分割线：高度为2px，颜色为灰色
+ * ### 使用方法:
+ * #### 添加默认分割线：高度为2px，颜色为灰色
+ * ```
  * mRecyclerView.addItemDecoration(new RecyclerViewDividerItemDecoration(mContext, LinearLayoutManager.HORIZONTAL));
+ * ```
  *
- * //添加自定义分割线：可自定义分割线drawable
+ * #### 添加自定义分割线：可自定义分割线drawable
+ * ```
  * mRecyclerView.addItemDecoration(new RecyclerViewDividerItemDecoration(
  * mContext, LinearLayoutManager.HORIZONTAL, R.drawable.divider_mileage));
+ * ```
  *
- * //添加自定义分割线：可自定义分割线高度和颜色
+ * #### 添加自定义分割线：可自定义分割线高度和颜色
+ * ```
  * mRecyclerView.addItemDecoration(new RecyclerViewDividerItemDecoration(
  * mContext, LinearLayoutManager.HORIZONTAL, 10, getResources().getColor(R.color.divide_gray_color)));
-</pre> *
+ * ```
  *
  * @author javakam
  * @date 2019/11/22  9:35
@@ -37,10 +39,14 @@ class RecyclerItemDecoration(context: Context, orientation: Int) : ItemDecoratio
     private var mPaint: Paint? = null
     private var mDivider: Drawable?
 
-    //分割线高度，默认为1px
+    /**
+     * 分割线高度，默认为1px
+     */
     private var mDividerHeight = 1
 
-    //列表的方向：LinearLayoutManager.VERTICAL或LinearLayoutManager.HORIZONTAL
+    /**
+     * 列表的方向：LinearLayoutManager.VERTICAL或LinearLayoutManager.HORIZONTAL
+     */
     private val mOrientation: Int
 
     /**
@@ -51,7 +57,7 @@ class RecyclerItemDecoration(context: Context, orientation: Int) : ItemDecoratio
      */
     constructor(context: Context, orientation: Int, drawableId: Int) : this(context, orientation) {
         mDivider = ContextCompat.getDrawable(context, drawableId)
-        mDividerHeight = mDivider!!.intrinsicHeight
+        mDividerHeight = mDivider?.intrinsicHeight ?: 0
     }
 
     /**
@@ -98,8 +104,9 @@ class RecyclerItemDecoration(context: Context, orientation: Int) : ItemDecoratio
      * 横向分割线
      */
     private fun drawHorizontal(canvas: Canvas, parent: RecyclerView) {
-        val left = parent.paddingLeft //获取分割线的左边距，即RecyclerView的padding值
+        val left = parent.paddingLeft       //获取分割线的左边距，即RecyclerView的padding值
         val right = parent.measuredWidth - parent.paddingRight //分割线右边距
+
         val childSize = parent.childCount
         //遍历所有item view，为它们的下方绘制分割线
         for (i in 0 until childSize) {
@@ -108,8 +115,8 @@ class RecyclerItemDecoration(context: Context, orientation: Int) : ItemDecoratio
             val top = child.bottom + layoutParams.bottomMargin
             val bottom = top + mDividerHeight
             if (mDivider != null) {
-                mDivider!!.setBounds(left, top, right, bottom)
-                mDivider!!.draw(canvas)
+                mDivider?.setBounds(left, top, right, bottom)
+                mDivider?.draw(canvas)
             }
             mPaint?.let {
                 canvas.drawRect(
@@ -120,7 +127,6 @@ class RecyclerItemDecoration(context: Context, orientation: Int) : ItemDecoratio
                     it
                 )
             }
-
         }
     }
 
@@ -137,8 +143,8 @@ class RecyclerItemDecoration(context: Context, orientation: Int) : ItemDecoratio
             val left = child.right + layoutParams.rightMargin
             val right = left + mDividerHeight
             if (mDivider != null) {
-                mDivider!!.setBounds(left, top, right, bottom)
-                mDivider!!.draw(canvas)
+                mDivider?.setBounds(left, top, right, bottom)
+                mDivider?.draw(canvas)
             }
             mPaint?.let {
                 canvas.drawRect(
@@ -154,11 +160,11 @@ class RecyclerItemDecoration(context: Context, orientation: Int) : ItemDecoratio
 
     /**
      * 默认分割线：高度为2px，颜色为灰色
-     *
-     * @param orientation 列表方向
      */
     init {
-        require(!(orientation != LinearLayoutManager.VERTICAL && orientation != LinearLayoutManager.HORIZONTAL)) { "请输入正确的参数！" }
+        require(!(orientation != LinearLayoutManager.VERTICAL && orientation != LinearLayoutManager.HORIZONTAL))
+        { "Please enter the correct parameters！" }
+
         mOrientation = orientation
         val attrs = intArrayOf(android.R.attr.listDivider)  //使用系统自带的listDivider
         val a = context.obtainStyledAttributes(attrs)

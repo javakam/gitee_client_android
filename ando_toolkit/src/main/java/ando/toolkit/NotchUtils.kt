@@ -306,7 +306,7 @@ object NotchUtils {
      * @param dpValue the dp value
      * @return the int
      */
-    private fun dp2px(context: Context, dpValue: Int): Int {
+    private fun dp2px(context: Context, @Suppress("SameParameterValue") dpValue: Int): Int {
         return TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
             dpValue.toFloat(),

@@ -1,6 +1,5 @@
 package ando.toolkit
 
-import android.R
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources.Theme
@@ -27,7 +26,7 @@ object ThemeUtils {
 
     @ColorInt
     fun getDisabledColor(context: Context): Int {
-        val primaryColor = resolveColor(context, R.attr.textColorPrimary)
+        val primaryColor = resolveColor(context, android.R.attr.textColorPrimary)
         val disabledColor = if (isColorDark(primaryColor)) Color.BLACK else Color.WHITE
         return adjustAlpha(disabledColor, 0.3f)
     }
@@ -220,11 +219,11 @@ object ThemeUtils {
 
     fun getActionTextStateList(context: Context, newPrimaryColor: Int): ColorStateList {
         var color = newPrimaryColor
-        val fallBackButtonColor = resolveColor(context, R.attr.textColorPrimary)
+        val fallBackButtonColor = resolveColor(context, android.R.attr.textColorPrimary)
         if (color == 0) {
             color = fallBackButtonColor
         }
-        val states = arrayOf(intArrayOf(-R.attr.state_enabled), intArrayOf())
+        val states = arrayOf(intArrayOf(-android.R.attr.state_enabled), intArrayOf())
         val colors = intArrayOf(adjustAlpha(color, 0.4f), color)
         return ColorStateList(states, colors)
     }

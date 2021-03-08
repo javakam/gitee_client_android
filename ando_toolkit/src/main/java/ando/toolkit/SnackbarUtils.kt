@@ -26,12 +26,13 @@ import java.lang.ref.WeakReference
 import kotlin.math.max
 
 /**
- * Snackbar工具类
+ * # SnackbarUtils
  *
  * @author javakam
  * @date 2018/12/18 下午5:58
  */
 class SnackbarUtils {
+
     private constructor() {
         throw UnsupportedOperationException("u can't instantiate me...")
     }
@@ -41,9 +42,9 @@ class SnackbarUtils {
     }
 
     /**
-     * 获取 mSnackbar
+     * 获取 snackBar
      */
-    private val snackbar: Snackbar?
+    private val snackBar: Snackbar?
         get() = if (mSnackbarWeakRef != null && mSnackbarWeakRef?.get() != null) {
             mSnackbarWeakRef?.get()
         } else null
@@ -52,8 +53,8 @@ class SnackbarUtils {
      * 设置mSnackbar背景色为  sColorInfo
      */
     fun info(): SnackbarUtils {
-        if (snackbar != null) {
-            snackbar?.view?.setBackgroundColor(sColorInfo)
+        if (snackBar != null) {
+            snackBar?.view?.setBackgroundColor(sColorInfo)
         }
         return this
     }
@@ -62,8 +63,8 @@ class SnackbarUtils {
      * 设置mSnackbar背景色为  sColorConfirm
      */
     fun confirm(): SnackbarUtils {
-        if (snackbar != null) {
-            snackbar?.view?.setBackgroundColor(sColorConfirm)
+        if (snackBar != null) {
+            snackBar?.view?.setBackgroundColor(sColorConfirm)
         }
         return this
     }
@@ -72,8 +73,8 @@ class SnackbarUtils {
      * 设置Snackbar背景色为   sColorWarning
      */
     fun warning(): SnackbarUtils {
-        if (snackbar != null) {
-            snackbar?.view?.setBackgroundColor(sColorWarning)
+        if (snackBar != null) {
+            snackBar?.view?.setBackgroundColor(sColorWarning)
         }
         return this
     }
@@ -82,8 +83,8 @@ class SnackbarUtils {
      * 设置Snackbar背景色为   sColorWarning
      */
     fun danger(): SnackbarUtils {
-        if (snackbar != null) {
-            snackbar?.view?.setBackgroundColor(sColorDanger)
+        if (snackBar != null) {
+            snackBar?.view?.setBackgroundColor(sColorDanger)
         }
         return this
     }
@@ -92,8 +93,8 @@ class SnackbarUtils {
      * 设置Snackbar背景色
      */
     fun backColor(@ColorInt backgroundColor: Int): SnackbarUtils {
-        if (snackbar != null) {
-            snackbar?.view?.setBackgroundColor(backgroundColor)
+        if (snackBar != null) {
+            snackBar?.view?.setBackgroundColor(backgroundColor)
         }
         return this
     }
@@ -102,8 +103,8 @@ class SnackbarUtils {
      * 设置TextView(@+id/snackbar_text)的文字颜色
      */
     fun messageColor(@ColorInt messageColor: Int): SnackbarUtils {
-        if (snackbar != null) {
-            (snackbar?.view?.findViewById<View>(R.id.snackbar_text) as TextView).setTextColor(
+        if (snackBar != null) {
+            (snackBar?.view?.findViewById<View>(R.id.snackbar_text) as TextView).setTextColor(
                 messageColor
             )
         }
@@ -114,8 +115,8 @@ class SnackbarUtils {
      * 设置Button(@+id/snackbar_action)的文字颜色
      */
     fun actionColor(@ColorInt actionTextColor: Int): SnackbarUtils {
-        if (snackbar != null) {
-            (snackbar?.view?.findViewById<View>(R.id.snackbar_action) as Button).setTextColor(
+        if (snackBar != null) {
+            (snackBar?.view?.findViewById<View>(R.id.snackbar_action) as Button).setTextColor(
                 actionTextColor
             )
         }
@@ -130,12 +131,12 @@ class SnackbarUtils {
         @ColorInt messageColor: Int,
         @ColorInt actionTextColor: Int
     ): SnackbarUtils {
-        if (snackbar != null) {
-            snackbar?.view?.setBackgroundColor(backgroundColor)
-            (snackbar?.view?.findViewById<View>(R.id.snackbar_text) as TextView).setTextColor(
+        if (snackBar != null) {
+            snackBar?.view?.setBackgroundColor(backgroundColor)
+            (snackBar?.view?.findViewById<View>(R.id.snackbar_text) as TextView).setTextColor(
                 messageColor
             )
-            (snackbar?.view?.findViewById<View>(R.id.snackbar_action) as Button).setTextColor(
+            (snackBar?.view?.findViewById<View>(R.id.snackbar_action) as Button).setTextColor(
                 actionTextColor
             )
         }
@@ -146,10 +147,10 @@ class SnackbarUtils {
      * 设置Snackbar 背景透明度
      */
     fun alpha(alpha: Float): SnackbarUtils {
-        var alpha = alpha
-        if (snackbar != null) {
-            alpha = if (alpha >= 1.0f) 1.0f else Math.max(alpha, 0.0f)
-            snackbar?.view?.alpha = alpha
+        var a = alpha
+        if (snackBar != null) {
+            a = if (a >= 1.0f) 1.0f else max(a, 0.0f)
+            snackBar?.view?.alpha = a
         }
         return this
     }
@@ -160,13 +161,13 @@ class SnackbarUtils {
      * @param gravity
      */
     fun gravityFrameLayout(gravity: Int): SnackbarUtils {
-        if (snackbar != null) {
+        if (snackBar != null) {
             val params = FrameLayout.LayoutParams(
-                snackbar?.view?.layoutParams?.width ?: 0,
-                snackbar?.view?.layoutParams?.height ?: 0
+                snackBar?.view?.layoutParams?.width ?: 0,
+                snackBar?.view?.layoutParams?.height ?: 0
             )
             params.gravity = gravity
-            snackbar?.view?.layoutParams = params
+            snackBar?.view?.layoutParams = params
         }
         return this
     }
@@ -177,13 +178,13 @@ class SnackbarUtils {
      * @param gravity
      */
     fun gravityCoordinatorLayout(gravity: Int): SnackbarUtils {
-        if (snackbar != null) {
+        if (snackBar != null) {
             val params = CoordinatorLayout.LayoutParams(
-                snackbar?.view?.layoutParams?.width ?: 0,
-                snackbar?.view?.layoutParams?.height ?: 0
+                snackBar?.view?.layoutParams?.width ?: 0,
+                snackBar?.view?.layoutParams?.height ?: 0
             )
             params.gravity = gravity
-            snackbar?.view?.layoutParams = params
+            snackBar?.view?.layoutParams = params
         }
         return this
     }
@@ -197,8 +198,8 @@ class SnackbarUtils {
      * @return
      */
     fun setAction(@StringRes resId: Int, listener: View.OnClickListener?): SnackbarUtils =
-        if (snackbar != null) setAction(
-            snackbar?.view?.resources?.getText(resId),
+        if (snackBar != null) setAction(
+            snackBar?.view?.resources?.getText(resId),
             listener
         ) else this
 
@@ -211,8 +212,8 @@ class SnackbarUtils {
      * @param listener
      */
     fun setAction(text: CharSequence?, listener: View.OnClickListener?): SnackbarUtils {
-        if (snackbar != null) {
-            snackbar!!.setAction(text, listener)
+        if (snackBar != null) {
+            snackBar!!.setAction(text, listener)
         }
         return this
     }
@@ -224,8 +225,8 @@ class SnackbarUtils {
      * @return
      */
     fun setCallback(setCallback: Snackbar.Callback?): SnackbarUtils {
-        if (snackbar != null) {
-            snackbar!!.setCallback(setCallback)
+        if (snackBar != null) {
+            snackBar!!.setCallback(setCallback)
         }
         return this
     }
@@ -242,18 +243,18 @@ class SnackbarUtils {
         @DrawableRes leftDrawable: Int?,
         @DrawableRes rightDrawable: Int?
     ): SnackbarUtils {
-        return if (snackbar != null) {
+        return if (snackBar != null) {
             var drawableLeft: Drawable? = null
             var drawableRight: Drawable? = null
             if (leftDrawable != null) {
                 try {
-                    drawableLeft = snackbar?.view?.resources?.getDrawable(leftDrawable)
+                    drawableLeft = snackBar?.view?.resources?.getDrawable(leftDrawable)
                 } catch (e: Exception) {
                 }
             }
             if (rightDrawable != null) {
                 try {
-                    drawableRight = snackbar?.view?.resources?.getDrawable(rightDrawable)
+                    drawableRight = snackBar?.view?.resources?.getDrawable(rightDrawable)
                 } catch (e: Exception) {
                 }
             }
@@ -267,8 +268,8 @@ class SnackbarUtils {
      * 设置TextView(@+id/snackbar_text)左右两侧的图片
      */
     fun leftAndRightDrawable(leftDrawable: Drawable?, rightDrawable: Drawable?): SnackbarUtils {
-        if (snackbar != null) {
-            val message = snackbar?.view?.findViewById<TextView>(R.id.snackbar_text)
+        if (snackBar != null) {
+            val message = snackBar?.view?.findViewById<TextView>(R.id.snackbar_text)
             var paramsMessage = message?.layoutParams as LinearLayout.LayoutParams
             paramsMessage =
                 LinearLayout.LayoutParams(paramsMessage.width, paramsMessage.height, 0.0f)
@@ -284,8 +285,8 @@ class SnackbarUtils {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 1.0f
             )
-            (snackbar!!.view as SnackbarLayout).addView(
-                Space(snackbar?.view?.context),
+            (snackBar!!.view as SnackbarLayout).addView(
+                Space(snackBar?.view?.context),
                 1,
                 paramsSpace
             )
@@ -299,8 +300,8 @@ class SnackbarUtils {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     fun messageCenter(): SnackbarUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            if (snackbar != null) {
-                val message = snackbar?.view?.findViewById<TextView>(R.id.snackbar_text)
+            if (snackBar != null) {
+                val message = snackBar?.view?.findViewById<TextView>(R.id.snackbar_text)
                 //View.setTextAlignment需要SDK>=17
                 message?.textAlignment = View.TEXT_ALIGNMENT_GRAVITY
                 message?.gravity = Gravity.CENTER
@@ -314,11 +315,12 @@ class SnackbarUtils {
      *
      * @return
      */
+    @SuppressLint("RtlHardcoded")
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     fun messageRight(): SnackbarUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            if (snackbar != null) {
-                val message = snackbar?.view?.findViewById<TextView>(R.id.snackbar_text)
+            if (snackBar != null) {
+                val message = snackBar?.view?.findViewById<TextView>(R.id.snackbar_text)
                 //View.setTextAlignment需要SDK>=17
                 message?.textAlignment = View.TEXT_ALIGNMENT_GRAVITY
                 message?.gravity = Gravity.CENTER_VERTICAL or Gravity.RIGHT
@@ -335,9 +337,9 @@ class SnackbarUtils {
      * @return
      */
     fun addView(layoutId: Int, index: Int): SnackbarUtils {
-        return if (snackbar != null) {
+        return if (snackBar != null) {
             //加载布局文件新建View
-            val addView = LayoutInflater.from(snackbar?.view?.context).inflate(layoutId, null)
+            val addView = LayoutInflater.from(snackBar?.view?.context).inflate(layoutId, null)
             addView(addView, index)
         } else this
     }
@@ -350,7 +352,7 @@ class SnackbarUtils {
      * @return
      */
     fun addView(addView: View, index: Int): SnackbarUtils {
-        if (snackbar != null) {
+        if (snackBar != null) {
             val params = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -359,7 +361,7 @@ class SnackbarUtils {
             params.gravity = Gravity.CENTER_VERTICAL
             addView.layoutParams = params
             //FrameLayout里面套了一个LinearLayout
-            val contentLayout = (snackbar!!.view as SnackbarLayout)
+            val contentLayout = (snackBar!!.view as SnackbarLayout)
                 .getChildAt(0) as SnackbarContentLayout
             contentLayout.addView(addView, index)
         }
@@ -375,7 +377,7 @@ class SnackbarUtils {
      * @return
      */
     fun margins(margin: Int): SnackbarUtils {
-        return if (snackbar != null) {
+        return if (snackBar != null) {
             margins(margin, margin, margin, margin)
         } else {
             this
@@ -388,10 +390,10 @@ class SnackbarUtils {
      * 为保证margins有效,应该先调用 gravityFrameLayout,在 show() 之前调用 margins
      */
     fun margins(left: Int, top: Int, right: Int, bottom: Int): SnackbarUtils {
-        if (snackbar != null) {
-            val params = snackbar?.view?.layoutParams
+        if (snackBar != null) {
+            val params = snackBar?.view?.layoutParams
             (params as MarginLayoutParams).setMargins(left, top, right, bottom)
-            snackbar?.view?.layoutParams = params
+            snackBar?.view?.layoutParams = params
         }
         return this
     }
@@ -420,14 +422,14 @@ class SnackbarUtils {
      * @param radius 圆角半径
      */
     fun radius(radius: Float): SnackbarUtils {
-        var radius = radius
-        if (snackbar != null) {
-            //将要设置给mSnackbar的背景
-            val background = getRadiusDrawable(snackbar?.view?.background)
+        var r = radius
+        if (snackBar != null) {
+            //将要设置给 snackBar 的背景
+            val background = getRadiusDrawable(snackBar?.view?.background)
             if (background != null) {
-                radius = if (radius <= 0) 12F else radius
-                background.cornerRadius = radius
-                snackbar?.view?.setBackgroundDrawable(background)
+                r = if (r <= 0) 12F else r
+                background.cornerRadius = r
+                snackBar?.view?.setBackgroundDrawable(background)
             }
         }
         return this
@@ -437,24 +439,25 @@ class SnackbarUtils {
      * 设置Snackbar布局的圆角半径值及边框颜色及边框宽度
      */
     fun radius(radius: Int, strokeWidth: Int, @ColorInt strokeColor: Int): SnackbarUtils {
-        var radius = radius
-        var strokeWidth = strokeWidth
-        if (snackbar != null) {
-            //将要设置给mSnackbar的背景
-            val background = getRadiusDrawable(snackbar?.view?.background)
+        var r = radius
+        var sWidth = strokeWidth
+        if (snackBar != null) {
+            //将要设置给 snackBar 的背景
+            val background = getRadiusDrawable(snackBar?.view?.background)
             if (background != null) {
-                radius = if (radius <= 0) 12 else radius
-                strokeWidth =
+                r = if (r <= 0) 12 else r
+                sWidth =
                     when {
-                        strokeWidth <= 0 -> 1
-                        strokeWidth >= snackbar?.view?.findViewById<View>(
+                        sWidth <= 0 -> 1
+                        sWidth >= snackBar?.view?.findViewById<View>(
                             R.id.snackbar_text
                         )?.paddingTop ?: 0 -> 2
-                        else -> strokeWidth
+                        else -> sWidth
                     }
-                background.cornerRadius = radius.toFloat()
-                background.setStroke(strokeWidth, strokeColor)
-                snackbar?.view?.setBackgroundDrawable(background)
+                background.cornerRadius = r.toFloat()
+                background.setStroke(sWidth, strokeColor)
+                @Suppress("DEPRECATION")
+                snackBar?.view?.setBackgroundDrawable(background)
             }
         }
         return this
@@ -482,11 +485,11 @@ class SnackbarUtils {
         */
         //文字高度+paddingTop+paddingBottom : 14sp + 14dp*2
 
-        val snackBarHeight = snackbar?.view?.context?.dp2px(28f)
-            ?.plus(snackbar?.view?.context?.sp2px(14f) ?: 0)
+        val snackBarHeight = snackBar?.view?.context?.dp2px(28f)
+            ?.plus(snackBar?.view?.context?.sp2px(14f) ?: 0)
         d(
             TAG,
-            "直接获取MessageView高度:" + snackbar?.view?.findViewById<View>(R.id.snackbar_text)?.height
+            "直接获取MessageView高度:" + snackBar?.view?.findViewById<View>(R.id.snackbar_text)?.height
         )
         return snackBarHeight ?: 0
     }
@@ -508,7 +511,7 @@ class SnackbarUtils {
     ): SnackbarUtils {
         var mLeft = marginLeft
         var mRight = marginRight
-        if (snackbar != null) {
+        if (snackBar != null) {
             mLeft = max(mLeft, 0)
             mRight = max(mRight, 0)
             val locations = IntArray(2)
@@ -519,14 +522,14 @@ class SnackbarUtils {
             //必须保证指定View的顶部可见 且 单行Snackbar可以完整的展示
             if (locations[1] >= contentViewTop + snackbarHeight) {
                 gravityFrameLayout(Gravity.BOTTOM)
-                val params = snackbar?.view?.layoutParams
+                val params = snackBar?.view?.layoutParams
                 (params as MarginLayoutParams).setMargins(
                     mLeft,
                     0,
                     mRight,
-                    snackbar?.view?.resources?.displayMetrics?.heightPixels ?: 0 - locations[1]
+                    snackBar?.view?.resources?.displayMetrics?.heightPixels ?: 0 - locations[1]
                 )
-                snackbar?.view?.layoutParams = params
+                snackBar?.view?.layoutParams = params
             }
         }
         return this
@@ -541,7 +544,7 @@ class SnackbarUtils {
     ): SnackbarUtils {
         var mLeft = marginLeft
         var mRight = marginRight
-        if (snackbar != null) {
+        if (snackBar != null) {
             mLeft = max(mLeft, 0)
             mRight = max(mRight, 0)
             val locations = IntArray(2)
@@ -552,14 +555,14 @@ class SnackbarUtils {
             //必须保证指定View的顶部可见 且 单行Snackbar可以完整的展示
             if (locations[1] >= contentViewTop + snackbarHeight) {
                 gravityCoordinatorLayout(Gravity.BOTTOM)
-                val params = snackbar?.view?.layoutParams
+                val params = snackBar?.view?.layoutParams
                 (params as MarginLayoutParams).setMargins(
                     mLeft,
                     0,
                     mRight,
-                    snackbar?.view?.resources?.displayMetrics?.heightPixels ?: 0 - locations[1]
+                    snackBar?.view?.resources?.displayMetrics?.heightPixels ?: 0 - locations[1]
                 )
-                snackbar?.view?.layoutParams = params
+                snackBar?.view?.layoutParams = params
             }
         }
         return this
@@ -581,42 +584,37 @@ class SnackbarUtils {
         marginLeft: Int,
         marginRight: Int
     ): SnackbarUtils {
-        var marginLeft = marginLeft
-        var marginRight = marginRight
-        if (snackbar != null) {
-            marginLeft = Math.max(marginLeft, 0)
-            marginRight = Math.max(marginRight, 0)
+        var marLeft = marginLeft
+        var marRight = marginRight
+        if (snackBar != null) {
+            marLeft = max(marLeft, 0)
+            marRight = max(marRight, 0)
             val locations = IntArray(2)
             targetView.getLocationOnScreen(locations)
             val snackbarHeight = calculateSnackBarHeight()
-            val screenHeight = snackbar?.view?.context?.screenHeight ?: 0
+            val screenHeight = snackBar?.view?.context?.screenHeight ?: 0
             //必须保证指定View的底部可见 且 单行Snackbar可以完整的展示
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 //为什么要'+2'? 因为在Android L(Build.VERSION_CODES.LOLLIPOP)以上,例如Button会有一定的'阴影(shadow)',阴影的大小由'高度(elevation)'决定.
                 //为了在Android L以上的系统中展示的Snackbar不要覆盖targetView的阴影部分太大比例,所以人为减小2px的layout_marginBottom属性.
                 if (locations[1] + targetView.height >= contentViewTop && locations[1] + targetView.height + snackbarHeight + 2 <= screenHeight) {
                     gravityFrameLayout(Gravity.BOTTOM)
-                    val params = snackbar?.view?.layoutParams
+                    val params = snackBar?.view?.layoutParams
                     (params as MarginLayoutParams).setMargins(
-                        marginLeft,
-                        0,
-                        marginRight,
+                        marLeft, 0, marRight,
                         screenHeight.minus((locations[1] + targetView.height + snackbarHeight + 2))
                     )
-                    snackbar?.view?.layoutParams = params
+                    snackBar?.view?.layoutParams = params
                 }
             } else {
                 if (locations[1] + targetView.height >= contentViewTop && locations[1] + targetView.height + snackbarHeight <= screenHeight) {
                     gravityFrameLayout(Gravity.BOTTOM)
-                    val params = snackbar?.view?.layoutParams
+                    val params = snackBar?.view?.layoutParams
                     (params as MarginLayoutParams).setMargins(
-                        marginLeft,
-                        0,
-                        marginRight,
-                        screenHeight?.minus((locations[1] + targetView.height + snackbarHeight))
-                            ?: 0
+                        marLeft, 0, marRight,
+                        screenHeight.minus((locations[1] + targetView.height + snackbarHeight))
                     )
-                    snackbar?.view?.layoutParams = params
+                    snackBar?.view?.layoutParams = params
                 }
             }
         }
@@ -629,41 +627,37 @@ class SnackbarUtils {
         marginLeft: Int,
         marginRight: Int
     ): SnackbarUtils {
-        var marginLeft = marginLeft
-        var marginRight = marginRight
-        if (snackbar != null) {
-            marginLeft = Math.max(marginLeft, 0)
-            marginRight = Math.max(marginRight, 0)
+        var marLeft = marginLeft
+        var marRight = marginRight
+        if (snackBar != null) {
+            marLeft = max(marLeft, 0)
+            marRight = max(marRight, 0)
             val locations = IntArray(2)
             targetView.getLocationOnScreen(locations)
             val snackbarHeight = calculateSnackBarHeight()
-            val screenHeight = snackbar?.view?.context?.screenHeight ?: 0
+            val screenHeight = snackBar?.view?.context?.screenHeight ?: 0
             //必须保证指定View的底部可见 且 单行Snackbar可以完整的展示
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 //为什么要'+2'? 因为在Android L(Build.VERSION_CODES.LOLLIPOP)以上,例如Button会有一定的'阴影(shadow)',阴影的大小由'高度(elevation)'决定.
                 //为了在Android L以上的系统中展示的Snackbar不要覆盖targetView的阴影部分太大比例,所以人为减小2px的layout_marginBottom属性.
                 if (locations[1] + targetView.height >= contentViewTop && locations[1] + targetView.height + snackbarHeight + 2 <= screenHeight) {
                     gravityCoordinatorLayout(Gravity.BOTTOM)
-                    val params = snackbar?.view?.layoutParams
+                    val params = snackBar?.view?.layoutParams
                     (params as MarginLayoutParams).setMargins(
-                        marginLeft,
-                        0,
-                        marginRight,
+                        marLeft, 0, marRight,
                         screenHeight.minus((locations[1] + targetView.height + snackbarHeight + 2))
                     )
-                    snackbar?.view?.layoutParams = params
+                    snackBar?.view?.layoutParams = params
                 }
             } else {
                 if (locations[1] + targetView.height >= contentViewTop && locations[1] + targetView.height + snackbarHeight <= screenHeight) {
                     gravityCoordinatorLayout(Gravity.BOTTOM)
-                    val params = snackbar?.view?.layoutParams
+                    val params = snackBar?.view?.layoutParams
                     (params as MarginLayoutParams).setMargins(
-                        marginLeft,
-                        0,
-                        marginRight,
+                        marLeft, 0, marRight,
                         screenHeight - (locations[1] + targetView.height + snackbarHeight)
                     )
-                    snackbar?.view?.layoutParams = params
+                    snackBar?.view?.layoutParams = params
                 }
             }
         }
@@ -674,8 +668,8 @@ class SnackbarUtils {
      * 显示 Snackbar
      */
     fun show() {
-        if (snackbar != null) {
-            snackbar!!.show()
+        if (snackBar != null) {
+            snackBar!!.show()
         } else {
             d(TAG, "已经被回收")
         }

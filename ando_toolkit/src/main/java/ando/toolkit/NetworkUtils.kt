@@ -89,7 +89,7 @@ object NetworkUtils {
     fun isAvailableByPing(ip: String): Boolean {
         val realIp = if (TextUtils.isEmpty(ip)) "223.5.5.5" else ip
         val result = execCmd(String.format("ping -c 1 %s", realIp), false)
-        return result?.result == 0
+        return result.result == 0
     }
 
     /**

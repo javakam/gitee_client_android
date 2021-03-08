@@ -19,9 +19,9 @@ import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
 /**
- * Title:BaseVirtualViewHolder
+ * # BaseVirtualViewHolder
  *
- * Description: github Joan Zapata
+ * github Joan Zapata
  *
  * Author javakam
  * Date 2018/10/25 9:39

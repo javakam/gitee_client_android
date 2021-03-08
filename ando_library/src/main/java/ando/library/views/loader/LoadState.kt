@@ -1,16 +1,14 @@
 package ando.library.views.loader
 
 /**
- * Title:LoadState
- *
+ * # LoadState
  *
  * Description:加载状态
- *
  *
  * @author javakam
  * @date 2019/11/15 15:02
  */
-enum class LoadState(private val state: String, private val value: Int) {
+enum class LoadState(private val state: String, private val stateValue: Int) {
     /**
      *
      */
@@ -20,7 +18,7 @@ enum class LoadState(private val state: String, private val value: Int) {
     EMPTY("空的状态", 4),
     SUCCESS("成功的状态", 5);
 
-    fun value(): Int {
-        return value
+    fun stateValue(): Int {
+        return stateValue
     }
 }

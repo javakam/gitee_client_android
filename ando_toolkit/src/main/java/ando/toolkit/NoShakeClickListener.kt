@@ -4,7 +4,7 @@ import android.view.View
 import kotlin.math.abs
 
 /**
- * 事件防抖
+ * # 事件防抖
  *
  * 1.既适用于单个`View`事件防抖, 也适用于`Adapter`中`ItemView`事件防抖
  * 2.如果事件为跳转到新的`Activity`, 该`Activity`启动模型应为`android:launchMode="singleTop"`

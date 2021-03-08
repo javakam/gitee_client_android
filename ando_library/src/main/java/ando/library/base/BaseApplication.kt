@@ -17,11 +17,7 @@ import ando.toolkit.AppUtils
 import java.lang.ref.WeakReference
 
 /**
- * Title: BaseApplication
- *
- *
- * Description:
- *
+ * # BaseApplication
  *
  * @author javakam
  * @date 2019/8/6  9:13
@@ -71,7 +67,7 @@ open class BaseApplication : MultiDexApplication() {
             val configuration = resources.configuration
             configuration.fontScale = 1.0f
             resources.updateConfiguration(configuration, resources.displayMetrics)
-//            createConfigurationContext(configuration)
+            //createConfigurationContext(configuration)
         }
         return resources
     }
@@ -85,7 +81,7 @@ open class BaseApplication : MultiDexApplication() {
         fun exit() {
             finishAll()
             killProcess(myPid())
-            System.exit(0)
+            //System.exit(0)
         }
 
         /**

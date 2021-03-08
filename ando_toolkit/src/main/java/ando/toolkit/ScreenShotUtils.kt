@@ -1,13 +1,11 @@
 package ando.toolkit
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
-import android.util.DisplayMetrics
 import android.util.LruCache
 import android.view.View
 import android.view.ViewGroup
@@ -19,11 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
 /**
- * Title:ScreenShotUtils
- *
- *
- * Description: 截屏工具类
- *
+ * # ScreenShotUtils 截屏工具类
  *
  * @author javakam
  * @date 2020/1/3 10:58

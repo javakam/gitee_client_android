@@ -1,12 +1,13 @@
-package ando.library.thread
+package ando.toolkit.thread
 
 import ando.toolkit.log.L
 import java.util.concurrent.*
 import java.util.concurrent.atomic.AtomicInteger
+import kotlin.math.max
+import kotlin.math.min
 
 /**
- * Title: ThreadProvider
- *
+ * # ThreadProvider
  *
  * Description: Modify from [android.os.AsyncTask]
  * <pre>
@@ -17,16 +18,19 @@ import java.util.concurrent.atomic.AtomicInteger
  * new MyAsyncTask(mActivity, "Task#c2 ").execute("123");
  * new MyAsyncTask(mActivity, "Task#c3 ").execute("123");
  * break;
+ *
  * case R.id.btAsyncTaskParallel://并行执行 -- 使用 AsyncTask 自带的线程池
  * new MyAsyncTask(mActivity, "Task#b1 ").executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "123");
  * new MyAsyncTask(mActivity, "Task#b2 ").executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "123");
  * new MyAsyncTask(mActivity, "Task#b3 ").executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "123");
  * break;
+ *
  * case R.id.btAsyncTaskParallelByUs://并行执行 -- 自定义线程池
  * new MyAsyncTask(mActivity, "Task#bb1 ").executeOnExecutor(MY_THREAD_POOL_EXECUTOR, "123");
  * new MyAsyncTask(mActivity, "Task#bb2 ").executeOnExecutor(MY_THREAD_POOL_EXECUTOR, "123");
  * new MyAsyncTask(mActivity, "Task#bb3 ").executeOnExecutor(MY_THREAD_POOL_EXECUTOR, "123");
  * break;
+ *
  * case R.id.btAsyncTaskParallelByUs2://并行执行 -- 自定义线程池 另外一种方式
  * MyAsyncTask.setDefaultExecutor(MY_THREAD_POOL_EXECUTOR);//替换掉默认的  AsyncTask.SERIAL_EXECUTOR
  * new MyAsyncTask(mActivity, "Task#a ").execute("abc");
@@ -34,24 +38,24 @@ import java.util.concurrent.atomic.AtomicInteger
  * new MyAsyncTask(mActivity, "Task#c ").execute("abc");
  * break;
  *
-</pre> *
+ * </pre>
  *
  * @author javakam
- * @date 2019/11/27  12:57
+ * 2019/11/27  12:57
  */
 object ThreadProvider {
     private const val TAG = "ThreadProvider"
 
     //自定义线程池
-    var CUSTOM_THREAD_POOL_EXECUTOR: Executor? = null
+    private var CUSTOM_THREAD_POOL_EXECUTOR: Executor? = null
 
     //Java虚拟机可用的处理器数量 -- 即 CPU核❤数
-    val CPU_COUNT = Runtime.getRuntime().availableProcessors()
+    private val CPU_COUNT = Runtime.getRuntime().availableProcessors()
 
     //线程池的核心线程数。默认情况下，核心线程会一直存活，即使它们处于闲置状态。
     //【注】设置了超时机制除外，当 allowCoreThreadTimeOut 属性为 true 时,那么闲置的核心线程在等待新任务到来时会有超时策略，
     //当等待时间超过 keepAliveTime 所指定的时长后，核心线程就会被终止！
-    private val CORE_POOL_SIZE = Math.max(2, Math.min(CPU_COUNT - 1, 4))
+    private val CORE_POOL_SIZE = max(2, min(CPU_COUNT - 1, 4))
 
     //线程池所能容纳的最大线程数。当活动线程数达到这个数值后，后续的新任务将会被阻塞。
     private val MAXIMUM_POOL_SIZE = CPU_COUNT * 2 + 1
@@ -66,7 +70,7 @@ object ThreadProvider {
 
     //线程工厂，为线程池提供创建线程的功能。
     //ThreadFactory是个接口，只有一个方法：Thread newThread(Runnable r);
-    val threadFactory: ThreadFactory = object : ThreadFactory {
+    private val threadFactory: ThreadFactory = object : ThreadFactory {
         private val mCount = AtomicInteger(1)
         override fun newThread(runnable: Runnable): Thread {
             return Thread(

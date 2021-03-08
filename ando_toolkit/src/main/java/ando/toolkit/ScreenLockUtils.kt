@@ -11,6 +11,8 @@ import android.util.Log
 import java.util.*
 
 /**
+ * # ScreenLockUtils
+ *
  * 用于保持屏幕高亮的工具
  */
 object ScreenLockUtils {
@@ -60,8 +62,10 @@ object ScreenLockUtils {
         if (isUnlock != null && isUnlock) {
             return
         }
+
         val mKeyguardManager =
             activity.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        @Suppress("DEPRECATION")
         val mKeyguardLock = mKeyguardManager.newKeyguardLock(activity.javaClass.name)
         mKeyguardLock.disableKeyguard()
         mIsUnlockArray[activity] = true

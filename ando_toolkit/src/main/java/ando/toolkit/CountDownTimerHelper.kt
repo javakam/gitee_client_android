@@ -5,7 +5,7 @@ import android.os.CountDownTimer
 import android.widget.TextView
 
 /**
- * 倒计时Button帮助类
+ * # 倒计时Button帮助类
  *
  * @author javakam
  * @date 2018/11/22 上午12:38
@@ -50,8 +50,7 @@ class CountDownTimerHelper constructor(
                         if (mListener != null) {
                             mListener?.onFinished()
                         } else {
-                            mButton.text =
-                                mButton.resources.getString(R.string.ando_count_down_finish)
+                            mButton.text = mButton.resources.getString(R.string.ando_count_down_finish)
                         }
                     }
                 }
@@ -101,11 +100,6 @@ class CountDownTimerHelper constructor(
         }
     }
 
-    /**
-     * 构造方法
-     * @param button        需要显示倒计时的Button
-     * @param countDownTime 倒计时总时间,单位是秒
-     */
     init {
         initCountDownTimer()
     }

@@ -5,12 +5,10 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import ando.library.base.BaseMvvmFragment
-import ando.library.views.RecyclerItemDecoration
+import ando.library.views.recycler.RecyclerItemDecoration
 import com.gitee.android.R
 import com.gitee.android.common.CacheManager
-import com.gitee.android.common.isLogin
 import com.gitee.android.databinding.FragmentRepoBinding
-import com.gitee.android.ui.home.HomeRepoListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

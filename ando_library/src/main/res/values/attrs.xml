@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--===============================加载框======================================-->
+    <!--=============================== Loader ======================================-->
     <declare-styleable name="Loader">
         <attr name="state">
             <enum name="loading" value="2" />

@@ -4,9 +4,7 @@ import android.app.Application
 import android.content.Context
 
 /**
- * Title:AppUtils
- *
- * Description:
+ * # AppUtils
  *
  * @author javakam
  * @date 2019/3/17 14:45
@@ -25,8 +23,7 @@ object AppUtils {
 
     fun getContext(): Context = context ?: throw NullPointerException("u should init first")
 
-    fun getApplication(): Application? =
-        context ?: throw NullPointerException("u should init first")
+    fun getApplication(): Application= context ?: throw RuntimeException("u should init first")
 
     fun release() {
         context = null

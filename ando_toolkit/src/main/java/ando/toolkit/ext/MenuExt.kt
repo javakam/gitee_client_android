@@ -5,10 +5,8 @@ import android.view.MenuItem
 import android.view.SubMenu
 
 /**
- * Title: MenuExt
- * <p>
- * Description:
- * </p>
+ * # MenuExt
+ *
  * @author javakam
  * @date 2020/11/9  17:00
  */

@@ -5,16 +5,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.database.Cursor
-import android.graphics.Rect
 import android.net.Uri
 import android.view.Window
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
 
 /**
- * Title:ActivityUtils
+ * # ActivityUtils
  *
- * Description:Activity 工具类
+ * Activity 工具类
  *
  * @author javakam
  * @date 2019/11/15 14:44

@@ -6,15 +6,14 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**
- * Title: BottomNavUtils
- * <p>
- * Description: com.google.android.material.bottomnavigation.BottomNavigationView
- * </p>
+ * # BottomNavUtils
+ *
+ * com.google.android.material.bottomnavigation.BottomNavigationView
  *
  * @author javakam
  * @date 2020/12/9  14:13
  */
-class BottomNavController(private val containerId: Int, size: Int = 5) {
+class BottomNavUtils(private val containerId: Int, size: Int = 5) {
 
     private val fragmentArray = SparseArray<Fragment>(size)
     private lateinit var navView: BottomNavigationView

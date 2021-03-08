@@ -3,12 +3,10 @@ package ando.toolkit
 import java.math.BigDecimal
 
 /**
- * Title:NumberUtils
- *
- * Description:数据工具类
+ * # NumberUtils 数据工具类
  *
  * @author javakam
- * Date 2018/8/17 14:40
+ * 2018/8/17 14:40
  */
 object NumberUtils {
     private fun setScale(value: Float?, scale: Int): Float =

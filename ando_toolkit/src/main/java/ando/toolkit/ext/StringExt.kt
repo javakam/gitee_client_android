@@ -7,7 +7,7 @@ import ando.toolkit.AppUtils
 import java.util.*
 
 /**
- * Title: String Extension
+ * # String Extension
  *
  * @author javakam
  * @date 2020/10/29  10:07

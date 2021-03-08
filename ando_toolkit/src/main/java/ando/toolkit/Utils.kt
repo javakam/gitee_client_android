@@ -128,9 +128,11 @@ object Utils {
     fun getBitmapFromDrawable(drawable: Drawable, color: Int): Bitmap {
         val width = drawable.intrinsicWidth
         val height = drawable.intrinsicHeight
+
+        @Suppress("DEPRECATION")
         var bitmap = Bitmap.createBitmap(
-            width, height, if (drawable.opacity != PixelFormat.OPAQUE
-            ) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
+            width, height,
+            if (drawable.opacity != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565
         )
         var canvas = Canvas(bitmap)
         canvas.drawColor(color, PorterDuff.Mode.SRC_IN)
@@ -149,9 +151,9 @@ object Utils {
 
     fun isLight(color: Int): Boolean =
         sqrt(
-            Color.red(color) * Color.red(color) * .241 + Color.green(color) * Color.green(color) * .691 + Color.blue(
-                color
-            ) * Color.blue(color) * .068
+            Color.red(color) * Color.red(color) * .241 +
+                    Color.green(color) * Color.green(color) * .691 +
+                    Color.blue(color) * Color.blue(color) * .068
         ) > 130
 
     /**

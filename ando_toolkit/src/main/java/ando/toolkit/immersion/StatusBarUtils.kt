@@ -1,6 +1,5 @@
 package ando.toolkit.immersion
 
-import android.R
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
@@ -24,16 +23,15 @@ import ando.toolkit.WindowUtils
 import ando.toolkit.ext.DimensionUtils
 
 /**
- * Title:StatusBarUtils
+ * # StatusBarUtils
  *
- *
- * Description: https://github.com/wuhenzhizao/android-titlebar
- *
+ * https://github.com/wuhenzhizao/android-titlebar
  *
  * @author javakam
  * @date 2020/11/25 13:41
  */
 object StatusBarUtils {
+
     /**
      * 设置状态栏背景
      * v21
@@ -43,7 +41,7 @@ object StatusBarUtils {
      */
     fun setStatusBarView(activity: Activity, @ColorRes statusBarColor: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val decorView = activity.findViewById<View>(R.id.content) as FrameLayout
+            val decorView = activity.findViewById<View>(android.R.id.content) as FrameLayout
             val count = decorView.childCount
             if (count > 0) {
                 val statusBarHeight = getStatusBarHeight(activity)
@@ -92,7 +90,7 @@ object StatusBarUtils {
         }
         if (drawable == null) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val rootView = activity.findViewById<View>(R.id.content) as FrameLayout
+            val rootView = activity.findViewById<View>(android.R.id.content) as FrameLayout
             val count = rootView.childCount
             if (count > 0) {
                 val layout = rootView.getChildAt(0)
@@ -154,18 +152,10 @@ object StatusBarUtils {
      */
     fun setLightMode(window: Window) {
         when {
-            isMiui -> {
-                setMIUIStatusBarDarkMode(window, false)
-            }
-            isFlyme -> {
-                setFlymeStatusBarDarkMode(window, false)
-            }
-            isOppo -> {
-                setOppoStatusBarDarkMode(window, false)
-            }
-            else -> {
-                setStatusBarDarkMode(window, false)
-            }
+            isMiui -> setMIUIStatusBarDarkMode(window, false)
+            isFlyme -> setFlymeStatusBarDarkMode(window, false)
+            isOppo -> setOppoStatusBarDarkMode(window, false)
+            else -> setStatusBarDarkMode(window, false)
         }
     }
 
@@ -174,18 +164,10 @@ object StatusBarUtils {
      */
     fun setDarkMode(window: Window) {
         when {
-            isMiui -> {
-                setMIUIStatusBarDarkMode(window, true)
-            }
-            isFlyme -> {
-                setFlymeStatusBarDarkMode(window, true)
-            }
-            isOppo -> {
-                setOppoStatusBarDarkMode(window, true)
-            }
-            else -> {
-                setStatusBarDarkMode(window, true)
-            }
+            isMiui -> setMIUIStatusBarDarkMode(window, true)
+            isFlyme -> setFlymeStatusBarDarkMode(window, true)
+            isOppo -> setOppoStatusBarDarkMode(window, true)
+            else -> setStatusBarDarkMode(window, true)
         }
     }
 
@@ -301,8 +283,8 @@ object StatusBarUtils {
             hasNavigationBar = rs.getBoolean(id)
         }
         try {
-            @SuppressLint("PrivateApi") val systemPropertiesClass =
-                Class.forName("android.os.SystemProperties")
+            @SuppressLint("PrivateApi")
+            val systemPropertiesClass = Class.forName("android.os.SystemProperties")
             val m = systemPropertiesClass.getMethod("get", String::class.java)
             val navBarOverride = m.invoke(systemPropertiesClass, "qemu.hw.mainkeys") as String
             if ("1" == navBarOverride) {

@@ -7,9 +7,7 @@ import java.util.*
 import kotlin.experimental.and
 
 /**
- * Title: MD5Utils
- *
- * Description:
+ * # MD5Utils
  *
  * @author javakam
  * @date 2019/11/13  9:23
@@ -32,8 +30,7 @@ object MD5Utils {
      * @param content 待加密内容
      */
     fun md5Decode32(content: String): String {
-        val hash: ByteArray
-        hash = try {
+        val hash: ByteArray = try {
             MessageDigest.getInstance("MD5").digest(content.toByteArray(StandardCharsets.UTF_8))
         } catch (e: NoSuchAlgorithmException) {
             throw RuntimeException("NoSuchAlgorithmException", e)

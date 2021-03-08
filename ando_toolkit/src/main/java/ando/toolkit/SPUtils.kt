@@ -6,9 +6,7 @@ import android.util.ArrayMap
 import ando.toolkit.AppUtils.getContext
 
 /**
- * Title:SPUtils
- *
- * Description:
+ * # SPUtils
  *
  * @author javakam
  * @date 2019/3/17 14:44

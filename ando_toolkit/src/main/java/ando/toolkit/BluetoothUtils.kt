@@ -11,9 +11,9 @@ import java.lang.reflect.InvocationTargetException
 import java.util.*
 
 /**
- * Title:BluetoothUtils
+ * # BluetoothUtils
  *
- * Description: 蓝牙连接工具
+ * 蓝牙连接工具
  *
  * @author javakam
  * @date 2019/11/15 13:38
@@ -216,7 +216,6 @@ class BluetoothUtils private constructor() {
     }
 
     companion object {
-        const val REQUEST_ENABLE_BT = 1000
         private val instance = BluetoothUtils()
         fun init(): BluetoothUtils {
             return instance

@@ -11,3 +11,9 @@ interface IBaseInterface {
     fun getLayoutView(): View? = null
     fun getLayoutId(): Int
 }
+
+interface IFragmentLazyLoad
+
+interface IBackPressed {
+    fun onBackPressed(): Boolean
+}

@@ -1,6 +1,5 @@
 package ando.toolkit
 
-import android.text.TextUtils
 import java.util.regex.Pattern
 
 /**

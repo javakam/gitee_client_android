@@ -15,7 +15,7 @@ object IoUtils {
         val ins = BufferedInputStream(input, BUFFER_SIZE)
         val out = BufferedOutputStream(output, BUFFER_SIZE)
         var count = 0
-        var n = 0
+        var n: Int
         try {
             while (ins.read(buffer, 0, BUFFER_SIZE).also { n = it } != -1) {
                 out.write(buffer, 0, n)

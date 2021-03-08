@@ -8,7 +8,7 @@ import java.net.Socket
 import java.nio.charset.StandardCharsets
 
 /**
- * 封装Pos机打印工具类
+ * # PrintUtils 打印工具类
  *
  * http://blog.csdn.net/haovip123/article/details/50739670
  */
@@ -83,14 +83,14 @@ open class PrintUtils(ip: String?, port: Int, encoding: String?) {
         writer?.write(0x1D)
         writer?.write(86)
         writer?.write(65)
-        //        writer.write(0);
+        //writer.write(0);
         //切纸前走纸多少
         writer?.write(100)
         writer?.flush()
 
         //另外一种切纸的方式
-        //        byte[] bytes = {29, 86, 0};
-        //        socketOut.write(bytes);
+        //byte[] bytes = {29, 86, 0};
+        //socketOut.write(bytes);
     }
 
     /**

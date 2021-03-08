@@ -22,10 +22,10 @@ import java.io.IOException
 import java.lang.ref.WeakReference
 
 /**
- * SpannableString 相关工具类
- * <pre>
+ * # SpanUtils
+ *
  * From QMUI_Android
- * </pre>
+ *
  * eg:
  * SpanUtils().append("")
  *      .setForegroundColor(Color.BLUE)
@@ -108,6 +108,7 @@ class SpanUtils {
     private val mTypeCharSequence = 0
     private val mTypeImage = 1
     private val mTypeSpace = 2
+
     private fun setDefault() {
         flag = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         foregroundColor = COLOR_DEFAULT

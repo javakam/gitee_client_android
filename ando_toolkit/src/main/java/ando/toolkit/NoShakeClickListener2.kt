@@ -3,11 +3,33 @@ package ando.toolkit
 import kotlin.math.abs
 
 /**
- * 事件防抖
+ * # 事件防抖
+ *
  * 注: 不仅适用于 View , 其他控件如: MenuItem 同样适用
  *
- * 1.既适用于单个`View`事件防抖, 也适用于`Adapter`中`ItemView`事件防抖
- * 2.如果事件为跳转到新的`Activity`, 该`Activity`启动模型应为`android:launchMode="singleTop"`
+ * 1. 既适用于单个`View`事件防抖, 也适用于`Adapter`中`ItemView`事件防抖
+ * 2. 如果事件为跳转到新的`Activity`, 该`Activity`启动模型应为`android:launchMode="singleTop"`
+ *
+ * eg:
+ * ```
+ * //快速点击事件 (Quick click event)
+ * val listener = object : NoShakeClickListener2() {
+ *    override fun onFastClick(item: Any?) {
+ *      super.onFastClick(item)
+ *      Log.i("123", "onFastClick Click")
+ *      (item as? MenuItem?)?.apply {
+ *          val fg = fragmentArray.get(itemId)
+ *          if (fg.isAdded) fg.refreshData()
+ *      }
+ *    }
+ * }
+ *
+ * BottomNavigationView.setOnNavigationItemSelectedListener {
+ *      switchPage(it.itemId)
+ *      listener.proceedClick(it)
+ *      true
+ * }
+ * ```
  */
 open class NoShakeClickListener2 @JvmOverloads constructor(interval: Long = 500L) {
 

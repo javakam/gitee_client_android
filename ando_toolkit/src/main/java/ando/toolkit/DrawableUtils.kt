@@ -16,7 +16,7 @@ import androidx.core.widget.NestedScrollView
 import ando.toolkit.log.L
 
 /**
- * Drawable工具类
+ * # DrawableUtils
  *
  * @author javakam
  * @date 2019/1/3 下午3:47
@@ -188,17 +188,17 @@ class DrawableUtils private constructor() {
         cornerRadius: Int,
         @ColorInt filledColor: Int
     ): BitmapDrawable {
-        var filledColor = filledColor
+        var color = filledColor
         val output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(output)
-        if (filledColor == 0) {
-            filledColor = Color.TRANSPARENT
+        if (color == 0) {
+            color = Color.TRANSPARENT
         }
         if (cornerRadius > 0) {
             val paint = Paint()
             paint.isAntiAlias = true
             paint.style = Paint.Style.FILL
-            paint.color = filledColor
+            paint.color = color
             canvas.drawRoundRect(
                 RectF(0F, 0F, width.toFloat(), height.toFloat()),
                 cornerRadius.toFloat(),
@@ -206,7 +206,7 @@ class DrawableUtils private constructor() {
                 paint
             )
         } else {
-            canvas.drawColor(filledColor)
+            canvas.drawColor(color)
         }
         return BitmapDrawable(resources, output)
     }

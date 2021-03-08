@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
 
 /**
- * Thread Util
+ * ThreadUtils
  *
  * based on https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/src/test/java/com/blankj/utilcode/util/ThreadUtilsTest.java
  */
@@ -1452,7 +1452,7 @@ object ThreadUtils {
  * Task，对回调做catch，防止崩溃
  *
  * ThreadUtils.executeByCpu(ThreadTask({
- *      queryAll()
+ *      //Time-consuming operation
  *  }, {
  *      callback?.invoke(it)
  *  }))

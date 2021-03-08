@@ -6,16 +6,14 @@ import android.app.ActivityManager.RunningAppProcessInfo
 import android.content.Context
 import android.text.TextUtils
 import ando.toolkit.log.L
+import android.annotation.SuppressLint
 import java.lang.ref.WeakReference
 import java.util.*
 
 /**
- * 应用中所有Activity的管理器，可用于一键杀死所有 Activity
+ * 应用中所有Activity的管理器，可用于一键关闭所有 Activity
  *
  * https://github.com/guolindev/giffun/blob/master/main/src/main/java/com/quxianggif/util/ActivityCollector.kt
- *
- * @author guolin
- * @date 18/2/8
  */
 object ActivityCollector {
 

@@ -1,6 +1,5 @@
 package ando.library.base
 
-import android.R
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ActivityInfo
@@ -28,9 +27,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 
 /**
- * Title:BaseActivity
- *
- * Description:
+ * # BaseActivity
  *
  * @author javakam
  * @date 2019/3/17 13:17
@@ -107,10 +104,20 @@ abstract class BaseActivity : AppCompatActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
+
+    override fun onBackPressed() {
+        supportFragmentManager.fragments.forEach {
+            it?.let {
+                if ((it as? IBackPressed)?.onBackPressed() == true) {
+                    return
+                }
+            }
+        }
+        super.onBackPressed()
+    }
 }
 
-abstract class BaseMvcActivity : BaseActivity(),
-    IBaseInterface {
+abstract class BaseMvcActivity : BaseActivity(), IBaseInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,13 +127,15 @@ abstract class BaseMvcActivity : BaseActivity(),
         } else {
             setContentView(getLayoutView())
         }
-        mView = findViewById(R.id.content)
+        mView = findViewById(android.R.id.content)
         initView(savedInstanceState)
         initListener()
         initData()
     }
 
-    //连续点击两次退出App
+    /**
+     * 连续点击两次退出 APP
+     */
     @SuppressLint("CheckResult")
     protected fun exitBy2Click(delay: Long, @StringRes text: Int) {
         if (!isExit) {

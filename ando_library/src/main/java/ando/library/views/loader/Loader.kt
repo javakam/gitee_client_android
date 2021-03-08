@@ -12,23 +12,20 @@ import ando.library.R
 import ando.toolkit.log.L.i
 
 /**
- * Title:Loader
+ * # Loader
  *
- *
- * Description: 网络请求加载页,在请求完毕后通过[.setLoadState]设置请求结果
- *
+ * 网络请求加载页,在请求完毕后通过[.setLoadState]设置请求结果
  *
  * @author javakam
  * @date 2019/11/15 15:03
  */
 abstract class Loader @JvmOverloads constructor(
-    private val mContext: Context,
+    context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0,
     defStyleRes: Int = 0
-) : FrameLayout(
-    mContext, attrs, defStyle, defStyleRes
-) {
+) :
+    FrameLayout(context, attrs, defStyle, defStyleRes) {
     var loadState: LoadState? = null
     private var loadingView: View? = null
     private var errorView: View? = null
@@ -60,9 +57,9 @@ abstract class Loader @JvmOverloads constructor(
     private fun initState(attrs: AttributeSet?, defStyle: Int) {
         val theme = mContext.theme
         val array = theme.obtainStyledAttributes(attrs, R.styleable.Loader, defStyle, 0)
-        mState = array.getInt(R.styleable.Loader_state, LoadState.UNLOADED.value())
+        mState = array.getInt(R.styleable.Loader_state, LoadState.UNLOADED.stateValue())
         for (loadState in LoadState.values()) {
-            if (mState == loadState.value()) {
+            if (mState == loadState.stateValue()) {
                 this.loadState = loadState
                 break
             }
@@ -74,20 +71,16 @@ abstract class Loader @JvmOverloads constructor(
         if (null != mSucceedView) {
             if (childCount == 0) {
                 this.addView(
-                    mSucceedView, LayoutParams(
-                        LayoutParams.MATCH_PARENT,
-                        LayoutParams.MATCH_PARENT
-                    )
+                    mSucceedView,
+                    LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
                 )
             }
         }
         loadingView = createLoadingView()
         if (null != loadingView) {
             this.addView(
-                loadingView, LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.MATCH_PARENT
-                )
+                loadingView,
+                LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
             )
         } else {
             mMaxCount--
@@ -95,10 +88,8 @@ abstract class Loader @JvmOverloads constructor(
         errorView = createErrorView()
         if (null != errorView) {
             this.addView(
-                errorView, LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.MATCH_PARENT
-                )
+                errorView,
+                LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
             )
         } else {
             mMaxCount--
@@ -106,10 +97,8 @@ abstract class Loader @JvmOverloads constructor(
         emptyView = createEmptyView()
         if (null != emptyView) {
             this.addView(
-                emptyView, LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.MATCH_PARENT
-                )
+                emptyView,
+                LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
             )
         } else {
             mMaxCount--
@@ -144,15 +133,14 @@ abstract class Loader @JvmOverloads constructor(
 
     private fun showPagerView() {
         if (null != loadingView) {
-            loadingView?.visibility = if (mState == LoadState.UNLOADED.value()
-                || mState == LoadState.LOADING.value()
-            ) VISIBLE else GONE
+            loadingView?.visibility =
+                if (mState == LoadState.UNLOADED.stateValue() || mState == LoadState.LOADING.stateValue())
+                    VISIBLE else GONE
         } else {
             i(TAG, "LoadingView is null!")
         }
         if (null != errorView) {
-            errorView?.visibility =
-                if (mState == LoadState.ERROR.value()) VISIBLE else GONE
+            errorView?.visibility = if (mState == LoadState.ERROR.stateValue()) VISIBLE else GONE
             if (mStateListener != null) {
                 mStateListener?.onState(LoadState.ERROR)
             }
@@ -160,8 +148,7 @@ abstract class Loader @JvmOverloads constructor(
             i(TAG, "ErrorView is null!")
         }
         if (null != emptyView) {
-            emptyView?.visibility =
-                if (mState == LoadState.EMPTY.value()) VISIBLE else GONE
+            emptyView?.visibility = if (mState == LoadState.EMPTY.stateValue()) VISIBLE else GONE
             if (mStateListener != null) {
                 mStateListener?.onState(LoadState.EMPTY)
             }
@@ -173,7 +160,7 @@ abstract class Loader @JvmOverloads constructor(
         }
         if (null != mSucceedView) {
             mSucceedView?.visibility =
-                if (mState == LoadState.SUCCESS.value()) VISIBLE else GONE
+                if (mState == LoadState.SUCCESS.stateValue()) VISIBLE else GONE
             if (mStateListener != null) {
                 mStateListener?.onState(LoadState.SUCCESS)
             }
@@ -225,7 +212,7 @@ abstract class Loader @JvmOverloads constructor(
      */
     fun reload() {
         if (mRListener != null) {
-            mState = LoadState.UNLOADED.value()
+            mState = LoadState.UNLOADED.stateValue()
             showSafePagerView()
             mRListener?.onReload()
         } else {
@@ -252,25 +239,25 @@ abstract class Loader @JvmOverloads constructor(
      */
     fun setLoadState(loadState: LoadState): Loader {
         this.loadState = loadState
-        if (mState == LoadState.ERROR.value() || mState == LoadState.EMPTY.value() || mState == LoadState.LOADING.value()) {
-            mState = LoadState.UNLOADED.value()
+        if (mState == LoadState.ERROR.stateValue() || mState == LoadState.EMPTY.stateValue() || mState == LoadState.LOADING.stateValue()) {
+            mState = LoadState.UNLOADED.stateValue()
         }
-        if (mState == LoadState.UNLOADED.value()) {
-            mState = LoadState.LOADING.value()
+        if (mState == LoadState.UNLOADED.stateValue()) {
+            mState = LoadState.LOADING.stateValue()
             //getHandler().post(new TaskRunnable());
-            post { mHandler?.sendEmptyMessage(1) }
+            post { mHandler.sendEmptyMessage(1) }
         } else {
-            mState = loadState.value()
+            mState = loadState.stateValue()
             showSafePagerView()
         }
         return this
     }
 
-    private val mHandler: Handler? = object : Handler(Looper.getMainLooper()) {
+    private val mHandler: Handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
             if (msg.what == 1) {
-                mState = loadState!!.value()
+                mState = loadState?.stateValue() ?: LoadState.UNLOADED.stateValue()
                 showPagerView()
             }
         }

@@ -1,13 +1,8 @@
 package ando.toolkit
 
-import android.R
 import android.app.Activity
 import android.content.Context
 import android.graphics.Rect
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.ResultReceiver
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +15,13 @@ import android.widget.FrameLayout
 import ando.toolkit.ext.DimensionUtils
 import ando.toolkit.ext.DimensionUtils.getNavBarHeight
 import ando.toolkit.ext.DimensionUtils.getStatusBarHeight
+import ando.toolkit.log.L
+import android.os.*
 import kotlin.math.abs
 
+/**
+ * @author javakam
+ */
 object KeyboardUtils {
 
     interface OnSoftInputChangedListener {
@@ -50,17 +50,13 @@ object KeyboardUtils {
             toggleSoftInput()
         }
     }
+
     /**
      * Show the soft input.
      *
      * @param view  The view.
      * @param flags Provides additional operating flags.  Currently may be
      * 0 or have the [InputMethodManager.SHOW_IMPLICIT] bit set.
-     */
-    /**
-     * Show the soft input.
-     *
-     * @param view The view.
      */
     @JvmOverloads
     fun showSoftInput(view: View, flags: Int = 0) {
@@ -69,7 +65,7 @@ object KeyboardUtils {
         view.isFocusable = true
         view.isFocusableInTouchMode = true
         view.requestFocus()
-        imm.showSoftInput(view, flags, object : ResultReceiver(Handler()) {
+        imm.showSoftInput(view, flags, object : ResultReceiver(Handler(Looper.getMainLooper())) {
             override fun onReceiveResult(resultCode: Int, resultData: Bundle) {
                 if (resultCode == InputMethodManager.RESULT_UNCHANGED_HIDDEN
                     || resultCode == InputMethodManager.RESULT_HIDDEN
@@ -276,14 +272,9 @@ object KeyboardUtils {
         val contentView = window.findViewById<View>(R.id.content) ?: return 0
         val outRect = Rect()
         contentView.getWindowVisibleDisplayFrame(outRect)
-        Log.d(
-            "KeyboardUtils",
-            "getContentViewInvisibleHeight: " + (contentView.bottom - outRect.bottom)
-        )
+        L.d("getContentViewInvisibleHeight: " + (contentView.bottom - outRect.bottom))
         val delta = abs(contentView.bottom - outRect.bottom)
-        return if (delta <= getStatusBarHeight() + getNavBarHeight()) {
-            0
-        } else delta
+        return if (delta <= getStatusBarHeight() + getNavBarHeight()) 0 else delta
     }
 
     /**
@@ -301,11 +292,9 @@ object KeyboardUtils {
      * @param window The window.
      */
     fun fixSoftInputLeaks(window: Window) {
-        val imm =
-            AppUtils.getContext()
-                .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        val leakViews =
-            arrayOf("mLastSrvView", "mCurRootView", "mServedView", "mNextServedView")
+        val imm = AppUtils.getContext()
+            .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val leakViews = arrayOf("mLastSrvView", "mCurRootView", "mServedView", "mNextServedView")
         for (leakView in leakViews) {
             try {
                 val leakViewField = InputMethodManager::class.java.getDeclaredField(leakView)
@@ -316,7 +305,7 @@ object KeyboardUtils {
                 if (obj.rootView === window.decorView.rootView) {
                     leakViewField[imm] = null
                 }
-            } catch (ignore: Throwable) { /**/
+            } catch (ignore: Throwable) {
             }
         }
     }

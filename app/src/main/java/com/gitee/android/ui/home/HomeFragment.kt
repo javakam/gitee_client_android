@@ -43,19 +43,6 @@ class HomeFragment : BaseMvcLazyFragment() {
         L.i("HomeFragment .... init")
     }
 
-    override fun onResume() {
-        super.onResume()
-        L.i("HomeFragment .... resume")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        L.i("HomeFragment .... destroy view")
-    }
-
-    override fun initLazyData() {
-    }
-
     override fun getLayoutId(): Int = R.layout.fragment_home
 
 }
