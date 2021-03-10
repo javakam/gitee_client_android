@@ -1,7 +1,7 @@
 package ando.library.eventbus
 
 /**
- * # EventBus 传输介质
+ * # EventBusMedium 传输介质
  *
  * @author javakam
  * @date 2019-05-25 14:18:11

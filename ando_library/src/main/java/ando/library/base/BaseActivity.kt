@@ -1,5 +1,9 @@
 package ando.library.base
 
+import ando.library.base.BaseApplication.Companion.exit
+import ando.library.base.BaseApplication.Companion.isGray
+import ando.library.views.GrayFrameLayout
+import ando.toolkit.ext.toastShort
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ActivityInfo
@@ -18,13 +22,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import ando.library.base.BaseApplication.Companion.exit
-import ando.library.base.BaseApplication.Companion.isGray
-import ando.library.views.GrayFrameLayout
-import ando.toolkit.ext.toastShort
-import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import java.util.concurrent.TimeUnit
 
 /**
  * # BaseActivity
@@ -32,11 +29,9 @@ import java.util.concurrent.TimeUnit
  * @author javakam
  * @date 2019/3/17 13:17
  */
-
 abstract class BaseActivity : AppCompatActivity() {
 
     protected lateinit var mView: View  //系统DecorView的根View
-    protected var isExit = false        //是否退出App
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initActivityStyle()
@@ -136,16 +131,15 @@ abstract class BaseMvcActivity : BaseActivity(), IBaseInterface {
     /**
      * 连续点击两次退出 APP
      */
+    private var exitTime: Long = 0
+
     @SuppressLint("CheckResult")
-    protected fun exitBy2Click(delay: Long, @StringRes text: Int) {
-        if (!isExit) {
-            isExit = true
+    protected fun exitBy2Click(delay: Long = 2000L, @StringRes text: Int) {
+        if (System.currentTimeMillis() - exitTime > delay) {
             toastShort(text)
-            // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
-            Flowable
-                .timer(delay, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                .subscribe { isExit = false }
+            exitTime = System.currentTimeMillis()
         } else {
+            finish()
             exit()
         }
     }

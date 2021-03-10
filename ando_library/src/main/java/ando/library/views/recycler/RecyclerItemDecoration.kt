@@ -35,9 +35,10 @@ import androidx.recyclerview.widget.RecyclerView.ItemDecoration
  * @author javakam
  * @date 2019/11/22  9:35
  */
-class RecyclerItemDecoration(context: Context, orientation: Int) : ItemDecoration() {
+open class RecyclerItemDecoration(context: Context, orientation: Int) : ItemDecoration() {
+
     private var mPaint: Paint? = null
-    private var mDivider: Drawable?
+    private var mDivider: Drawable? = null
 
     /**
      * 分割线高度，默认为1px

@@ -13,7 +13,7 @@ import java.util.*
  * @author javakam
  * @date 2019-08-11 16:12
  */
-abstract class XRecyclerAdapter<T, VH : BaseViewHolder?> : RecyclerView.Adapter<VH> {
+abstract class XRecyclerAdapter<T, VH : BaseViewHolder> : RecyclerView.Adapter<VH> {
     /**
      * 数据源
      */
@@ -36,23 +36,23 @@ abstract class XRecyclerAdapter<T, VH : BaseViewHolder?> : RecyclerView.Adapter<
         private set
 
     interface OnItemLongClickListener {
-        fun onItemLongClick(viewHolder: BaseViewHolder?, position: Int): Boolean
+        fun onItemLongClick(viewHolder: BaseViewHolder, position: Int): Boolean
     }
 
     interface OnItemClickListener {
-        fun onItemClick(viewHolder: BaseViewHolder?, position: Int)
+        fun onItemClick(viewHolder: BaseViewHolder, position: Int)
     }
 
     constructor()
 
     constructor(list: List<T>?) {
-        if (list != null) {
+        if (!list.isNullOrEmpty()) {
             mData.addAll(list)
         }
     }
 
     constructor(data: Array<T>?) {
-        if (data != null && data.isNotEmpty()) {
+        if (!data.isNullOrEmpty()) {
             mData.addAll(listOf(*data))
         }
     }
@@ -89,16 +89,13 @@ abstract class XRecyclerAdapter<T, VH : BaseViewHolder?> : RecyclerView.Adapter<
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val holder = getViewHolder(parent, viewType)
         if (mClickListener != null) {
-            holder!!.itemView.setOnClickListener {
-                mClickListener!!.onItemClick(
-                    holder,
-                    holder.layoutPosition
-                )
+            holder.itemView.setOnClickListener {
+                mClickListener?.onItemClick(holder, holder.layoutPosition)
             }
         }
         if (mLongClickListener != null) {
-            holder!!.itemView.setOnLongClickListener {
-                mLongClickListener!!.onItemLongClick(holder, holder.layoutPosition)
+            holder.itemView.setOnLongClickListener {
+                mLongClickListener?.onItemLongClick(holder, holder.layoutPosition)
                 true
             }
         }
@@ -123,12 +120,9 @@ abstract class XRecyclerAdapter<T, VH : BaseViewHolder?> : RecyclerView.Adapter<
         return position >= 0 && position <= mData.size - 1
     }
 
-    val isEmpty: Boolean
-        get() = itemCount == 0
+    fun isEmpty(): Boolean = (itemCount == 0)
 
-    override fun getItemCount(): Int {
-        return mData.size
-    }
+    override fun getItemCount(): Int = (mData.size)
 
     /**
      * 给指定位置添加一项
@@ -182,9 +176,6 @@ abstract class XRecyclerAdapter<T, VH : BaseViewHolder?> : RecyclerView.Adapter<
 
     /**
      * 刷新列表数据
-     *
-     * @param collection
-     * @return
      */
     fun refresh(collection: Collection<T>?): XRecyclerAdapter<*, *> {
         if (collection != null) {
@@ -198,9 +189,6 @@ abstract class XRecyclerAdapter<T, VH : BaseViewHolder?> : RecyclerView.Adapter<
 
     /**
      * 刷新列表数据
-     *
-     * @param array
-     * @return
      */
     fun refresh(array: Array<T>?): XRecyclerAdapter<*, *> {
         if (array != null && array.isNotEmpty()) {
@@ -214,9 +202,6 @@ abstract class XRecyclerAdapter<T, VH : BaseViewHolder?> : RecyclerView.Adapter<
 
     /**
      * 加载更多
-     *
-     * @param collection
-     * @return
      */
     fun loadMore(collection: Collection<T>?): XRecyclerAdapter<*, *> {
         if (collection != null) {
@@ -228,9 +213,6 @@ abstract class XRecyclerAdapter<T, VH : BaseViewHolder?> : RecyclerView.Adapter<
 
     /**
      * 加载更多
-     *
-     * @param array
-     * @return
      */
     fun loadMore(array: Array<T>?): XRecyclerAdapter<*, *> {
         if (array != null && array.isNotEmpty()) {
@@ -242,9 +224,6 @@ abstract class XRecyclerAdapter<T, VH : BaseViewHolder?> : RecyclerView.Adapter<
 
     /**
      * 添加一个
-     *
-     * @param item
-     * @return
      */
     fun load(item: T?): XRecyclerAdapter<*, *> {
         if (item != null) {
@@ -300,7 +279,7 @@ abstract class XRecyclerAdapter<T, VH : BaseViewHolder?> : RecyclerView.Adapter<
      * 清除数据
      */
     fun clear() {
-        if (!isEmpty) {
+        if (!isEmpty()) {
             mData.clear()
             selectPosition = -1
             notifyDataSetChanged()

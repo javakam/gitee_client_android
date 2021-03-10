@@ -1,5 +1,6 @@
 package ando.library.views.recycler
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.Paint
 import android.graphics.Typeface
@@ -19,14 +20,11 @@ import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
 /**
- * # BaseVirtualViewHolder
+ * # BaseViewHolder
  *
  * github Joan Zapata
- *
- * Author javakam
- * Date 2018/10/25 9:39
  */
-class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+open class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val views: SparseArray<View> = SparseArray()
     val childClickViewIds: HashSet<Int> = HashSet()
@@ -111,6 +109,7 @@ class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         return this
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     fun setAlpha(viewId: Int, value: Float): BaseViewHolder {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             getView<View>(viewId).alpha = value
@@ -277,6 +276,7 @@ class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             view = convertView.findViewById(viewId)
             views.put(viewId, view)
         }
+        @Suppress("UNCHECKED_CAST")
         return view as T
     }
 
