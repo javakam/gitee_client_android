@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.FrameLayout
 import ando.library.R
-import ando.toolkit.log.L.i
+import android.util.Log
 
 /**
  * # Loader
@@ -137,7 +137,7 @@ abstract class Loader @JvmOverloads constructor(
                 if (mState == LoadState.UNLOADED.stateValue() || mState == LoadState.LOADING.stateValue())
                     VISIBLE else GONE
         } else {
-            i(TAG, "LoadingView is null!")
+            Log.i(TAG, "LoadingView is null!")
         }
         if (null != errorView) {
             errorView?.visibility = if (mState == LoadState.ERROR.stateValue()) VISIBLE else GONE
@@ -145,7 +145,7 @@ abstract class Loader @JvmOverloads constructor(
                 mStateListener?.onState(LoadState.ERROR)
             }
         } else {
-            i(TAG, "ErrorView is null!")
+            Log.i(TAG, "ErrorView is null!")
         }
         if (null != emptyView) {
             emptyView?.visibility = if (mState == LoadState.EMPTY.stateValue()) VISIBLE else GONE
@@ -153,7 +153,7 @@ abstract class Loader @JvmOverloads constructor(
                 mStateListener?.onState(LoadState.EMPTY)
             }
         } else {
-            i(TAG, "EmptyView is null!")
+            Log.i(TAG, "EmptyView is null!")
         }
         if (null == mSucceedView) {
             mSucceedView = createSuccessView()
@@ -165,7 +165,7 @@ abstract class Loader @JvmOverloads constructor(
                 mStateListener?.onState(LoadState.SUCCESS)
             }
         } else {
-            i(TAG, "SuccessView is null!")
+            Log.i(TAG, "SuccessView is null!")
         }
         if (mStateListener != null) {
             if (loadState == LoadState.UNLOADED) {
@@ -216,7 +216,7 @@ abstract class Loader @JvmOverloads constructor(
             showSafePagerView()
             mRListener?.onReload()
         } else {
-            i(javaClass.simpleName, "OnReloadListener is null.")
+            Log.i(javaClass.simpleName, "OnReloadListener is null.")
         }
     }
 

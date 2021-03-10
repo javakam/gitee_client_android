@@ -15,6 +15,7 @@ import java.util.*
  *
  * https://github.com/guolindev/giffun/blob/master/main/src/main/java/com/quxianggif/util/ActivityCollector.kt
  */
+@SuppressLint("StaticFieldLeak")
 object ActivityCollector {
 
     private const val TAG = "123"

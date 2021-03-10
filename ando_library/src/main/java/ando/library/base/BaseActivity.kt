@@ -3,7 +3,6 @@ package ando.library.base
 import ando.library.base.BaseApplication.Companion.exit
 import ando.library.base.BaseApplication.Companion.isGray
 import ando.library.views.GrayFrameLayout
-import ando.toolkit.ext.toastShort
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ActivityInfo
@@ -17,6 +16,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -136,7 +136,7 @@ abstract class BaseMvcActivity : BaseActivity(), IBaseInterface {
     @SuppressLint("CheckResult")
     protected fun exitBy2Click(delay: Long = 2000L, @StringRes text: Int) {
         if (System.currentTimeMillis() - exitTime > delay) {
-            toastShort(text)
+            Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
             exitTime = System.currentTimeMillis()
         } else {
             finish()

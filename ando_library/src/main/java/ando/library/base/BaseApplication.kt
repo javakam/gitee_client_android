@@ -3,18 +3,10 @@ package ando.library.base
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Resources
-import android.os.Bundle
 import android.os.Process.killProcess
 import android.os.Process.myPid
 import androidx.multidex.MultiDexApplication
-import ando.library.BuildConfig
-import ando.toolkit.ActivityCollector.add
 import ando.toolkit.ActivityCollector.finishAll
-import ando.toolkit.ActivityCollector.getAll
-import ando.toolkit.ActivityCollector.remove
-import ando.toolkit.ActivityCollector.setCurActivity
-import ando.toolkit.AppUtils
-import java.lang.ref.WeakReference
 
 /**
  * # BaseApplication
@@ -23,38 +15,6 @@ import java.lang.ref.WeakReference
  * @date 2019/8/6  9:13
  */
 open class BaseApplication : MultiDexApplication() {
-
-    override fun onCreate() {
-        super.onCreate()
-        AppUtils.init(this, BuildConfig.DEBUG)
-
-        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
-            override fun onActivityCreated(
-                activity: Activity,
-                savedInstanceState: Bundle?
-            ) {
-                add(WeakReference(activity))
-            }
-
-            override fun onActivityStarted(activity: Activity) {}
-            override fun onActivityResumed(activity: Activity) {
-                setCurActivity(activity)
-            }
-
-            override fun onActivityPaused(activity: Activity) {}
-            override fun onActivityStopped(activity: Activity) {}
-            override fun onActivitySaveInstanceState(
-                activity: Activity,
-                outState: Bundle
-            ) {
-                getAll()
-            }
-
-            override fun onActivityDestroyed(activity: Activity) {
-                remove(WeakReference(activity))
-            }
-        })
-    }
 
     /**
      * 重写 getResource 方法，防止系统字体影响

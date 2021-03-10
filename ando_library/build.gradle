@@ -77,9 +77,10 @@ dependencies {
     api "org.greenrobot:eventbus:$version.eventbus"
     kapt "org.greenrobot:eventbus-annotation-processor:$version.eventbus"
 
-    compileOnly "ando.file:core:$version.file_operator"
-    compileOnly project(':ando_toolkit')
     //compileOnly "ando.toolkit:toolkit:$config.versionName"
+    compileOnly project(':ando_toolkit')
+
+    compileOnly "ando.file:core:$version.file_operator"
 
 }
 
