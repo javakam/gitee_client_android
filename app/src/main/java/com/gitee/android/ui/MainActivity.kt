@@ -1,6 +1,5 @@
 package com.gitee.android.ui
 
-import ando.file.core.FileOperator
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -47,7 +46,6 @@ class MainActivity : BaseMvvmActivity<ActivityMainBinding>() {
                 }
             }
         }
-        FileOperator
         super.onCreate(savedInstanceState)
     }
 

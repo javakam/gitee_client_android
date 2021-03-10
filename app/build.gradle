@@ -210,7 +210,7 @@ dependencies {
     //
     implementation project(':ando_library')
     implementation project(':ando_toolkit')
-
+    implementation "ando.file:core:$version.file_operator"
 }
 
 
