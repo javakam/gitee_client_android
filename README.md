@@ -195,7 +195,7 @@ Failed to find GeneratedAppGlideModule. You should include an annotationProcesso
 Failed to invoke public androidx.lifecycle.LiveData() with no args
 ```
 
-6.XRecyclerAdapter 用法
+6.BaseAdapter 用法
 ```kotlin
 class CustomAdapter :
     BaseRecyclerAdapter<String>(R.layout.xxx, null) {
@@ -203,7 +203,7 @@ class CustomAdapter :
     }
 }
 
-class CustomAdapter2 : XRecyclerAdapter<String, CustomHolder>(null) {
+class CustomAdapter2 : BaseAdapter<String, CustomHolder>(null) {
     override fun getViewHolder(view: View): CustomHolder {
         return CustomHolder(view)
     }

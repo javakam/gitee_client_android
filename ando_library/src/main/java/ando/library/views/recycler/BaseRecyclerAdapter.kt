@@ -8,9 +8,6 @@ import android.view.View
  * @author javakam
  * @date 2017/9/10 18:30
  */
-abstract class BaseRecyclerAdapter<T>(layoutResId: Int, data: List<T>?) :
-    BaseAdapter<T, BaseViewHolder>(layoutResId, data) {
-
+abstract class BaseRecyclerAdapter<T>(layoutResId: Int) : BaseAdapter<T, BaseViewHolder>(layoutResId, null) {
     override fun getViewHolder(view: View): BaseViewHolder = BaseViewHolder(view)
-
 }

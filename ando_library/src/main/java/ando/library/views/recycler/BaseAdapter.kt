@@ -25,7 +25,7 @@ import java.util.*
  *  }
  *
  *
- * class CustomAdapter2 : XRecyclerAdapter<String, CustomHolder>(null) {
+ * class CustomAdapter2 : BaseAdapter<String, CustomHolder>(null) {
  *      override fun getViewHolder(view: View): CustomHolder = CustomHolder(view)
  *      override fun bindData(holder: CustomHolder, position: Int, item: String) {}
  * }
@@ -175,8 +175,8 @@ abstract class BaseAdapter<T, VH : BaseViewHolder> : RecyclerView.Adapter<VH> {
     open fun addData(newData: Collection<T>?) {
         if (!newData.isNullOrEmpty()) {
             mData.addAll(newData)
-            notifyItemRangeInserted(mData.size - newData.size, newData.size)
-            //notifyDataSetChanged()
+            notifyDataSetChanged()
+            //notifyItemRangeInserted(mData.size - newData.size, newData.size)
         }
     }
 
