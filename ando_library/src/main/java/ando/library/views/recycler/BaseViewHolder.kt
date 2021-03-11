@@ -23,13 +23,23 @@ import java.util.*
  * # BaseViewHolder
  *
  * github Joan Zapata
+ *
+ * eg:
+ *  ```kotlin
+ *  class CustomHolder(v: View) : BaseViewHolder(v) {
+ *      //...
+ *  }
+ *  ```
+ *
+ * @author javakam
+ * 2021-03-11 15:38:38
  */
 open class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    private val views: SparseArray<View> = SparseArray()
-    val childClickViewIds: HashSet<Int> = HashSet()
-    val itemChildLongClickViewIds: HashSet<Int> = HashSet()
-    var convertView: View = view
+    protected val views: SparseArray<View> = SparseArray()
+    protected val childClickViewIds: HashSet<Int> = HashSet()
+    protected val itemChildLongClickViewIds: HashSet<Int> = HashSet()
+    protected var convertView: View = view
 
     /**
      * Package private field to retain the associated user object and detect a change
@@ -61,56 +71,57 @@ open class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
      * 绝对位置
      */
     var absolutePosition = -1
-    fun setText(viewId: Int, value: CharSequence?): BaseViewHolder {
+
+    open fun setText(viewId: Int, value: CharSequence?): BaseViewHolder {
         val view = getView<TextView>(viewId)
         view.text = value
         return this
     }
 
-    fun setText(viewId: Int, @StringRes strId: Int): BaseViewHolder {
+    open fun setText(viewId: Int, @StringRes strId: Int): BaseViewHolder {
         val view = getView<TextView>(viewId)
         view.setText(strId)
         return this
     }
 
-    fun setImageResource(viewId: Int, @DrawableRes imageResId: Int): BaseViewHolder {
+    open fun setImageResource(viewId: Int, @DrawableRes imageResId: Int): BaseViewHolder {
         val view = getView<ImageView>(viewId)
         view.setImageResource(imageResId)
         return this
     }
 
-    fun setBackgroundColor(viewId: Int, color: Int): BaseViewHolder {
+    open fun setBackgroundColor(viewId: Int, color: Int): BaseViewHolder {
         val view = getView<View>(viewId)
         view.setBackgroundColor(color)
         return this
     }
 
-    fun setBackgroundRes(viewId: Int, @DrawableRes backgroundRes: Int): BaseViewHolder {
+    open fun setBackgroundResource(viewId: Int, @DrawableRes backgroundRes: Int): BaseViewHolder {
         val view = getView<View>(viewId)
         view.setBackgroundResource(backgroundRes)
         return this
     }
 
-    fun setTextColor(viewId: Int, textColor: Int): BaseViewHolder {
+    open fun setTextColor(viewId: Int, textColor: Int): BaseViewHolder {
         val view = getView<TextView>(viewId)
         view.setTextColor(textColor)
         return this
     }
 
-    fun setImageDrawable(viewId: Int, drawable: Drawable?): BaseViewHolder {
+    open fun setImageDrawable(viewId: Int, drawable: Drawable?): BaseViewHolder {
         val view = getView<ImageView>(viewId)
         view.setImageDrawable(drawable)
         return this
     }
 
-    fun setImageBitmap(viewId: Int, bitmap: Bitmap?): BaseViewHolder {
+    open fun setImageBitmap(viewId: Int, bitmap: Bitmap?): BaseViewHolder {
         val view = getView<ImageView>(viewId)
         view.setImageBitmap(bitmap)
         return this
     }
 
     @SuppressLint("ObsoleteSdkInt")
-    fun setAlpha(viewId: Int, value: Float): BaseViewHolder {
+    open fun setAlpha(viewId: Int, value: Float): BaseViewHolder {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             getView<View>(viewId).alpha = value
         } else {
@@ -123,26 +134,26 @@ open class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         return this
     }
 
-    fun setVisible(viewId: Int, visible: Boolean): BaseViewHolder {
+    open fun setVisible(viewId: Int, visible: Boolean): BaseViewHolder {
         val view = getView<View>(viewId)
         view.visibility = if (visible) View.VISIBLE else View.GONE
         return this
     }
 
-    fun linkify(viewId: Int): BaseViewHolder {
+    open fun linkify(viewId: Int): BaseViewHolder {
         val view = getView<TextView>(viewId)
         Linkify.addLinks(view, Linkify.ALL)
         return this
     }
 
-    fun setTypeface(viewId: Int, typeface: Typeface?): BaseViewHolder {
+    open fun setTypeface(viewId: Int, typeface: Typeface?): BaseViewHolder {
         val view = getView<TextView>(viewId)
         view.typeface = typeface
         view.paintFlags = view.paintFlags or Paint.SUBPIXEL_TEXT_FLAG
         return this
     }
 
-    fun setTypeface(typeface: Typeface?, vararg viewIds: Int): BaseViewHolder {
+    open fun setTypeface(typeface: Typeface?, vararg viewIds: Int): BaseViewHolder {
         for (viewId in viewIds) {
             val view = getView<TextView>(viewId)
             view.typeface = typeface
@@ -151,61 +162,61 @@ open class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         return this
     }
 
-    fun setProgress(viewId: Int, progress: Int): BaseViewHolder {
+    open fun setProgress(viewId: Int, progress: Int): BaseViewHolder {
         val view = getView<ProgressBar>(viewId)
         view.progress = progress
         return this
     }
 
-    fun setProgress(viewId: Int, progress: Int, max: Int): BaseViewHolder {
+    open fun setProgress(viewId: Int, progress: Int, max: Int): BaseViewHolder {
         val view = getView<ProgressBar>(viewId)
         view.max = max
         view.progress = progress
         return this
     }
 
-    fun setMax(viewId: Int, max: Int): BaseViewHolder {
+    open fun setMax(viewId: Int, max: Int): BaseViewHolder {
         val view = getView<ProgressBar>(viewId)
         view.max = max
         return this
     }
 
-    fun setRating(viewId: Int, rating: Float): BaseViewHolder {
+    open fun setRating(viewId: Int, rating: Float): BaseViewHolder {
         val view = getView<RatingBar>(viewId)
         view.rating = rating
         return this
     }
 
-    fun setRating(viewId: Int, rating: Float, max: Int): BaseViewHolder {
+    open fun setRating(viewId: Int, rating: Float, max: Int): BaseViewHolder {
         val view = getView<RatingBar>(viewId)
         view.max = max
         view.rating = rating
         return this
     }
 
-    fun addOnClickListener(viewId: Int): BaseViewHolder {
+    open fun addOnClickListener(viewId: Int): BaseViewHolder {
         childClickViewIds.add(viewId)
         return this
     }
 
-    fun addOnLongClickListener(viewId: Int): BaseViewHolder {
+    open fun addOnLongClickListener(viewId: Int): BaseViewHolder {
         itemChildLongClickViewIds.add(viewId)
         return this
     }
 
-    fun setOnTouchListener(viewId: Int, listener: OnTouchListener?): BaseViewHolder {
+    open fun setOnTouchListener(viewId: Int, listener: OnTouchListener?): BaseViewHolder {
         val view = getView<View>(viewId)
         view.setOnTouchListener(listener)
         return this
     }
 
-    fun setOnLongClickListener(viewId: Int, listener: OnLongClickListener?): BaseViewHolder {
+    open fun setOnLongClickListener(viewId: Int, listener: OnLongClickListener?): BaseViewHolder {
         val view = getView<View>(viewId)
-        view.setOnLongClickListener(listener)
+        view.onLongClickListener = listener
         return this
     }
 
-    fun setOnItemClickListener(
+    open fun setOnItemClickListener(
         viewId: Int,
         listener: AdapterView.OnItemClickListener?
     ): BaseViewHolder {
@@ -214,7 +225,7 @@ open class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         return this
     }
 
-    fun setOnItemLongClickListener(
+    open fun setOnItemLongClickListener(
         viewId: Int,
         listener: AdapterView.OnItemLongClickListener?
     ): BaseViewHolder {
@@ -223,7 +234,7 @@ open class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         return this
     }
 
-    fun setOnItemSelectedClickListener(
+    open fun setOnItemSelectedClickListener(
         viewId: Int,
         listener: OnItemSelectedListener?
     ): BaseViewHolder {
@@ -232,7 +243,7 @@ open class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         return this
     }
 
-    fun setOnCheckedChangeListener(
+    open fun setOnCheckedChangeListener(
         viewId: Int,
         listener: CompoundButton.OnCheckedChangeListener?
     ): BaseViewHolder {
@@ -241,19 +252,19 @@ open class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         return this
     }
 
-    fun setTag(viewId: Int, tag: Any?): BaseViewHolder {
+    open fun setTag(viewId: Int, tag: Any?): BaseViewHolder {
         val view = getView<View>(viewId)
         view.tag = tag
         return this
     }
 
-    fun setTag(viewId: Int, key: Int, tag: Any?): BaseViewHolder {
+    open fun setTag(viewId: Int, key: Int, tag: Any?): BaseViewHolder {
         val view = getView<View>(viewId)
         view.setTag(key, tag)
         return this
     }
 
-    fun setChecked(viewId: Int, checked: Boolean): BaseViewHolder {
+    open fun setChecked(viewId: Int, checked: Boolean): BaseViewHolder {
         val view = getView<View>(viewId)
         // View unable cast to Checkable
         if (view is CompoundButton) {
@@ -264,13 +275,13 @@ open class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         return this
     }
 
-    fun setAdapter(viewId: Int, adapter: Adapter?): BaseViewHolder {
+    open fun setAdapter(viewId: Int, adapter: Adapter?): BaseViewHolder {
         val view = getView<AdapterView<Adapter>>(viewId)
         view.adapter = adapter
         return this
     }
 
-    fun <T : View?> getView(viewId: Int): T {
+    open fun <T : View?> getView(viewId: Int): T {
         var view = views[viewId]
         if (view == null) {
             view = convertView.findViewById(viewId)

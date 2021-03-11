@@ -47,7 +47,7 @@ abstract class BaseDataBindingAdapter<T, V : ViewDataBinding> :
 
     fun setData(list: List<T>?) {
         list?.let {
-            if (mData.isNotEmpty()) mData.clear()
+            mData.clear()
             mData.addAll(list)
             notifyDataSetChanged()
         }

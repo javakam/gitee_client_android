@@ -1,22 +1,16 @@
 package ando.library.views.recycler
 
-import android.view.ViewGroup
+import android.view.View
 
 /**
- * # 通用的 RecyclerView 适配器
+ * # 通用 RecyclerView 适配器
  *
  * @author javakam
  * @date 2017/9/10 18:30
  */
-abstract class BaseRecyclerAdapter<T> : XRecyclerAdapter<T, BaseViewHolder> {
+abstract class BaseRecyclerAdapter<T>(layoutResId: Int, data: List<T>?) :
+    BaseAdapter<T, BaseViewHolder>(layoutResId, data) {
 
-    protected abstract fun getLayoutId(viewType: Int): Int
+    override fun getViewHolder(view: View): BaseViewHolder = BaseViewHolder(view)
 
-    constructor() : super()
-    constructor(list: List<T>) : super(list)
-    constructor(data: Array<T>) : super(data)
-
-    override fun getViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        return BaseViewHolder(inflateView(parent, getLayoutId(viewType)))
-    }
 }
