@@ -9,7 +9,7 @@ interface IBaseInterface {
     fun initData() {}
 
     fun getLayoutView(): View? = null
-    fun getLayoutId(): Int
+    fun getLayoutId(): Int = -1
 }
 
 interface IFragmentLazyLoad
