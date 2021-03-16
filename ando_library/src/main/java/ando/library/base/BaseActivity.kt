@@ -134,12 +134,12 @@ abstract class BaseMvcActivity : BaseActivity(), IBaseInterface {
     private var exitTime: Long = 0
 
     @SuppressLint("CheckResult")
-    protected fun exitBy2Click(delay: Long = 2000L, @StringRes text: Int) {
+    protected fun exitBy2Click(delay: Long = 2000L, @StringRes text: Int, block: () -> Unit) {
         if (System.currentTimeMillis() - exitTime > delay) {
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
             exitTime = System.currentTimeMillis()
         } else {
-            finish()
+            block.invoke()
             exit()
         }
     }
